@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
+import com.example.app.refrigerator.RefrigeratorStatus
 
 
 class Pan : AppCompatActivity() {
@@ -14,13 +15,12 @@ class Pan : AppCompatActivity() {
 
         val store = findViewById<ImageButton>(R.id.store)
 
-        val back= findViewById<ImageButton>(R.id.back)
+        val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
-            val intent = Intent(this, RefrigeratorStatus::class.java)
-            startActivity(intent)
+            finish()
         }
 
-        store.setOnClickListener{
+        store.setOnClickListener {
             Toast.makeText(this@Pan, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
 

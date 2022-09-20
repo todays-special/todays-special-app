@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import com.example.app.refrigerator.RefrigeratorStatus
 
 class RecipeRec : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

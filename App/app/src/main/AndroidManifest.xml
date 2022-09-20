@@ -38,7 +38,7 @@
             android:name=".Pan"
             android:exported="false" />
         <activity
-            android:name=".RefrigeratorStatus"
+            android:name=".refrigerator.RefrigeratorStatus"
             android:exported="false" />
         <activity
             android:name=".Search"

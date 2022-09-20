@@ -1,17 +1,21 @@
-package com.example.app
+package com.example.app.refrigerator
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import com.example.app.MainActivity
+import com.example.app.Pan
+import com.example.app.PlusMenu
+import com.example.app.R
 
 class RefrigeratorStatus : AppCompatActivity() {
+    //김민규 작업중
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refrigerator_status)
-
 
 
         //조리도구 현황이동
@@ -31,6 +35,8 @@ class RefrigeratorStatus : AppCompatActivity() {
 
 
     }
+    /** when + btn pressed
+     */
     fun onDialogClicked(view: View){
         val plusMenu = PlusMenu(this)
         plusMenu.show()

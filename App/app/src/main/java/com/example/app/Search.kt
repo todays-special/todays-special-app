@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
+import com.example.app.refrigerator.RefrigeratorStatus
 
 class Search : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
