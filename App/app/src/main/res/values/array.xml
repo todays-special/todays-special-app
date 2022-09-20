@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="test">
+        <item>클릭하세요</item>
         <item>야채/채소</item>
         <item>과일</item>
         <item>육류</item>
@@ -9,6 +10,38 @@
         <item>면류</item>
         <item>ETC</item>
     </string-array>
+
+    <string-array name="test_vegetable">
+        <item>야채/채소</item>
+        <item>양파</item>
+        <item>파</item>
+        <item>당근</item>
+        <item>감자</item>
+    </string-array>
+
+    <string-array name="test_fruit">
+        <item>과일</item>
+        <item>사과</item>
+        <item>배</item>
+        <item>감</item>
+        <item>포도</item>
+    </string-array>
+
+    <string-array name="test_meat">
+        <item>육류</item>
+        <item>삼겹살</item>
+        <item>목살</item>
+        <item>갈메기살</item>
+    </string-array>
+
+    <string-array name="test_fish">
+        <item>해산물</item>
+        <item>고등어</item>
+        <item>삼치</item>
+        <item>조개</item>
+    </string-array>
+
+
 
     <string-array name="test2">
         <item>개수</item>

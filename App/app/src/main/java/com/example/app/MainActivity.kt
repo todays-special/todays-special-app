@@ -3,13 +3,20 @@ package com.example.app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import com.example.app.refrigerator.RefrigeratorStatus
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val imageView4 = findViewById<ImageView>(R.id.imageView4)
+        val imageView5 = findViewById<ImageView>(R.id.imageView5)
+        val imageView3 = findViewById<ImageView>(R.id.imageView3)
 
         val bell= findViewById<ImageButton>(R.id.bell)
         bell.setOnClickListener {
@@ -81,6 +88,30 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val name2 = findViewById<ImageButton>(R.id.name2)
+        name2.setOnClickListener{
+            imageView4.visibility=View.INVISIBLE
+            imageView5.visibility=View.INVISIBLE
+            imageView3.visibility=View.VISIBLE
+        }
+
+        val name1 = findViewById<ImageButton>(R.id.name1)
+        name1.setOnClickListener{
+            imageView4.visibility=View.VISIBLE
+            imageView5.visibility=View.INVISIBLE
+            imageView3.visibility=View.INVISIBLE
+
+        }
+
+        val name3 = findViewById<ImageButton>(R.id.name3)
+        name3.setOnClickListener{
+            imageView4.visibility=View.INVISIBLE
+            imageView5.visibility=View.VISIBLE
+            imageView3.visibility=View.INVISIBLE
+
+        }
     }
+
+
 
 }

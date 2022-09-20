@@ -14,6 +14,9 @@
         android:theme="@style/Theme.App"
         tools:targetApi="31">
         <activity
+            android:name=".Alert"
+            android:exported="false" />
+        <activity
             android:name=".Alter"
             android:exported="false" />
         <activity
@@ -48,7 +51,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

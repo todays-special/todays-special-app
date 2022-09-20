@@ -18,6 +18,12 @@ class Setting : AppCompatActivity()  {
             val intent = Intent(this, NoticeMatter::class.java)
             startActivity(intent)
         }
+
+        val alterPoint= findViewById<ImageButton>(R.id.alterPoint)
+        alterPoint.setOnClickListener {
+            val intent = Intent(this, Alter::class.java)
+            startActivity(intent)
+        }
     }
 
     fun onDialogClicked3(view: View){
