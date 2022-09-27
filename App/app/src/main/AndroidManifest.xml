@@ -32,7 +32,7 @@
             android:name=".Check"
             android:exported="false" />
         <activity
-            android:name=".PlusMenu"
+            android:name=".refrigerator.PlusMenu"
             android:exported="false" />
         <activity
             android:name=".Notice"

@@ -5,7 +5,7 @@
     android:layout_width="300dp"
     android:layout_height="190dp"
     android:background="@drawable/plusmenu"
-    tools:context=".PlusMenu">
+    tools:context=".refrigerator.PlusMenu">
 
 
 
@@ -164,6 +164,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view4"
         app:layout_constraintVertical_bias="0.55" />
+    <TextView
+        android:id="@+id/calendar_date"
+        app:layout_constraintStart_toEndOf="@+id/textView12"
+        app:layout_constraintEnd_toStartOf="@+id/calendar"
+        app:layout_constraintTop_toBottomOf="@+id/view4"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
     <ImageButton
         android:id="@+id/calendar"
