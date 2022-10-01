@@ -1,0 +1,55 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "676fef1adc1d6be4d7d9627a9ba5ccc9",
+    "entities": [
+      {
+        "tableName": "internalExpDb",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `count` TEXT NOT NULL, `expiration` TEXT NOT NULL, `keyValue` TEXT NOT NULL DEFAULT 'default', PRIMARY KEY(`name`, `expiration`, `keyValue`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "count",
+            "columnName": "count",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exp",
+            "columnName": "expiration",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keyValue",
+            "columnName": "keyValue",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'default'"
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "name",
+            "expiration",
+            "keyValue"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '676fef1adc1d6be4d7d9627a9ba5ccc9')"
+    ]
+  }
+}
