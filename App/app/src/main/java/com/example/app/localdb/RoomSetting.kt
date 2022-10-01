@@ -29,6 +29,7 @@ class RoomSetting {
         expRoomDbBuild()
     }
 
+
     fun expRoomDbBuild() {
         //list를 먼저 받고, exp를 받아서 list에 exp가 있으면 name-count-exp순으로 앱 내부 db에 저장한다.
         //list받기
@@ -40,7 +41,7 @@ class RoomSetting {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
         val api = retrofit.create(GetIngredientAPI::class.java)
-        val callList = api.getList()
+        val callList = api.getList("test")
 
         var resultJsonArray: JsonArray?
 

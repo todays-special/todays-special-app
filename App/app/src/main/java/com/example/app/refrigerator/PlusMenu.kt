@@ -15,7 +15,7 @@ import com.example.app.R
 
 class PlusMenu(context: Context) : Dialog(context) {
 
-    lateinit var date: String
+    var date: String = "null"
     lateinit var mAlertDialog: AlertDialog
     var sortName: String = ""
     var nameValue: String = ""
@@ -29,8 +29,11 @@ class PlusMenu(context: Context) : Dialog(context) {
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         var spinner = findViewById<Spinner>(R.id.spinner)
         var spinner2 = findViewById<Spinner>(R.id.spinner2)
+        var spinner3 = findViewById<Spinner>(R.id.spinner3)
+        val volumeInput = findViewById<EditText>(R.id.volume_input)
 
-//        spinner.adapter = ArrayAdapter.createFromResource(this.context , R.array.test, android.R.layout.simple_spinner_item)
+        spinner3.adapter = ArrayAdapter.createFromResource(this.context , R.array.test2, android.R.layout.simple_spinner_item)
+
         spinner.adapter = ArrayAdapter(this.context ,android.R.layout.simple_spinner_item,
             IngredientData().spinnerList)
 
@@ -46,83 +49,75 @@ class PlusMenu(context: Context) : Dialog(context) {
                         //TODO spinner 아이템 가져오기
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerGrain)
-                        sortName = IngredientData().spinnerList[0]
                     }
                     1 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerNut)
-                        sortName = IngredientData().spinnerList[1]
                     }
                     2 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerFruit)
-                        sortName = IngredientData().spinnerList[2]
                     }
                     3 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerVegetable)
-                        sortName = IngredientData().spinnerList[3]
                     }
                     4 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerMushroom)
-                        sortName = IngredientData().spinnerList[4]
                     }
                     5 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerMeat)
-                        sortName = IngredientData().spinnerList[5]
                     }
                     6 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerDairy)
-                        sortName = IngredientData().spinnerList[6]
                     }
                     7 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerSeafood)
-                        sortName = IngredientData().spinnerList[7]
                     }
                     8 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerSauce)
-                        sortName = IngredientData().spinnerList[8]
                     }
                     9 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerSpice)
-                        sortName = IngredientData().spinnerList[9]
                     }
                     10 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerHerb)
-                        sortName = IngredientData().spinnerList[10]
                     }
                     11 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerCan)
-                        sortName = IngredientData().spinnerList[11]
                     }
                     12 -> {
                         spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
                             IngredientData().spinnerWine)
-                        sortName = IngredientData().spinnerList[12]
                     }
                 }
             }
-
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
 
         }
+
         val calendarDate = findViewById<TextView>(R.id.calendar_date)
         val calendar = findViewById<ImageButton>(R.id.calendar)
         val plusClear = findViewById<ImageButton>(R.id.plusclear)
 
         plusClear.setOnClickListener {
-            Log.d("Plus"," "+ sortName+" "+date)
+            val sortName = spinner.selectedItem.toString()
+            val ingredient = spinner2.selectedItem.toString()
+            val volume = volumeInput.text.toString()
+            val volumeName = spinner3.selectedItem.toString()
+            Log.d("Plus", "$sortName $ingredient $volume $volumeName $date")
         }
+
         calendar.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_calendar, null)

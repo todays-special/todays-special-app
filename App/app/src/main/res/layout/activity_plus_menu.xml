@@ -34,9 +34,9 @@
         app:layout_constraintVertical_bias="0.042" />
 
     <Spinner
+        android:id="@+id/spinner3"
         android:layout_width="94dp"
         android:layout_height="25dp"
-        android:entries="@array/test2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.922"
@@ -45,11 +45,11 @@
         app:layout_constraintVertical_bias="0.55" />
 
     <EditText
-        android:id="@+id/textView7"
+        android:id="@+id/volume_input"
         android:layout_width="46dp"
         android:layout_height="42dp"
         android:gravity="center"
-        android:text="용량"
+        android:hint="용량"
         android:textColor="@color/black"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"

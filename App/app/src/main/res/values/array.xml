@@ -44,7 +44,7 @@
 
 
     <string-array name="test2">
-        <item>개수</item>
+        <item>개</item>
         <item>g</item>
         <item>kg</item>
         <item>ml</item>
