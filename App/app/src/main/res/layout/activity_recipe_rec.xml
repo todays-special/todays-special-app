@@ -135,15 +135,23 @@
         android:id="@+id/linearLayout"
         android:layout_width="338dp"
         android:layout_height="177dp"
+        android:layout_marginTop="30dp"
         android:background="#9A9A9A"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.967"
-        tools:ignore="MissingConstraints"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/recipe_howto"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView3"
@@ -200,4 +208,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/name_cook"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/left_btn"
+        android:layout_width="43dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="◀"
+        app:layout_constraintEnd_toStartOf="@+id/pageview"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <Button
+        android:id="@+id/right_btn"
+        android:layout_width="43dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:text="▶"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+    <TextView
+        android:id="@+id/pageview"
+        android:layout_width="19dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="1"
+        app:layout_constraintEnd_toStartOf="@+id/right_btn"
+        app:layout_constraintTop_toBottomOf="@+id/view3" />
 </androidx.constraintlayout.widget.ConstraintLayout>
