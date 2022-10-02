@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,17 +34,18 @@ class RecipeRec : AppCompatActivity() {
     private lateinit var recyclerArray: ArrayList<recipe>
     var addlist = mutableListOf<recycler>()
     val items = mutableListOf<recipe>()
+    var howtorecipe = arrayOfNulls<String>(500)
+    private var Booleanname: String? = null
 //    private var youTubePlayerView = findViewById(R.id.video_player)
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_rec)
         var require_in = findViewById(R.id.require_in) as TextView
         var recipe_name = findViewById(R.id.name_cook) as TextView
+        var recipehow = findViewById<TextView>(R.id.pageview)
 
-        val home= findViewById<ImageButton>(R.id.home)
+        val home = findViewById<ImageButton>(R.id.home)
         home.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -53,6 +55,11 @@ class RecipeRec : AppCompatActivity() {
             val intent = Intent(this, RefrigeratorStatus::class.java)
             startActivity(intent)
         }
+
+        if (intent.hasExtra("BooleanName")) {
+            Booleanname = intent.getStringExtra("BooleanName")
+        }
+
 
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
@@ -64,6 +71,8 @@ class RecipeRec : AppCompatActivity() {
 
         val callResult = api.getResult()
         var resultJsonArray: JsonArray?
+        var recipeto = findViewById<TextView>(R.id.recipe_howto)
+        var recipeHowCount = 1
 
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
@@ -122,26 +131,61 @@ class RecipeRec : AppCompatActivity() {
 //                val mainItems = items.filter { it.chief == "A" }
 //                val subItems = items.filter { it.chief != "A" }
                 Log.d("List", "$items")
+                if (Booleanname != null) {
+                    for(i in items.indices){
+                        if (items[i].name == Booleanname){
+                            require_in.setText(items[i].Ingredient.toString())
+                            recipe_name.setText(items[i].name)
+                            Log.d("match", "$items")
 
-                for (i in items.indices) {
-                    val matchCounter = (items[i].Ingredient).count() - (items[i].Ingredient).minus(
-                        listOf<String>(
-                            "onion",
-                            "rice",
-                            "kimchi"
-                        )
-                    ).count()
-                    items[i].matchCount = matchCounter
-                    Log.d("count", "$matchCounter")
+                            howtorecipe[0] = items[i]?.step1.toString()
+                            howtorecipe[1] = items[i]?.step2.toString()
+                            howtorecipe[2] = items[i]?.step3.toString()
+                            howtorecipe[3] = items[i]?.step4.toString()
+                            howtorecipe[4] = items[i]?.step5.toString()
+                            howtorecipe[5] = items[i]?.step6.toString()
+                            howtorecipe[6] = items[i]?.step7.toString()
+                            howtorecipe[7] = items[i]?.step8.toString()
+                            recipeto.setText(howtorecipe[i])
+                            recipehow.setText(recipeHowCount.toString())
+                        }
+                    }
+                } else {
+                    for (i in items.indices) {
+                        val matchCounter =
+                            (items[i].Ingredient).count() - (items[i].Ingredient).minus(
+                                listOf<String>(
+                                    "onion",
+                                    "chilipepper",
+                                    "kimchi",
+                                    "tofu",
+                                    "soyhbeanpaste",
+                                    "shiitake"
+                                )
+                            ).count()
+                        items[i].matchCount = matchCounter
+                        Log.d("count", "$matchCounter")
 
+                    }
+                    items.sortBy { it.matchCount }
+                    items.reverse()
+                    getListData()
+                    require_in.setText(items[0].Ingredient.toString())
+                    recipe_name.setText(items[0].name)
+                    Log.d("match", "$items")
+
+                    howtorecipe[0] = items[0]?.step1.toString()
+                    howtorecipe[1] = items[0]?.step2.toString()
+                    howtorecipe[2] = items[0]?.step3.toString()
+                    howtorecipe[3] = items[0]?.step4.toString()
+                    howtorecipe[4] = items[0]?.step5.toString()
+                    howtorecipe[5] = items[0]?.step6.toString()
+                    howtorecipe[6] = items[0]?.step7.toString()
+                    howtorecipe[7] = items[0]?.step8.toString()
+//                setHowtoRecipe()
+                    recipeto.setText(howtorecipe[0])
+                    recipehow.setText(recipeHowCount.toString())
                 }
-                items.sortBy { it.matchCount }
-                items.reverse()
-                getListData()
-                require_in.setText(items[0].Ingredient.toString())
-                recipe_name.setText(items[0].name)
-                Log.d("match", "$items")
-
             }
 
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
@@ -149,8 +193,29 @@ class RecipeRec : AppCompatActivity() {
             }
         })
 
+
+        val left = findViewById<Button>(R.id.left_btn)
+        val right = findViewById<Button>(R.id.right_btn)
+        left.setOnClickListener {
+            if (recipeHowCount > 1) {
+                recipeHowCount--
+                recipehow.setText((recipeHowCount).toString())
+                recipeto.setText(howtorecipe[recipeHowCount - 1])
+            }
+        }
+        right.setOnClickListener {
+            recipeHowCount++
+            if (howtorecipe[recipeHowCount - 1]?.isEmpty() == true) recipeHowCount--
+            else {
+                recipehow.setText((recipeHowCount).toString())
+                recipeto.setText(howtorecipe[recipeHowCount - 1])
+            }
+        }
+
+
     }
-    fun onDialogClicked2(view: View){
+
+    fun onDialogClicked2(view: View) {
         val check = Check(this)
         check.show()
     }
@@ -165,4 +230,8 @@ class RecipeRec : AppCompatActivity() {
         }
         Log.d("list", "$addlist")
     }
+
+//    private fun setHowtoRecipe(){
+
+//    }
 }
