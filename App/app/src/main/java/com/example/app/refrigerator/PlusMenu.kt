@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.*
 import com.example.app.IngredientData
 import com.example.app.R
+import com.example.app.plusminus.ControlData
 
 class PlusMenu(context: Context) : Dialog(context) {
 
@@ -112,12 +113,20 @@ class PlusMenu(context: Context) : Dialog(context) {
 
         plusClear.setOnClickListener {
             //값을 내부 DB에 먼저 넣고, 서버에 동기화하기
-
+            IngredientData().meat_beef
             val sortName = spinner.selectedItem.toString()
             val ingredient = spinner2.selectedItem.toString()
             val volume = volumeInput.text.toString()
             val volumeName = spinner3.selectedItem.toString()
-            Log.d("Plus", "$sortName $ingredient $volume $volumeName $date")
+
+            if (volume.isNotEmpty() && date != "null"){
+                Log.d("Plus", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")
+                ControlData().insertData("test",IngredientData().getKeyName(ingredient),volume,date)
+                dismiss()
+            }else{
+                Log.d("NULL", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")
+                Toast.makeText(context, "입력이 올바르지않습니다", Toast.LENGTH_LONG).show()
+            }
         }
 
         calendar.setOnClickListener {

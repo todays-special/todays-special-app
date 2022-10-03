@@ -51,14 +51,14 @@ class RefrigeratorStatus : AppCompatActivity() {
             val mDialogView = LayoutInflater.from(this@RefrigeratorStatus).inflate(R.layout.dialog_loading, null)
             val mBuilder = AlertDialog.Builder(this@RefrigeratorStatus)
                 .setView(mDialogView)
-                .setCancelable(false)
+                .setCancelable(false) //외부영역 터치해도 dismiss 안되게
             mAlertDialog = mBuilder.create()
 
-            //dialog 배경 투명하게 만들기
+            /** dialog 배경 투명하게 만들기*/
             mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
             mAlertDialog.show()
-            delay(2000)
+            delay(4000)
             mAlertDialog.dismiss()
 
             Log.d("getList:", "${getList}")

@@ -3,7 +3,22 @@ package com.example.app
 val s = "vegetable"
 
 class IngredientData {
-    val spinnerList = arrayListOf<String>("쌀/곡식","견과","과일","채소","버섯","육류","유제품","해산물","소스","양념","허브","통조림","술")
+    val spinnerList = arrayListOf<String>(
+        "쌀/곡식",
+        "견과",
+        "과일",
+        "채소",
+        "버섯",
+        "육류",
+        "유제품",
+        "해산물",
+        "소스",
+        "양념",
+        "허브",
+        "통조림",
+        "술"
+    )
+
     fun getNameFromId(nameCode: String): String {
         if (nameCode.contains("grain_")) return grain[nameCode].toString()
         if (nameCode.contains("nut_")) return nut[nameCode].toString()
@@ -25,6 +40,15 @@ class IngredientData {
         if (nameCode.contains("can_")) return can[nameCode].toString()
         if (nameCode.contains("wine_")) return wine[nameCode].toString()
         else return nameCode
+    }
+
+    fun getKeyName(value: String): String {
+        for(i in dataList){
+            if (i.value == value){
+                return i.key
+            }
+        }
+        return "no key"
     }
 
     //grain_
@@ -177,6 +201,7 @@ class IngredientData {
         "meat_pork_backmeat" to "뒷고기",            // 뒷고기
         "meat_pork_" to "",                    //
     )
+    val key_meat_pork = meat_pork.keys
 
     //meat_beef
     val meat_beef = hashMapOf(
@@ -241,7 +266,8 @@ class IngredientData {
         "meat_processed_beefjerky" to "육포",        // 육포
         "meat_processed_" to " ",        //
     )
-    val spinnerMeat = (meat_processed.values + meat_lamb.values + meat_chicken.values +meat_pork.values + meat_beef.values).toList()
+    val spinnerMeat =
+        (meat_processed.values + meat_lamb.values + meat_chicken.values + meat_pork.values + meat_beef.values).toList()
 
     //dairy
     val dairy = hashMapOf(
@@ -284,7 +310,7 @@ class IngredientData {
         "seafood_fish_niphonius" to "삼치",        // 삼치
         "seafood_fish_azonus" to "임연수어",            // 임연수어
     )
-    val spinnerSeafood = (seafood_fish.values+seafood.values).toList()
+    val spinnerSeafood = (seafood_fish.values + seafood.values).toList()
 
     //sauce
     val sauce = hashMapOf(
