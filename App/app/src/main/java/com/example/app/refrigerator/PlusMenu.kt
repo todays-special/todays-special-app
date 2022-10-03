@@ -111,6 +111,8 @@ class PlusMenu(context: Context) : Dialog(context) {
         val plusClear = findViewById<ImageButton>(R.id.plusclear)
 
         plusClear.setOnClickListener {
+            //값을 내부 DB에 먼저 넣고, 서버에 동기화하기
+
             val sortName = spinner.selectedItem.toString()
             val ingredient = spinner2.selectedItem.toString()
             val volume = volumeInput.text.toString()
