@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.app.IngredientData
 import com.example.app.R
 
 class ExpWarningAdapter(private val items: MutableList<Exp>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -12,9 +13,11 @@ class ExpWarningAdapter(private val items: MutableList<Exp>): RecyclerView.Adapt
     inner class ItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bindItems(item: Exp){
             //data mapping
+            val processedName = IngredientData().getNameFromId(item.name)
+
             val name = itemView.findViewById<TextView>(R.id.textView1)
             val exp = itemView.findViewById<TextView>(R.id.exp)
-            name.text = item.name
+            name.text = processedName
             exp.text = item.exp
         }
     }
