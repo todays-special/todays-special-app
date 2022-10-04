@@ -122,6 +122,7 @@ class PlusMenu(context: Context) : Dialog(context) {
             if (volume.isNotEmpty() && date != "null"){
                 Log.d("Plus", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")
                 ControlData().insertData("test",IngredientData().getKeyName(ingredient),volume,date)
+
                 dismiss()
             }else{
                 Log.d("NULL", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")

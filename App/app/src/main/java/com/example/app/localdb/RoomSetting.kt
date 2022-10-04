@@ -26,6 +26,9 @@ class RoomSetting {
             .build()
 
         dbList.clear()
+    }
+
+    fun getDataFromServer(){
         expRoomDbBuild()
     }
 

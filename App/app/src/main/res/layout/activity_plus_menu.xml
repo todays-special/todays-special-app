@@ -7,8 +7,6 @@
     android:background="@drawable/plusmenu"
     tools:context=".refrigerator.PlusMenu">
 
-
-
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="150dp"
