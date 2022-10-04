@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.app.MainActivity
 import com.example.app.Pan
 import com.example.app.R
@@ -54,19 +55,24 @@ class RefrigeratorStatus : AppCompatActivity() {
         val rvFine = findViewById<RecyclerView>(R.id.rv_fine)
         val rvWarning = findViewById<RecyclerView>(R.id.rv_warning)
         val rvExpired = findViewById<RecyclerView>(R.id.rv_expired)
+        val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
+
+        refresh.setOnRefreshListener {
+            CoroutineScope(Dispatchers.Main).launch {
+                expRoomDbBuild()
+                delay(3000)
+                refresh.isRefreshing = false
+            }
+        }
 
         CoroutineScope(Dispatchers.Main).launch {
-//            RoomSetting().run {
-//                init(context = this@RefrigeratorStatus)
-//                getList = dbList
-//            }
             helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
                 .build()
             dbList.clear()
 
             refreshAdapter()
 
-            loading()
+            loading(1000)
 
             //오늘날짜 가져오기
             val today = Calendar.getInstance()
@@ -123,7 +129,7 @@ class RefrigeratorStatus : AppCompatActivity() {
         }
     }
 
-    suspend fun loading(){
+    suspend fun loading(time: Long) {
         val mDialogView =
             LayoutInflater.from(this@RefrigeratorStatus).inflate(R.layout.dialog_loading, null)
         val mBuilder = AlertDialog.Builder(this@RefrigeratorStatus)
@@ -135,7 +141,7 @@ class RefrigeratorStatus : AppCompatActivity() {
         mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
         mAlertDialog.show()
-        delay(4000)
+        delay(time)
         mAlertDialog.dismiss()
 
         Log.d("getList:", "${getList}")
@@ -272,6 +278,7 @@ class RefrigeratorStatus : AppCompatActivity() {
             }
         }
     }
+
     fun refreshAll() {
         //MainThread에서 안돌리려면 코루틴 안에 넣어야됨
         if (dbList.isNotEmpty()) {
@@ -282,7 +289,7 @@ class RefrigeratorStatus : AppCompatActivity() {
             dbList.clear()
             dbList.addAll(helper.roomExpDao().getAll())
             delay(500)
-            withContext(Dispatchers.Main){
+            withContext(Dispatchers.Main) {
 
                 expiredList.clear()
                 warningList.clear()
