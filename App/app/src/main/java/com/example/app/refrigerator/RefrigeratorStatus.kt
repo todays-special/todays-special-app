@@ -119,6 +119,10 @@ class RefrigeratorStatus : AppCompatActivity() {
         }
 
         // 임박/여유 5일 기준. 확인을 삭제.
+        val back = findViewById<ImageButton>(R.id.back)
+        back.setOnClickListener {
+            finish()
+        }
 
 
         //하단바
