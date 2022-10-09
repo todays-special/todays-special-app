@@ -36,7 +36,7 @@
 
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/et_id"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint=" 아이디"
@@ -50,16 +50,16 @@
         app:layout_constraintVertical_bias="0.122" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/et_pw"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint=" 비밀번호"
         android:inputType="textMultiLine|textNoSuggestions"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText"
-        app:layout_constraintStart_toStartOf="@+id/editText"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintEnd_toEndOf="@+id/et_id"
+        app:layout_constraintStart_toStartOf="@+id/et_id"
+        app:layout_constraintTop_toBottomOf="@+id/et_id"
         app:layout_constraintVertical_bias="0.029999971" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,9 +69,9 @@
         android:background="@drawable/check2"
         android:backgroundTint="#FF8868"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="@+id/et_pw"
+        app:layout_constraintStart_toStartOf="@+id/et_pw"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw"
         app:layout_constraintVertical_bias="0.13">
 
         <TextView
@@ -124,10 +124,10 @@
         android:visibility="gone"
         android:textColor="#575757"
         app:layout_constraintBottom_toTopOf="@+id/login"
-        app:layout_constraintEnd_toEndOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="@+id/et_pw"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editText2"
-        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintStart_toStartOf="@+id/et_pw"
+        app:layout_constraintTop_toBottomOf="@+id/et_pw"
         app:layout_constraintVertical_bias="0.18" />
 
     <TextView

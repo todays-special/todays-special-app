@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "385791676303",
+    "project_id": "fb-email-login-75700",
+    "storage_bucket": "fb-email-login-75700.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385791676303:android:def99af79dda0c064685fa",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7t9YpkGF2GcV8g_axH-_-p29ckPC_J3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385791676303:android:e9069387274051224685fa",
+        "android_client_info": {
+          "package_name": "com.kimmandoo.community"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7t9YpkGF2GcV8g_axH-_-p29ckPC_J3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385791676303:android:93db931428799b884685fa",
+        "android_client_info": {
+          "package_name": "com.kimmandoo.project_exercise_3_2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7t9YpkGF2GcV8g_axH-_-p29ckPC_J3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385791676303:android:db57ca4007c815a74685fa",
+        "android_client_info": {
+          "package_name": "com.tistory.gyudev.lec6_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7t9YpkGF2GcV8g_axH-_-p29ckPC_J3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385791676303-5vanomum71nc8n1r71f45au6b89bq84m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
