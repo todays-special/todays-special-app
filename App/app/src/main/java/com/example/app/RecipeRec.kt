@@ -36,7 +36,14 @@ class RecipeRec : AppCompatActivity() {
     val items = mutableListOf<recipe>()
     var howtorecipe = arrayOfNulls<String>(500)
     private var Booleanname: String? = null
-//    private var youTubePlayerView = findViewById(R.id.video_player)
+    private var KeyAPI:String? = null
+    //통신 함수
+    var gson = GsonBuilder().setLenient().create()
+    val retrofit = Retrofit.Builder()
+        .baseUrl("http://jaeryurp.duckdns.org:40131/")
+//            .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
+        .build()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,18 +65,35 @@ class RecipeRec : AppCompatActivity() {
 
         if (intent.hasExtra("BooleanName")) {
             Booleanname = intent.getStringExtra("BooleanName")
+            Log.d("Boolean", "$Booleanname")
+        }
+        if(intent.hasExtra("key"))
+            KeyAPI = intent.getStringExtra("key")
+        var api = retrofit.create(recipeapi::class.java)
+
+        val callResult: Call<JsonArray>?
+        if(KeyAPI=="korean") {
+            callResult = api.getResult()
+        }else if(KeyAPI=="japan"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="american"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="china"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="bunsik"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="meat"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="seafood"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="random"){
+            callResult = api.getResult()
+        }else if(KeyAPI=="image"){
+            callResult = api.getResult()
+        }else{
+            callResult = api.getResult()
         }
 
-
-        var gson = GsonBuilder().setLenient().create()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://jaeryurp.duckdns.org:40131/")
-//            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
-            .build()
-        val api = retrofit.create(recipeapi::class.java)
-
-        val callResult = api.getResult()
         var resultJsonArray: JsonArray?
         var recipeto = findViewById<TextView>(R.id.recipe_howto)
         var recipeHowCount = 1
@@ -107,6 +131,7 @@ class RecipeRec : AppCompatActivity() {
                     val step7 = jsonArray.getJSONObject(i).getString("step7")
                     val step8 = jsonArray.getJSONObject(i).getString("step8")
                     val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
+                    val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
                     val url = jsonArray.getJSONObject(i).getString("link")
                     val match = 0
                     val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
@@ -114,6 +139,7 @@ class RecipeRec : AppCompatActivity() {
                         recipe(
                             name,
                             list,
+                            mainIngredient,
                             chief,
                             step1,
                             step2,
@@ -169,7 +195,6 @@ class RecipeRec : AppCompatActivity() {
                     }
                     items.sortBy { it.matchCount }
                     items.reverse()
-                    getListData()
                     require_in.setText(items[0].Ingredient.toString())
                     recipe_name.setText(items[0].name)
                     Log.d("match", "$items")
@@ -182,7 +207,6 @@ class RecipeRec : AppCompatActivity() {
                     howtorecipe[5] = items[0]?.step6.toString()
                     howtorecipe[6] = items[0]?.step7.toString()
                     howtorecipe[7] = items[0]?.step8.toString()
-//                setHowtoRecipe()
                     recipeto.setText(howtorecipe[0])
                     recipehow.setText(recipeHowCount.toString())
                 }
@@ -211,8 +235,6 @@ class RecipeRec : AppCompatActivity() {
                 recipeto.setText(howtorecipe[recipeHowCount - 1])
             }
         }
-
-
     }
 
     fun onDialogClicked2(view: View) {
@@ -220,18 +242,8 @@ class RecipeRec : AppCompatActivity() {
         check.show()
     }
 
-    private fun getListData() {
-        Log.d("GetList:items", "$items")
-        for (i in items.indices) {
-            var Ttext = items[i].name
-            var Tcheif = items[i].chief
-            addlist.add(recycler(Ttext, Tcheif))
-            Log.d("GetList", "$addlist")
-        }
-        Log.d("list", "$addlist")
+    private fun useAPI(key:String?){
+
     }
 
-//    private fun setHowtoRecipe(){
-
-//    }
 }

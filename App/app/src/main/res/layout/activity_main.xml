@@ -255,7 +255,7 @@
         app:layout_constraintVertical_bias="0.076">
 
         <ImageButton
-            android:id="@+id/name1"
+            android:id="@+id/token1"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -275,7 +275,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name1" />
+            app:layout_constraintTop_toBottomOf="@+id/token1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -289,7 +289,7 @@
         app:layout_constraintTop_toTopOf="@+id/state">
 
         <ImageButton
-            android:id="@+id/name2"
+            android:id="@+id/token2"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -309,7 +309,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name2" />
+            app:layout_constraintTop_toBottomOf="@+id/token2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -325,7 +325,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <ImageButton
-            android:id="@+id/name3"
+            android:id="@+id/token3"
             android:layout_width="45dp"
             android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -345,7 +345,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name3" />
+            app:layout_constraintTop_toBottomOf="@+id/token3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

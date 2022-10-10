@@ -8,19 +8,8 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface recipeapi {
-    @GET("/show/show_temptable.php")
-    fun getRefrigeTable(
-//        @Query("query") userName: String
-    ): Call<JsonArray>
-
-//    @GET("/update/update_ingredient.php?Uingredient=onion&")
-//    fun minusOne(
-////        @Query("Uingredient") Uingredient: String,
-//        @Query("Ucnt") Ucnt: String,
-//    ): Call<JsonArray>
-
-    @GET("/json.php")
-    fun getResult(
-
-    ): Call<JsonArray>
+    @GET("/json.php") //한식
+    fun getResult(): Call<JsonArray>
+    @GET("/jsonjapan.php")
+    fun getJapan(): Call<JsonArray>
 }

@@ -2,7 +2,10 @@ package com.example.app.APIS
 
 data class recipe(
     val name: String,
+    // 이거 배열 아니자나 시민ㅇ립1ㅏㄻㅇㄴㅍㅁㄴㅇㅎㄹ
+//    var ingredient : List<String>,
     var Ingredient : List<String>,
+    val mainIngredient: String,
     val chief: String,
     val step1: String,
     val step2: String,
@@ -12,7 +15,7 @@ data class recipe(
     val step6: String,
     val step7: String,
     val step8: String,
-    val url: String,
+    var link: String,
     var matchCount : Int
 )
 
