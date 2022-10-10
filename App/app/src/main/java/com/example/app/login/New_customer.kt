@@ -2,6 +2,7 @@ package com.example.app.login
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.app.R
@@ -28,7 +29,8 @@ class New_customer : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_customer)
         auth = Firebase.auth
-
+        val name = findViewById<EditText>(R.id.editText5)
+        //SharedPreference로 처리.
 
         constraintLayout12.setOnClickListener {
             val signUpID = ID.text.toString()

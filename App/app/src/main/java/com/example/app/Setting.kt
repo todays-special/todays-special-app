@@ -1,12 +1,11 @@
 package com.example.app
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import com.example.app.alert.Alert
 
 class Setting : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +20,7 @@ class Setting : AppCompatActivity()  {
 
         val alterPoint= findViewById<ImageButton>(R.id.alterPoint)
         alterPoint.setOnClickListener {
-            val intent = Intent(this, Alter::class.java)
+            val intent = Intent(this, Alert::class.java)
             startActivity(intent)
         }
     }
