@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
+import com.example.app.algorithm.enqueue
+import com.example.app.algorithm.sort
 import com.example.app.refrigerator.RefrigeratorStatus
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private val serviceKey = "Cname"
     private var container = -1
     var addlist = mutableListOf<recycler>()
-    val items = mutableListOf<recipe>()
+    var items = mutableListOf<recipe>()
     var choice = 2 //ThreadLocalRandom.current().nextInt(1,2)
 
 
@@ -39,110 +41,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val imageBtn = findViewById<ImageButton>(R.id.recipeImageBtn)
 
-
-
-
-        var gson = GsonBuilder().setLenient().create()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://jaeryurp.duckdns.org:40131/")
-//            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
-            .build()
-        val api = retrofit.create(recipeapi::class.java)
-        val callResult = api.getResult()
-        var resultJsonArray: JsonArray?
-
-        callResult.enqueue(object : Callback<JsonArray> {
-            override fun onResponse(
-                call: Call<JsonArray>,
-                response: Response<JsonArray>
-            ) {
-//                Log.d("FeatTwo", "성공 : ${response.body()}")
-                resultJsonArray = response.body()
-//                Log.d("FeatTwo", "json : ${resultJsonArray.toString()}")
-
-                val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
-                val convertArray =
-                    MutableList<JSONObject>(jsonArray.length()) { i -> jsonArray.getJSONObject(i) }.map {
-                        Gson().fromJson<HashMap<String, String>>(
-                            it.toString(),
-                            HashMap::class.java
-                        )
-                    }
-                val filterMainIngredient =
-                    convertArray.filter { it?.get("mainIngredient") == "tomato" }
-//                val mainItems = filterMainIngredient.filter { it?.get("chief") == "A" }
-//                val subItems = filterMainIngredient.filter { it?.get("chief") != "A" }
-                for (i in 0 until jsonArray.length()) {
-                    val name = jsonArray.getJSONObject(i).getString("name")
-                    val chief = jsonArray.getJSONObject(i).getString("chief")
-                    val step1 = jsonArray.getJSONObject(i).getString("step1")
-                    val step2 = jsonArray.getJSONObject(i).getString("step2")
-                    val step3 = jsonArray.getJSONObject(i).getString("step3")
-                    val step4 = jsonArray.getJSONObject(i).getString("step4")
-                    val step5 = jsonArray.getJSONObject(i).getString("step5")
-                    val step6 = jsonArray.getJSONObject(i).getString("step6")
-                    val step7 = jsonArray.getJSONObject(i).getString("step7")
-                    val step8 = jsonArray.getJSONObject(i).getString("step8")
-                    val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
-                    val url = jsonArray.getJSONObject(i).getString("link")
-                    val match = 0
-                    val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
-                    items.add(
-                        recipe(
-                            name,
-                            list,
-                            chief,
-                            step1,
-                            step2,
-                            step3,
-                            step4,
-                            step5,
-                            step6,
-                            step7,
-                            step8,
-                            url,
-                            match
-                        )
-                    )
-                }
-//                val mainItems = items.filter { it.chief == "A" }
-//                val subItems = items.filter { it.chief != "A" }
-
-                for (i in items.indices) {
-                    val matchCounter = (items[i].Ingredient).count() - (items[i].Ingredient).minus(
-                        listOf<String>(
-                            "onion",
-                            "chilipepper",
-                            "kimchi",
-                            "tofu"
-                        )
-                    ).count()
-                    items[i].matchCount = matchCounter
-                    Log.d("count", "$matchCounter")
-
-                }
-                items.sortBy { it.matchCount }
-                items.reverse()
-                Log.d("match", "$items")
-
-
-                if(choice==1){
-                    imageBtn.setImageResource(R.drawable.kimchijji)
-                } else {
-                    imageBtn.setImageResource(R.drawable.d)
-                }
-
+        Thread {
+            val test = enqueue().getRecipeArray();
+            if (test != null) {
+                items = sort().orderByIngredient(test, listOf<String>(
+                    "onion",
+                    "chilipepper",
+                    "kimchi",
+                    "tofu"
+                ));
 
             }
-            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
-                Log.d("FeatTwo", "실패 : $t")
-            }
-        })
+
+            Log.d("test","$test")
+        }.start()
 
 
 
-
+        if (choice == 1) {
+            imageBtn.setImageResource(R.drawable.kimchijji)
+        } else {
+            imageBtn.setImageResource(R.drawable.d)
+        }
 
         val bell= findViewById<ImageButton>(R.id.bell)
         bell.setOnClickListener {

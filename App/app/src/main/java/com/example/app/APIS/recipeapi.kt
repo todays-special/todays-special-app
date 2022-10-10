@@ -10,14 +10,9 @@ import retrofit2.http.Query
 interface recipeapi {
     @GET("/show/show_temptable.php")
     fun getRefrigeTable(
-//        @Query("query") userName: String
+
     ): Call<JsonArray>
 
-//    @GET("/update/update_ingredient.php?Uingredient=onion&")
-//    fun minusOne(
-////        @Query("Uingredient") Uingredient: String,
-//        @Query("Ucnt") Ucnt: String,
-//    ): Call<JsonArray>
 
     @GET("/json.php")
     fun getResult(

@@ -58,6 +58,7 @@ class RecipeRec : AppCompatActivity() {
 
         if (intent.hasExtra("BooleanName")) {
             Booleanname = intent.getStringExtra("BooleanName")
+            Log.d("Boolean", "$Booleanname")
         }
 
 
@@ -107,6 +108,7 @@ class RecipeRec : AppCompatActivity() {
                     val step7 = jsonArray.getJSONObject(i).getString("step7")
                     val step8 = jsonArray.getJSONObject(i).getString("step8")
                     val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
+                    val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
                     val url = jsonArray.getJSONObject(i).getString("link")
                     val match = 0
                     val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
@@ -114,6 +116,7 @@ class RecipeRec : AppCompatActivity() {
                         recipe(
                             name,
                             list,
+                            mainIngredient,
                             chief,
                             step1,
                             step2,
