@@ -40,21 +40,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val imageBtn = findViewById<ImageButton>(R.id.recipeImageBtn)
-
-        Thread {
-            val test = enqueue().getRecipeArray();
-            if (test != null) {
-                items = sort().orderByIngredient(test, listOf<String>(
-                    "onion",
-                    "chilipepper",
-                    "kimchi",
-                    "tofu"
-                ));
-
-            }
-
-            Log.d("test","$test")
-        }.start()
+        /**다시하자 **/
+//        Thread {
+//            val test = enqueue().getRecipeArray();
+//            if (test != null) {
+//                items = sort().orderByIngredient(test, listOf<String>(
+//                    "onion",
+//                    "chilipepper",
+//                    "kimchi",
+//                    "tofu"
+//                ));
+//
+//            }
+//
+//            Log.d("test","$test")
+//        }.start()
 
 
 
@@ -70,6 +70,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val imagetoken1 = findViewById<ImageButton>(R.id.token1)
+        imagetoken1.setOnClickListener{
+            choice = 1
+            imageBtn.setImageResource(R.drawable.kimchijji)
+        }
+        val imagetoken2=findViewById<ImageButton>(R.id.token2)
+        imagetoken2.setOnClickListener{
+            choice = 2
+            imageBtn.setImageResource(R.drawable.d)
+        }
 
 
         //하단바 이동
