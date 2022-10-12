@@ -260,7 +260,6 @@ class RecipeRec : AppCompatActivity() {
 //            howtorecipe[5] = items[0]?.step6.toString()
 //            howtorecipe[6] = items[0]?.step7.toString()
 //            howtorecipe[7] = items[0]?.step8.toString()
-////                setHowtoRecipe()
 //            recipeto.setText(howtorecipe[0])
 //            recipehow.setText(recipeHowCount.toString())
 //        }
@@ -290,14 +289,4 @@ class RecipeRec : AppCompatActivity() {
         check.show()
     }
 
-//    private fun getListData() {
-//        Log.d("GetList:items", "$items")
-//        for (i in items.indices) {
-//            var Ttext = items[i].name
-//            var Tcheif = items[i].chief
-//            addlist.add(recycler(Ttext, Tcheif))
-//            Log.d("GetList", "$addlist")
-//        }
-//        Log.d("list", "$addlist")
-//    }
 }
