@@ -1,14 +1,28 @@
 package com.example.app
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import com.example.app.login.New_customer
+import com.example.app.login.SettingUserName
 import com.example.app.refrigerator.RefrigeratorStatus
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+
+//    private fun getName(key: String): String? {
+//        val prefs = getSharedPreferences(New_customer.sharedPrefFileName, Context.MODE_PRIVATE)
+//        val value = prefs.getString(key, " ") ?: "User+${Random(10000).nextInt()}"
+//        Log.d("name", "$value")
+//        return value
+//    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
@@ -24,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        main_name.text = "${SettingUserName().getName("name", this).toString()}의 냉장고"
 
 
         //하단바 이동

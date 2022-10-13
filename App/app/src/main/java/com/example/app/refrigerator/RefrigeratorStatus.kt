@@ -292,7 +292,7 @@ class RefrigeratorStatus : AppCompatActivity() {
 //            dbList.clear()
             dbList.clear()
             dbList.addAll(helper.roomExpDao().getAll())
-            delay(500)
+            delay(1000)
             withContext(Dispatchers.Main) {
 
                 expiredList.clear()

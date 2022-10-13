@@ -1,10 +1,13 @@
 package com.example.app.login
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.app.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -17,6 +20,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.random.Random
 
 class New_customer : AppCompatActivity() {
 
@@ -25,12 +29,35 @@ class New_customer : AppCompatActivity() {
     lateinit var passwordInput: String
     lateinit var passwordCheck: String
 
+    private lateinit var mPreferences: SharedPreferences
+
+    companion object {
+        const val sharedPrefFileName = "name"
+    }
+
+    //사용자 이름 설정하기 -> sharedPreference로 저장하기 때문에 로컬파일로 남게됨.
+    private fun setName(values: String) {
+        val prefs = getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("name", values)
+        editor.apply()
+    }
+
+    //사용자 이름 가져오기
+    private fun getName(key: String): String? {
+        val prefs = getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
+        val value = prefs.getString(key, "User${Random(1000).nextInt()}") ?: "User+${Random(1000).nextInt()}"
+        Log.d("name", "$value")
+        return value
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_customer)
         auth = Firebase.auth
         val name = findViewById<EditText>(R.id.editText5)
         //SharedPreference로 처리.
+
 
         constraintLayout12.setOnClickListener {
             val signUpID = ID.text.toString()
@@ -43,6 +70,8 @@ class New_customer : AppCompatActivity() {
 
             if (passwordInput != passwordCheck) {
                 Toast.makeText(this, "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
+            }else if(name.text.isNullOrEmpty()){
+                Toast.makeText(this, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
                 //input == check 일 때
                 auth.createUserWithEmailAndPassword(email, passwordInput)
@@ -59,7 +88,7 @@ class New_customer : AppCompatActivity() {
                                 .build()
                             val api = retrofit.create(createAPI::class.java)
                             val callResult = api.createUser(user!!.uid)
-
+                            setName(name.text.toString())
                             callResult.enqueue(object : Callback<JsonArray> {
                                 override fun onResponse(
                                     call: Call<JsonArray>,

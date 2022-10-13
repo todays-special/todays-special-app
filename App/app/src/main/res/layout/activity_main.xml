@@ -9,7 +9,9 @@
 
     <TextView
         android:id="@+id/main_name"
-        android:layout_width="wrap_content"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="12sp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -18,11 +20,12 @@
         android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/bell"
         app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:targetApi="o" />
 
     <ImageButton
         android:id="@+id/suljung"

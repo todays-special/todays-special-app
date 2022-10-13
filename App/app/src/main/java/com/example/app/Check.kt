@@ -12,7 +12,6 @@ class Check(context: Context) : Dialog(context) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
 
-        setContentView(R.layout.activity_check)
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 }
