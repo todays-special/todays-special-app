@@ -1,6 +1,7 @@
 package com.example.app.login
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.app.MainActivity
 import com.example.app.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -95,13 +97,18 @@ class New_customer : AppCompatActivity() {
                                     response: Response<JsonArray>
                                 ) {
                                     Log.d("SignIn", "회원가입되었습니다 : ${response.body()}")
+                                    Toast.makeText(
+                                        baseContext, "회원가입되었습니다",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
 
                                 override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                                     Log.d("SignIn", "실패 : $t")
                                 }
                             })
-
+                            startActivity(Intent(this,MainActivity::class.java))
+                            finish()
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "createUserWithEmail:failure", task.exception)
