@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.app.MainActivity
 import com.example.app.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -37,6 +38,12 @@ class Login : AppCompatActivity() {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d("TAG", "signInWithEmail:success")
                         val user = auth.currentUser
+                        Toast.makeText(
+                            this, "로그인 되었습니다",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w("TAG", "signInWithEmail:failure", task.exception)

@@ -5,7 +5,7 @@
     android:background="#FAF6EC"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hello">
+    tools:context=".start.hello">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/intro"

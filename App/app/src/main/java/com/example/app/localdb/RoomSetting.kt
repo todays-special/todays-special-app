@@ -59,10 +59,12 @@ class RoomSetting {
                     nameList.clear()
                 }
                 val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
+
                 for (i in 0 until jsonArray.length()) {
                     val Sname = jsonArray.getJSONObject(i).getString("Tables_in_test")
                     nameList.add(Sname)
                 }
+
                 for (i in nameList) {
                     if (i == "temp_ingre" || i == "cookware") continue //filter
                     val callExp = api.getExp(i)

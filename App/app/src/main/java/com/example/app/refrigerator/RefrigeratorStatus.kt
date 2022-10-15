@@ -49,6 +49,26 @@ class RefrigeratorStatus : AppCompatActivity() {
     val warningList = mutableListOf<Exp>()
     val expiredList = mutableListOf<Exp>()
 
+    fun getRoomDb(){
+        if (dbList.isNotEmpty()) {
+            dbList.clear()
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            //room에 있는 데이터 가져오기
+            dbList.clear()
+            dbList.addAll(helper.roomExpDao().getAll())
+            //RoomDb가 존재하지 않으면 build하도록
+            if (dbList.size == 0) {
+                expRoomDbBuild()
+            }else{
+                //dbList로 가져온 데이터를 가공하는 곳
+            }
+            withContext(Dispatchers.Main) {
+//                dbAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refrigerator_status)

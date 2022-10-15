@@ -1,7 +1,5 @@
-package com.example.app
+package com.example.app.start
 
-
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -11,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.example.app.MainActivity
+import com.example.app.R
 
 class hello : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,45 +41,42 @@ class hello : AppCompatActivity() {
             startActivity(intent)
         }
 
-
         btn1.setOnClickListener {
             showDialog()
         }
     }
-    private  fun showDialog(){
 
+    private fun showDialog() {
         val mSelectedItem: ArrayList<String> = arrayListOf()
-
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
 
         builder.setTitle("가진 조리도구를 선택하세요")
-
-        builder.setMultiChoiceItems(R.array.pan, null){
-            p0, which, isChecked ->
-
+        builder.setMultiChoiceItems(R.array.pan, null) { _, which, isChecked ->
             val pan: Array<String> = resources.getStringArray(R.array.pan)
-
-            if(isChecked){
+            if (isChecked) {
                 mSelectedItem.add(pan[which])
-            }else{
+            } else {
                 mSelectedItem.remove(pan[which])
             }
         }
-        builder.setPositiveButton("ok"){
-            p0, p1 ->
+
+        builder.setPositiveButton("ok") { p0, p1 ->
             var finalSelection = ""
 
-            for(item: String in mSelectedItem){
-            finalSelection =finalSelection + "\n" + item
+            for (item: String in mSelectedItem) {
+                finalSelection = finalSelection + "\n" + item
+            }
+            Toast.makeText(
+                this@hello, "선택 조리기구는 $finalSelection",
+                Toast.LENGTH_SHORT
+            ).show()
         }
-            Toast.makeText(this@hello, "선택 조리기구는 ${finalSelection}",
-            Toast.LENGTH_SHORT).show()
+
+        builder.setNegativeButton("Cancel") { dialog, p1 ->
+            dialog.cancel()
         }
-        builder.setNegativeButton("Cancel"){
-            dialog, p1 ->dialog.cancel()
-        }
+
         val alertDialog: AlertDialog = builder.create()
         alertDialog.show()
     }
-
 }
