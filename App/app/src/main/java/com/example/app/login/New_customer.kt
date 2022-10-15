@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.app.MainActivity
 import com.example.app.R
+import com.example.app.hello
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -107,7 +108,7 @@ class New_customer : AppCompatActivity() {
                                     Log.d("SignIn", "실패 : $t")
                                 }
                             })
-                            startActivity(Intent(this,MainActivity::class.java))
+                            startActivity(Intent(this,hello::class.java))
                             finish()
                         } else {
                             // If sign in fails, display a message to the user.

@@ -11,6 +11,12 @@
         <item>ETC</item>
     </string-array>
 
+    <string-array name="pan">
+        <item>후라이팬</item>
+        <item>냄비</item>
+        <item>전자레인지</item>
+    </string-array>
+
     <string-array name="test_vegetable">
         <item>야채/채소</item>
         <item>양파</item>

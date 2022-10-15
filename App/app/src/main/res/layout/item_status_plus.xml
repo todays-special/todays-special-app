@@ -50,21 +50,16 @@
         android:text="남은날짜"
         android:textSize="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="0.285" />
+        app:layout_constraintEnd_toEndOf="@+id/exp"
+        app:layout_constraintTop_toBottomOf="@+id/exp" />
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="20dp"
+        android:layout_height="18dp"
         android:background="#00ffffff"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="@+id/textView3"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintBottom_toTopOf="@+id/exp"
+        app:layout_constraintEnd_toEndOf="@+id/exp"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/update" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,17 +5,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Pan">
-    <CheckBox
-        android:id="@+id/checkBox"
+
+    <LinearLayout
+        android:id="@+id/tool_rg"
         android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:text="후라이팬"
+        android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/view7"
         app:layout_constraintEnd_toStartOf="@+id/view7"
         app:layout_constraintHorizontal_bias="0.592"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view7"
-        app:layout_constraintVertical_bias="0.015" />
+        app:layout_constraintVertical_bias="0.015">
+        <CheckBox
+            android:id="@+id/pan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="후라이팬" />
+        <CheckBox
+            android:id="@+id/pot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="냄비" />
+        <CheckBox
+            android:id="@+id/stick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="젓가락" />
+        <CheckBox
+            android:id="@+id/ladle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="국자" />
+
+    </LinearLayout>
+
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/pan"-->
+    <!--        android:layout_width="175dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:text="후라이팬"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/view7"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/view7"-->
+    <!--        app:layout_constraintHorizontal_bias="0.592"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/view7"-->
+    <!--        app:layout_constraintVertical_bias="0.015" />-->
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/pot"-->
+    <!--        android:layout_width="175dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:text="냄비"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/view7"-->
+    <!--        app:layout_constraintEnd_toStartOf="@+id/view7"-->
+    <!--        app:layout_constraintHorizontal_bias="0.592"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/pan"-->
+    <!--        app:layout_constraintVertical_bias="0.015" />-->
 
     <TextView
         android:id="@+id/textView2"
@@ -71,12 +117,11 @@
         android:id="@+id/store"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#00ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view7"
-        app:srcCompat="@drawable/store"
-        android:background="#00ffffff"
-        />
+        app:srcCompat="@drawable/store" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
