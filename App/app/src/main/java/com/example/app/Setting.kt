@@ -6,17 +6,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import com.example.app.alert.Alert
 import com.example.app.login.Login
+import com.example.app.login.SettingUserName
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_setting.*
 
 class Setting : AppCompatActivity()  {
+    lateinit var nameText: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
         val logout = findViewById<Button>(R.id.logout)
+        nameText = findViewById<TextView>(R.id.name)
+
+        nameText.text = SettingUserName().getName("name",this).toString()
 
         logout.setOnClickListener {
             //로그아웃하고
@@ -42,5 +49,8 @@ class Setting : AppCompatActivity()  {
     fun onDialogClicked3(view: View){
         val name = Name(this)
         name.show()
+        name.setOnDismissListener {
+            nameText.text = SettingUserName().getName("name",this).toString()
+        }
     }
 }

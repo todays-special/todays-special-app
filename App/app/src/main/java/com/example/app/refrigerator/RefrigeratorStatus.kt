@@ -57,6 +57,10 @@ class RefrigeratorStatus : AppCompatActivity() {
             //room에 있는 데이터 가져오기
             dbList.clear()
             dbList.addAll(helper.roomExpDao().getAll())
+//            val ingreNames = mutableListOf<String>()
+//            for (i in dbList){
+//                ingreNames.add(i.name)
+//            }
             //RoomDb가 존재하지 않으면 build하도록
             if (dbList.size == 0) {
                 expRoomDbBuild()

@@ -29,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
             ).show()
             Handler(Looper.myLooper()!!).postDelayed({
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             }, 1500)
         } catch (e: Exception) {
             Log.d("Splash", "need to sign in")
@@ -38,8 +39,8 @@ class SplashActivity : AppCompatActivity() {
             ).show()
             Handler().postDelayed({
                 startActivity(Intent(this, Login::class.java))
+                finish()
             }, 1500)
         }
-
     }
 }

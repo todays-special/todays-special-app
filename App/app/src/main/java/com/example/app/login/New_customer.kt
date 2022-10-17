@@ -47,7 +47,7 @@ class New_customer : AppCompatActivity() {
     //사용자 이름 가져오기
     private fun getName(key: String): String? {
         val prefs = getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
-        val value = prefs.getString(key, "User${Random(1000).nextInt()}") ?: "User+${Random(1000).nextInt()}"
+        val value = prefs.getString(key, "User${Random(1000).nextInt()}")
         Log.d("name", "$value")
         return value
     }

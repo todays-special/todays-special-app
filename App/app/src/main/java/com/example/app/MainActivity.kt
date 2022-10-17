@@ -127,6 +127,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
+    override fun onResume() {
+        super.onResume()
+        main_name.text = "${SettingUserName().getName("name", this).toString()}의 냉장고"
+    }
 }
