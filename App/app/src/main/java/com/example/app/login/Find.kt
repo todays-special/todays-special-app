@@ -14,13 +14,13 @@ class Find : AppCompatActivity() {
         setFrag(0)
     }
 
-    private fun setFrag(fragNum : Int) {
+    private fun setFrag(fragNum: Int) {
         val ft = supportFragmentManager.beginTransaction()
-        when(fragNum){
-            0->{
+        when (fragNum) {
+            0 -> {
                 ft.replace(R.id.main_frame, Find_id()).commit()
             }
-            1->{
+            1 -> {
                 ft.replace(R.id.main_frame, Find_id()).commit()
             }
         }

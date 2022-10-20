@@ -9,5 +9,5 @@ interface createAPI {
     @GET("/create/create_user.php?")
     fun createUser(
         @Query("Cname") Cname: String,
-        ): Call<JsonArray>
+    ): Call<JsonArray>
 }

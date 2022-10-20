@@ -32,6 +32,7 @@ class ControlData {
             ) {
                 Log.d("insert", "성공 : ${response.body()}")
             }
+
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
                 Log.d("insert", "실패 : $t")
             }

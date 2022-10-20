@@ -21,14 +21,14 @@ class RoomSetting {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
 
-    fun init(context: Context){
+    fun init(context: Context) {
         helper = Room.databaseBuilder(context, RoomHelper::class.java, "internalExpDb")
             .build()
 
         dbList.clear()
     }
 
-    fun getDataFromServer(){
+    fun getDataFromServer() {
         expRoomDbBuild()
     }
 
@@ -55,7 +55,7 @@ class RoomSetting {
             ) {
                 Log.d("List", "${responseList.body()}")
                 resultJsonArray = responseList.body()
-                if(nameList.isNotEmpty()){
+                if (nameList.isNotEmpty()) {
                     nameList.clear()
                 }
                 val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
@@ -83,7 +83,8 @@ class RoomSetting {
                                 for (item in 0 until expArray.length()) {
                                     val count = expArray.getJSONObject(item).getString("count")
                                     val exp = expArray.getJSONObject(item).getString("expiration")
-                                    val keyValue = expArray.getJSONObject(item).getString("keyvalue")
+                                    val keyValue =
+                                        expArray.getJSONObject(item).getString("keyvalue")
 
                                     Log.d("DB", "${i},${count},${exp},${keyValue}")
                                     insertData(RoomExpDB(i, count, exp, keyValue))

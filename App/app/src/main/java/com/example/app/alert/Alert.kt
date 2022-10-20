@@ -28,11 +28,12 @@ class Alert : AppCompatActivity() {
         const val notificationID_NO_ITEM = 1001
         const val notificationID_NIGHT = 1002
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alter)
 
-        val back= findViewById<ImageButton>(R.id.back)
+        val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
             val intent = Intent(this, Setting::class.java)
             startActivity(intent)
@@ -49,42 +50,38 @@ class Alert : AppCompatActivity() {
         switch4.isChecked = true
 
 
-        switch1.setOnClickListener{
-            if (switch1.isChecked){
+        switch1.setOnClickListener {
+            if (switch1.isChecked) {
                 switch2.isChecked = true
                 switch3.isChecked = true
                 switch4.isChecked = true
                 // 알람이 켜졌습니다.
                 sendNotification()
-            }
-            else {
+            } else {
                 switch2.isChecked = false
                 switch3.isChecked = false
                 switch4.isChecked = false
             }
         }
 
-        switch2.setOnClickListener{
-            if(switch2.isChecked){
+        switch2.setOnClickListener {
+            if (switch2.isChecked) {
 
-            }
-            else{
+            } else {
                 switch1.isChecked = false
             }
         }
-        switch3.setOnClickListener{
-            if(switch3.isChecked){
+        switch3.setOnClickListener {
+            if (switch3.isChecked) {
 
-            }
-            else{
+            } else {
                 switch1.isChecked = false
             }
         }
-        switch4.setOnClickListener{
-            if(switch4.isChecked){
+        switch4.setOnClickListener {
+            if (switch4.isChecked) {
 
-            }
-            else{
+            } else {
                 switch1.isChecked = false
             }
         }
@@ -116,7 +113,11 @@ class Alert : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel(notificationManager: NotificationManager) {
-        val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
             description = "Channel Description"
             enableLights(true)
             lightColor = Color.GREEN

@@ -12,12 +12,12 @@ interface InsertDeleteAPI {
         @Query("Iingredient") Iingredient: String,
         @Query("Icnt") Icnt: String,
         @Query("Idate") Idate: String,
-        ): Call<JsonArray>
+    ): Call<JsonArray>
 
     @GET("/delete/deleteingredient.php?")
     fun delete(
         @Query("Dname") Dname: String,
         @Query("Dingredient") Dingredient: String,
         @Query("Ddate") Ddate: String,
-        ): Call<JsonArray>
+    ): Call<JsonArray>
 }

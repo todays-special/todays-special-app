@@ -71,7 +71,7 @@ class New_customer : AppCompatActivity() {
 
             if (passwordInput != passwordCheck) {
                 Toast.makeText(this, "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
-            }else if(name.text.isNullOrEmpty()){
+            } else if (name.text.isNullOrEmpty()) {
                 Toast.makeText(this, "이름을 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
                 //input == check 일 때

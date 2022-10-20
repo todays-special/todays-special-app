@@ -33,74 +33,114 @@ class PlusMenu(context: Context) : Dialog(context) {
         var spinner3 = findViewById<Spinner>(R.id.spinner3)
         val volumeInput = findViewById<EditText>(R.id.volume_input)
 
-        spinner3.adapter = ArrayAdapter.createFromResource(this.context , R.array.test2, android.R.layout.simple_spinner_item)
+        spinner3.adapter = ArrayAdapter.createFromResource(
+            this.context,
+            R.array.test2,
+            android.R.layout.simple_spinner_item
+        )
 
-        spinner.adapter = ArrayAdapter(this.context ,android.R.layout.simple_spinner_item,
-            IngredientData().spinnerList)
+        spinner.adapter = ArrayAdapter(
+            this.context, android.R.layout.simple_spinner_item,
+            IngredientData().spinnerList
+        )
 
         spinner.setSelection(0)
         sortName = IngredientData().spinnerList[0]
-        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-            IngredientData().spinnerGrain)
+        spinner2.adapter = ArrayAdapter(
+            context, android.R.layout.simple_spinner_item,
+            IngredientData().spinnerGrain
+        )
 //        "쌀/곡식","견과","과일","채소","버섯","육류","유제품","해산물","소스","양념","허브","통조림","술"
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when(position){
-                    0 ->{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                when (position) {
+                    0 -> {
                         //TODO spinner 아이템 가져오기
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerGrain)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerGrain
+                        )
                     }
                     1 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerNut)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerNut
+                        )
                     }
                     2 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerFruit)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerFruit
+                        )
                     }
                     3 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerVegetable)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerVegetable
+                        )
                     }
                     4 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerMushroom)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerMushroom
+                        )
                     }
                     5 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerMeat)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerMeat
+                        )
                     }
                     6 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerDairy)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerDairy
+                        )
                     }
                     7 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerSeafood)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerSeafood
+                        )
                     }
                     8 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerSauce)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerSauce
+                        )
                     }
                     9 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerSpice)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerSpice
+                        )
                     }
                     10 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerHerb)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerHerb
+                        )
                     }
                     11 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerCan)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerCan
+                        )
                     }
                     12 -> {
-                        spinner2.adapter = ArrayAdapter(context ,android.R.layout.simple_spinner_item,
-                            IngredientData().spinnerWine)
+                        spinner2.adapter = ArrayAdapter(
+                            context, android.R.layout.simple_spinner_item,
+                            IngredientData().spinnerWine
+                        )
                     }
                 }
             }
+
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
@@ -119,13 +159,28 @@ class PlusMenu(context: Context) : Dialog(context) {
             val volume = volumeInput.text.toString()
             val volumeName = spinner3.selectedItem.toString()
 
-            if (volume.isNotEmpty() && date != "null"){
-                Log.d("Plus", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")
-                ControlData().insertData("test",IngredientData().getKeyName(ingredient),volume,date)
+            if (volume.isNotEmpty() && date != "null") {
+                Log.d(
+                    "Plus",
+                    "$sortName $ingredient $volume $volumeName $date ${
+                        IngredientData().getKeyName(ingredient)
+                    }"
+                )
+                ControlData().insertData(
+                    "test",
+                    IngredientData().getKeyName(ingredient),
+                    volume,
+                    date
+                )
 
                 dismiss()
-            }else{
-                Log.d("NULL", "$sortName $ingredient $volume $volumeName $date ${IngredientData().getKeyName(ingredient)}")
+            } else {
+                Log.d(
+                    "NULL",
+                    "$sortName $ingredient $volume $volumeName $date ${
+                        IngredientData().getKeyName(ingredient)
+                    }"
+                )
                 Toast.makeText(context, "입력이 올바르지않습니다", Toast.LENGTH_LONG).show()
             }
         }

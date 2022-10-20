@@ -23,9 +23,13 @@ class SettingUserName {
     }
 
     //사용자 이름 가져오기
-     fun getName(key: String, context: Context): String? {
+    fun getName(key: String, context: Context): String? {
         val prefs = context.getSharedPreferences(sharedPrefFileName, Context.MODE_PRIVATE)
-        val value = prefs.getString(key, "User${Random(1000).nextInt(10000)}") ?: "User+${Random(10000).nextInt()}"
+        val value = prefs.getString(key, "User${Random(1000).nextInt(10000)}") ?: "User+${
+            Random(
+                10000
+            ).nextInt()
+        }"
         Log.d("name", "$value")
         return value
     }

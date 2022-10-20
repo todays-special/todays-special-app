@@ -49,7 +49,7 @@ class RefrigeratorStatus : AppCompatActivity() {
     val warningList = mutableListOf<Exp>()
     val expiredList = mutableListOf<Exp>()
 
-    fun getRoomDb(){
+    fun getRoomDb() {
         if (dbList.isNotEmpty()) {
             dbList.clear()
         }
@@ -64,7 +64,7 @@ class RefrigeratorStatus : AppCompatActivity() {
             //RoomDb가 존재하지 않으면 build하도록
             if (dbList.size == 0) {
                 expRoomDbBuild()
-            }else{
+            } else {
                 //dbList로 가져온 데이터를 가공하는 곳
             }
             withContext(Dispatchers.Main) {
