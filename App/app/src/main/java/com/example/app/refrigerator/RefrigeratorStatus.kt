@@ -42,12 +42,13 @@ class RefrigeratorStatus : AppCompatActivity() {
     lateinit var expiredAdapter: ExpExpiredAdapter
     lateinit var getList: MutableList<RoomExpDB>
     lateinit var mAlertDialog: AlertDialog
-    val dbList = mutableListOf<RoomExpDB>()
-    lateinit var helper: RoomHelper
 
     val fineList = mutableListOf<Exp>()
     val warningList = mutableListOf<Exp>()
     val expiredList = mutableListOf<Exp>()
+
+    val dbList = mutableListOf<RoomExpDB>()
+    lateinit var helper: RoomHelper
 
     fun getRoomDb() {
         if (dbList.isNotEmpty()) {
