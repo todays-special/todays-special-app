@@ -10,6 +10,7 @@ import retrofit2.http.Query
 interface recipeapi {
     @GET("/json.php") //한식
     fun getResult(): Call<JsonArray>
-    @GET("/jsonjapan.php")
-    fun getJapan(): Call<JsonArray>
+
+    @GET("/show/show_china.php")
+    fun getChina(): Call<JsonArray>
 }

@@ -9,15 +9,22 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
 import com.example.app.algorithm.enqueue
 import com.example.app.algorithm.sort
+import com.example.app.localdb.RoomExpDB
+import com.example.app.localdb.RoomHelper
 import com.example.app.refrigerator.RefrigeratorStatus
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONObject
 import org.json.JSONTokener
@@ -34,7 +41,8 @@ class MainActivity : AppCompatActivity() {
     var addlist = mutableListOf<recycler>()
     var items = mutableListOf<recipe>()
     var choice = 2 //ThreadLocalRandom.current().nextInt(1,2)
-
+    val dbList = mutableListOf<RoomExpDB>()
+    lateinit var helper: RoomHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_App)
@@ -50,8 +58,13 @@ class MainActivity : AppCompatActivity() {
             .build()
         val api = retrofit.create(recipeapi::class.java)
 
-        val callResult = api.getResult()
+        val callResult = api.getChina()
         var resultJsonArray: JsonArray?
+
+        helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
+            .build()
+        getRoomDb()
+
 
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
@@ -61,43 +74,7 @@ class MainActivity : AppCompatActivity() {
                 resultJsonArray = response.body()
 
                 val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
-
-                for (i in 0 until jsonArray.length()) {
-                    val name = jsonArray.getJSONObject(i).getString("name")
-                    val chief = jsonArray.getJSONObject(i).getString("chief")
-                    val step1 = jsonArray.getJSONObject(i).getString("step1")
-                    val step2 = jsonArray.getJSONObject(i).getString("step2")
-                    val step3 = jsonArray.getJSONObject(i).getString("step3")
-                    val step4 = jsonArray.getJSONObject(i).getString("step4")
-                    val step5 = jsonArray.getJSONObject(i).getString("step5")
-                    val step6 = jsonArray.getJSONObject(i).getString("step6")
-                    val step7 = jsonArray.getJSONObject(i).getString("step7")
-                    val step8 = jsonArray.getJSONObject(i).getString("step8")
-                    val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
-                    val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
-                    val url = jsonArray.getJSONObject(i).getString("link")
-                    val match = 0
-                    val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
-                    items.add(
-                        recipe(
-                            name,
-                            list,
-                            mainIngredient,
-                            chief,
-                            step1,
-                            step2,
-                            step3,
-                            step4,
-                            step5,
-                            step6,
-                            step7,
-                            step8,
-                            url,
-                            match
-                        )
-                    )
-                }
-                Log.d("List", "$items")
+                insertRecipe(jsonArray)
 
                 filter_recipe()
 
@@ -215,17 +192,15 @@ class MainActivity : AppCompatActivity() {
     }
     private fun filter_recipe(){
         val i = 0
+        val n = 0
+        val indexes = mutableListOf<String>()
+        for(n in dbList.indices){
+            indexes.add(dbList[n].name)
+        }
+        Log.d("lists","$indexes")
         for(i in items.indices) {
             val matchCounter =
-                (items[i].Ingredient).count() - (items[i].Ingredient).minus(
-                    listOf<String>(
-                        "onion",
-                        "chilipepper",
-                        "kimchi",
-                        "tofu",
-                        "soyhbeanpaste",
-                        "shiitake"
-                    )
+                (items[i].Ingredient).count() - (items[i].Ingredient).minus(indexes.toList()
                 ).count()
             items[i].matchCount = matchCounter
             Log.d("count", "$matchCounter")
@@ -235,6 +210,94 @@ class MainActivity : AppCompatActivity() {
         items.sortBy { it.matchCount }
         items.reverse()
         Log.d("match", "$items")
+    }
+
+    fun getRoomDb(){
+        if (dbList.isNotEmpty()) {
+            dbList.clear()
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            //room에 있는 데이터 가져오기
+            dbList.clear()
+            dbList.addAll(helper.roomExpDao().getAll())
+            //RoomDb가 존재하지 않으면 build하도록
+            if (dbList.size == 0) {
+                //냉장고 리스트에 내용물 없을 때 할 일
+            }else{
+                //dbList로 가져온 데이터를 가공하는 곳
+            }
+            withContext(Dispatchers.Main) {
+//                dbAdapter.notifyDataSetChanged()
+            }
+            Log.d("dblist","$dbList")
+        }
+
+    }
+
+    fun insertRecipe(jsonArray : JSONArray){
+        for (i in 0 until jsonArray.length()) {
+            val name = jsonArray.getJSONObject(i).getString("name")
+            val chief = jsonArray.getJSONObject(i).getString("chief")
+            val step1 = jsonArray.getJSONObject(i).getString("step1")
+            val step2 = jsonArray.getJSONObject(i).getString("step2")
+            val step3 = jsonArray.getJSONObject(i).getString("step3")
+            val step4 = jsonArray.getJSONObject(i).getString("step4")
+            val step5 = jsonArray.getJSONObject(i).getString("step5")
+            val step6 = jsonArray.getJSONObject(i).getString("step6")
+            val step7 = jsonArray.getJSONObject(i).getString("step7")
+            val step8 = jsonArray.getJSONObject(i).getString("step8")
+            val step9 = jsonArray.getJSONObject(i).getString("step9")
+            val step10 = jsonArray.getJSONObject(i).getString("step10")
+            val step11 = jsonArray.getJSONObject(i).getString("step11")
+            val step12 = jsonArray.getJSONObject(i).getString("step12")
+            val step13 = jsonArray.getJSONObject(i).getString("step13")
+            val step14 = jsonArray.getJSONObject(i).getString("step14")
+            val step15 = jsonArray.getJSONObject(i).getString("step15")
+            val step16 = jsonArray.getJSONObject(i).getString("step16")
+            val step17 = jsonArray.getJSONObject(i).getString("step17")
+            val step18 = jsonArray.getJSONObject(i).getString("step18")
+            val step19 = jsonArray.getJSONObject(i).getString("step19")
+            val step20 = jsonArray.getJSONObject(i).getString("step20")
+            val step21 = jsonArray.getJSONObject(i).getString("step21")
+            val step22 = jsonArray.getJSONObject(i).getString("step22")
+            val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
+            val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
+            val url = jsonArray.getJSONObject(i).getString("link")
+            val match = 0
+            val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
+            items.add(
+                recipe(
+                    name,
+                    list,
+                    mainIngredient,
+                    chief,
+                    step1,
+                    step2,
+                    step3,
+                    step4,
+                    step5,
+                    step6,
+                    step7,
+                    step8,
+                    step9,
+                    step10,
+                    step11,
+                    step12,
+                    step13,
+                    step14,
+                    step15,
+                    step16,
+                    step17,
+                    step18,
+                    step19,
+                    step20,
+                    step21,
+                    step22,
+                    url,
+                    match
+                )
+            )
+        }
     }
 
 

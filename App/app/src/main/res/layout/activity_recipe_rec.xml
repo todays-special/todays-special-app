@@ -52,7 +52,7 @@
             app:srcCompat="@drawable/refrigerator" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+    <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/video_player"
         android:layout_width="355dp"
         android:layout_height="184dp"
