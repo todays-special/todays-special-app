@@ -14,6 +14,31 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ControlData {
+    fun deleteData(Dname: String, Dingredient: String, Ddate: String){
+        var gson = GsonBuilder().setLenient().create()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://jaeryurp.duckdns.org:40131/")
+//            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
+            .build()
+        val api = retrofit.create(InsertDeleteAPI::class.java)
+
+        val deleteResult = api.delete(Dname, Dingredient, Ddate)
+
+        deleteResult.enqueue(object : Callback<JsonArray> {
+            override fun onResponse(
+                call: Call<JsonArray>,
+                response: Response<JsonArray>
+            ) {
+                Log.d("deleteResult", "성공 : ${response.body()}")
+            }
+
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                Log.d("deleteResult", "실패 : $t")
+            }
+        })
+    }
+
     fun insertData(Iname: String, Iingredient: String, Icnt: String, Idate: String) {
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()

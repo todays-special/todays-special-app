@@ -22,6 +22,7 @@ import com.example.app.localdb.GetIngredientAPI
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.localdb.RoomSetting
+import com.example.app.plusminus.ControlData
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.coroutines.*
@@ -84,6 +85,7 @@ class RefrigeratorStatus : AppCompatActivity() {
 
         refresh.setOnRefreshListener {
             CoroutineScope(Dispatchers.Main).launch {
+                dbList.clear()
                 expRoomDbBuild()
                 delay(3000)
                 refresh.isRefreshing = false
@@ -115,7 +117,7 @@ class RefrigeratorStatus : AppCompatActivity() {
                 } else {
                     fineList.add(Exp("TEST", i.name, i.exp))
                 }
-                Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
+//                Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
             }
 
             fineAdapter = ExpFineAdapter(fineList)
@@ -129,6 +131,66 @@ class RefrigeratorStatus : AppCompatActivity() {
             expiredAdapter = ExpExpiredAdapter(expiredList)
             rvExpired.adapter = expiredAdapter
             rvExpired.layoutManager = LinearLayoutManager(baseContext)
+
+            withContext(Dispatchers.Main) {
+                expiredAdapter.itemClick = object : ExpExpiredAdapter.ItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        val exp = expiredList[position].exp
+                        val name = expiredList[position].name
+                        for (i in dbList) {
+                            if (name == i.name && exp == i.exp) {
+                                expiredList.removeAt(position)
+                                deleteData(RoomExpDB(i.name, i.count, i.exp, i.keyValue))
+                                ControlData().deleteData("test", name, exp)
+                                break
+                            }
+                        }
+                        // delete 할때 room이 초기화가 안됨. room을 날려야됨.
+                        expiredAdapter.notifyItemRemoved(position)
+                        fineAdapter.notifyDataSetChanged()
+                        expiredAdapter.notifyDataSetChanged()
+                        warningAdapter.notifyDataSetChanged()
+                    }
+                }
+                fineAdapter.itemClick = object : ExpFineAdapter.ItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        val exp = fineList[position].exp
+                        val name = fineList[position].name
+                        for (i in dbList) {
+                            if (name == i.name && exp == i.exp) {
+                                fineList.removeAt(position)
+                                deleteData(RoomExpDB(i.name, i.count, i.exp, i.keyValue))
+                                ControlData().deleteData("test", name, exp)
+                                break
+                            }
+                        }
+//                    ControlData().deleteData("test",name,exp)
+                        fineAdapter.notifyItemRemoved(position)
+                        fineAdapter.notifyDataSetChanged()
+                        expiredAdapter.notifyDataSetChanged()
+                        warningAdapter.notifyDataSetChanged()
+                    }
+                }
+                warningAdapter.itemClick = object : ExpWarningAdapter.ItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        val exp = warningList[position].exp
+                        val name = warningList[position].name
+                        for (i in dbList) {
+                            if (name == i.name && exp == i.exp) {
+                                warningList.removeAt(position)
+                                deleteData(RoomExpDB(i.name, i.count, i.exp, i.keyValue))
+                                ControlData().deleteData("test", name, exp)
+                                break
+                            }
+                        }
+//                    ControlData().deleteData("test",name,exp)
+                        warningAdapter.notifyItemRemoved(position)
+                        fineAdapter.notifyDataSetChanged()
+                        expiredAdapter.notifyDataSetChanged()
+                        warningAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
         //test code
 //        var date = sf.parse("2022-10-05")
@@ -289,6 +351,12 @@ class RefrigeratorStatus : AppCompatActivity() {
         }
     }
 
+    fun deleteData(data: RoomExpDB) {
+        CoroutineScope(Dispatchers.IO).launch {
+            helper.roomExpDao().delete(data)
+        }
+    }
+
     fun refreshAdapter() {
         //MainThread에서 안돌리려면 코루틴 안에 넣어야됨
         if (dbList.isNotEmpty()) {
@@ -341,7 +409,7 @@ class RefrigeratorStatus : AppCompatActivity() {
                     } else {
                         fineList.add(Exp("TEST", i.name, i.exp))
                     }
-                    Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
+//                    Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
                 }
 
                 fineAdapter.notifyDataSetChanged()
