@@ -20,6 +20,7 @@ class ExpExpiredAdapter(private val items: MutableList<Exp>) :
             val exp = itemView.findViewById<TextView>(R.id.exp)
             name.text = processedName
             exp.text = item.exp
+
         }
     }
 

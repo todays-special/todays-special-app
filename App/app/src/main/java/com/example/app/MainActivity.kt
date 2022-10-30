@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                     if (calcDate < 5) {
                         mainIngList.add(MainTop(testUrl, i.name))
                     }
-                    Log.d("Main", i.name + " ")
+                    Log.d("Main", i.name + " " + i.exp +" "+ i.count)
                 }
             }
             withContext(Dispatchers.Main) {

@@ -16,7 +16,13 @@
         android:theme="@style/Theme.App"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".recipeapi.UpdateTestActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".kk"
             android:exported="true" />
