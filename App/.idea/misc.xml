@@ -4,7 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_alter.xml" value="0.24166666666666667" />
-        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_check.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_check.xml" value="0.33" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_name.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_notice.xml" value="0.24166666666666667" />
@@ -15,8 +15,13 @@
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_refrigerator_status.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_search.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_setting.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_test.xml" value="0.2368659420289855" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/check_item.xml" value="0.16530054644808742" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/check_recycler.xml" value="0.5" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/controller_layout.xml" value="0.11803444782168186" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/dialog_calendar.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/item_status_plus.xml" value="0.2368659420289855" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/items_main_token.xml" value="0.67" />
       </map>
     </option>
   </component>

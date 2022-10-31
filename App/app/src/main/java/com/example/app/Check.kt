@@ -6,8 +6,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.app.RecAdapter.EndCook
 
-class Check(context: Context) : Dialog(context) {
+class Check(recipe_ingred:MutableList<EndCook>,context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)

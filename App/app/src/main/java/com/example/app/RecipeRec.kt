@@ -15,9 +15,11 @@ import androidx.room.Room
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
+import com.example.app.RecAdapter.EndCook
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.refrigerator.RefrigeratorStatus
+import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -49,9 +51,11 @@ class RecipeRec : AppCompatActivity() {
     private var KeyAPI: String? = null
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
+    var Extra = mutableListOf<EndCook>()
+    var Sort = 0
 
     //플레이어
-    private var exoPlayer: SimpleExoPlayer? = null
+    private var exoPlayer: ExoPlayer? = null
     private lateinit var videoPlayer: PlayerView
     //통신 함수
     var gson = GsonBuilder().setLenient().create()
@@ -140,12 +144,12 @@ class RecipeRec : AppCompatActivity() {
                             Imgtorecipe(i)
                             recipeto.setText(howtorecipe[i])
                             recipehow.setText(recipeHowCount.toString())
-
-                            exoPlayer = SimpleExoPlayer.Builder(this).build()
-                            videoPlayer?.player = exoPlayer
-                            buildMediaSource(items[i].link)?.let{
-                                videoPlayer?.prepare(it)
-                            }
+                            Sort = i
+//                            exoPlayer = SimpleExoPlayer.Builder(this).build()
+//                            videoPlayer?.player = exoPlayer
+//                            buildMediaSource(items[i].link)?.let{
+//                                videoPlayer?.prepare(it)
+//                            }
                         }
                     }
                 } else {
@@ -157,11 +161,11 @@ class RecipeRec : AppCompatActivity() {
                     recipeto.setText(howtorecipe[0])
                     recipehow.setText(recipeHowCount.toString())
 
-                    exoPlayer = SimpleExoPlayer.Builder(this).build()
-                    videoPlayer?.player = exoPlayer
-                    buildMediaSource(items[0].link)?.let{
-                        videoPlayer?.prepare(it)
-                    }
+//                    exoPlayer = SimpleExoPlayer.Builder(this).build()
+//                    videoPlayer?.player = exoPlayer
+//                    buildMediaSource(items[0].link)?.let{
+//                        videoPlayer?.prepare(it)
+//                    }
                 }
             }
 
@@ -197,10 +201,20 @@ class RecipeRec : AppCompatActivity() {
                 recipeto.setText(howtorecipe[recipeHowCount - 1])
             }
         }
+
     }
 
     fun onDialogClicked2(view: View) {
-        val check = Check(this)
+        for(i in items[Sort].Ingredient.indices){
+            val split = items[Sort].Ingredient[i].split(' ')
+            val ingredient = split[0]
+            val used = split[1]
+
+            Extra.add(EndCook(ingredient,used))
+
+        }
+        Log.d("Extra", "$Extra")
+        val check = Check(Extra,this)
         check.show()
     }
 
@@ -345,9 +359,9 @@ class RecipeRec : AppCompatActivity() {
         }
     }
 
-    private fun buildMediaSource(link):MediaSource?{
-        val dataSourceFactory = DefaultDataSource(this,"sample")
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(link))
-    }
+//    private fun buildMediaSource(link):MediaSource?{
+//        val dataSourceFactory = DefaultDataSource(this,"sample")
+//        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(link))
+//    }
 
 }
