@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ import com.example.app.localdb.RoomSetting
 import com.example.app.plusminus.ControlData
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
+import kotlinx.android.synthetic.main.activity_refrigerator_status.*
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONTokener
@@ -82,6 +84,10 @@ class RefrigeratorStatus : AppCompatActivity() {
         val rvWarning = findViewById<RecyclerView>(R.id.rv_warning)
         val rvExpired = findViewById<RecyclerView>(R.id.rv_expired)
         val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
+
+        delete.setOnClickListener {
+            layout2.visibility = View.GONE
+        }
 
         refresh.setOnRefreshListener {
             CoroutineScope(Dispatchers.Main).launch {

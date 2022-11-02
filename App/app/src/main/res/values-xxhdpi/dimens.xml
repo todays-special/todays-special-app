@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="menu_button_width">75dp</dimen>
+    <dimen name="menu_button_height">95dp</dimen>
+    <dimen name="menu_button_random">92dp</dimen>
+    <dimen name="menu_button_random2">91dp</dimen>
+    <dimen name="down_button_width">50dp</dimen>
+    <dimen name="down_button_height">45dp</dimen>
+    <dimen name="name">45dp</dimen>
+    <dimen name="main_image_width">345dp</dimen>
+    <dimen name="main_image_height">230dp</dimen>
+    <dimen name="up_button_width">37dp</dimen>
+    <dimen name="up_button_height">35dp</dimen>
+    <dimen name="check_width">60dp</dimen>
+    <dimen name="check_height">30dp</dimen>
+    <dimen name="down_toolbar">60dp</dimen>
+    <dimen name="token_width">50dp</dimen>
+    <dimen name="token_height">65dp</dimen>
+    <dimen name="token_image">45dp</dimen>
+
+
+
+    <dimen name="main_title">26sp</dimen>
+    <dimen name="alp_14">14dp</dimen>
+    <dimen name="alp_22">22dp</dimen>
+    <dimen name="alp_24">24dp</dimen>
+    <dimen name="alp_18">18dp</dimen>
+    
+    
+    
+</resources>

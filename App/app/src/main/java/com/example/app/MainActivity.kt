@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -85,6 +86,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val rv = findViewById<RecyclerView>(R.id.main_rv)
         getRoomDb()
+
+        delete.setOnClickListener {
+            layout2.visibility = View.GONE
+        }
 
         //상단 재료 바
         mainAdapter = MainTopAdapter(mainIngList)

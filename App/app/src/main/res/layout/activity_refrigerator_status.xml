@@ -10,8 +10,8 @@
         android:id="@+id/main_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="냉장고 관리"
         android:layout_marginTop="4dp"
+        android:text="냉장고 관리"
         android:textColor="#020202"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -51,8 +51,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_marginTop="1dp"
         style="@style/Divider"
+        android:layout_marginTop="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_name"
         app:layout_constraintVertical_bias="0.00999999"
@@ -60,8 +60,8 @@
         tools:layout_editor_absoluteX="-16dp" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:layout_width="match_parent"
         android:id="@+id/refresh"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintTop_toBottomOf="@+id/view"
@@ -110,9 +110,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/danger_life"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:tint="#FFEB3B"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/red_cir"
+                        app:tint="#FFEB3B"
                         tools:ignore="MissingConstraints" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -206,15 +206,14 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-
     <ImageButton
         android:id="@+id/plus"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginBottom="4dp"
         android:background="#00ffffff"
-        android:scaleType="fitXY"
         android:onClick="onDialogClicked"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -266,5 +265,135 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/refrigerator" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC232323"
+        tools:layout_editor_absoluteX="-92dp"
+        tools:layout_editor_absoluteY="10dp">
+
+        <View
+            android:id="@+id/main7"
+            style="@style/Divider3"
+            android:layout_width="150dp"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout17"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/constraintLayout17"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout17"
+            app:layout_constraintVertical_bias="0.483" />
+
+        <View
+            android:id="@+id/main8"
+            style="@style/Divider3"
+            android:layout_width="150dp"
+            android:rotation="90"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.35"
+            app:layout_constraintStart_toStartOf="@+id/main7"
+            app:layout_constraintTop_toBottomOf="@+id/main7"
+            app:layout_constraintVertical_bias="0.100000024" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="조리도구 현황 관리"
+            android:textColor="#FAB8B8"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/main8"
+            app:layout_constraintStart_toStartOf="@+id/main8"
+            app:layout_constraintTop_toBottomOf="@+id/main8"
+            app:layout_constraintVertical_bias="0.120000005" />
+
+        <CheckBox
+            android:id="@+id/check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="7dp"
+            android:text="다시 보지 않습니다."
+            android:textColor="@color/white"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/delete" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="58dp"
+            android:layout_height="39dp"
+            android:layout_marginEnd="7dp"
+            android:layout_marginBottom="7dp"
+            android:text="닫기"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout17"
+            android:layout_width="37dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/check5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout18"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/check5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.90999997" />
+
+
+        <View
+            android:id="@+id/main10"
+            style="@style/Divider3"
+            android:layout_width="150dp"
+            android:layout_marginTop="3dp"
+            android:rotation="90"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout18"
+            app:layout_constraintHorizontal_bias="0.52"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout18"
+            app:layout_constraintTop_toBottomOf="@+id/main7"
+            app:layout_constraintVertical_bias="0.75" />
+
+        <TextView
+            android:id="@+id/textView16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="식재료 추가!"
+            android:textColor="#FAB8B8"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout18"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout18"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout18"
+            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.64" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
