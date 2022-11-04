@@ -1,9 +1,10 @@
 package com.example.app
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseArray
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -12,6 +13,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import at.huber.youtubeExtractor.VideoMeta
+import at.huber.youtubeExtractor.YouTubeExtractor
+import at.huber.youtubeExtractor.YtFile
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
@@ -20,11 +24,12 @@ import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.refrigerator.RefrigeratorStatus
 import com.google.android.exoplayer2.ExoPlayer
-import com.google.android.exoplayer2.SimpleExoPlayer
+import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
-import com.google.android.exoplayer2.upstream.DefaultDataSource
+import com.google.android.exoplayer2.upstream.DataSource
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.coroutines.CoroutineScope
@@ -38,6 +43,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class RecipeRec : AppCompatActivity() {
     private val serviceKey = "Cname"
@@ -145,10 +151,13 @@ class RecipeRec : AppCompatActivity() {
                             recipeto.setText(howtorecipe[i])
                             recipehow.setText(recipeHowCount.toString())
                             Sort = i
-//                            exoPlayer = SimpleExoPlayer.Builder(this).build()
-//                            videoPlayer?.player = exoPlayer
+                            playYoutubeLink(items[i].link)
+
+//                            exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
+//
 //                            buildMediaSource(items[i].link)?.let{
-//                                videoPlayer?.prepare(it)
+//                                exoPlayer?.addMediaSource(it)
+//                                videoPlayer?.player = exoPlayer
 //                            }
                         }
                     }
@@ -161,10 +170,11 @@ class RecipeRec : AppCompatActivity() {
                     recipeto.setText(howtorecipe[0])
                     recipehow.setText(recipeHowCount.toString())
 
-//                    exoPlayer = SimpleExoPlayer.Builder(this).build()
-//                    videoPlayer?.player = exoPlayer
+                    playYoutubeLink(items[0].link)
+//                    exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
 //                    buildMediaSource(items[0].link)?.let{
-//                        videoPlayer?.prepare(it)
+//                        exoPlayer?.addMediaSource(it)
+//                        videoPlayer?.player = exoPlayer
 //                    }
                 }
             }
@@ -355,10 +365,31 @@ class RecipeRec : AppCompatActivity() {
             )
         }
     }
+    
+    
+    @SuppressLint("StaticFieldLeak")
+    private fun playYoutubeLink(link: String) {
+        object : YouTubeExtractor(this) {
+            override fun onExtractionComplete(ytFiles: SparseArray<YtFile>?, vMeta: VideoMeta?) {
+                if (ytFiles != null) {
+                    val itag = 22
+                    val videoPath = ytFiles[itag].url
+                    Log.d("YouTube Link", videoPath)
+                    exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
+                    buildMediaSource(videoPath)?.let{
+                        exoPlayer?.addMediaSource(it)
+                        videoPlayer?.player = exoPlayer
+                    }
+                }
+            }
+        }.extract(link)
+    }
 
-//    private fun buildMediaSource(link):MediaSource?{
-//        val dataSourceFactory = DefaultDataSource(this,"sample")
-//        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(Uri.parse(link))
-//    }
+    private fun buildMediaSource(link: String): MediaSource? {
+        Log.d("buildMediaSource", link)
+        val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
+        return ProgressiveMediaSource.Factory(dataSourceFactory)
+            .createMediaSource(MediaItem.fromUri(link))
+    }
 
 }
