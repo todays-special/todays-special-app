@@ -150,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="30dp"
+            android:textSize="23dp"
             android:text="TextView" />
     </LinearLayout>
 
@@ -186,12 +186,12 @@
         android:id="@+id/name_cook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
         android:text="요리 이름"
         android:textColor="#020202"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/require_in"
-        app:layout_constraintStart_toStartOf="@+id/require_in"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/video_player" />
 
     <Button

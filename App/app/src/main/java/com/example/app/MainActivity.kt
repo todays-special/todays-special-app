@@ -8,11 +8,16 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
+import com.example.app.MainTop.MainTop
+import com.example.app.MainTop.MainTopAdapter
+import com.example.app.MainTop.testUrl
 import com.example.app.algorithm.enqueue
 import com.example.app.algorithm.sort
 import com.example.app.localdb.RoomExpDB
@@ -33,7 +38,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ThreadLocalRandom
+
+const val testUrl =
+    "https://img.danawa.com/prod_img/500000/616/833/img/3833616_1.jpg?shrink=330:330&_v=20170329122809"
 
 class MainActivity : AppCompatActivity() {
     private val serviceKey = "Cname"
@@ -44,11 +54,17 @@ class MainActivity : AppCompatActivity() {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
 
+    //토큰 뷰
+    val mainIngList = mutableListOf<MainTop>()
+    lateinit var mainAdapter: MainTopAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val imageBtn = findViewById<ImageButton>(R.id.recipeImageBtn)
+
+        val rv = findViewById<RecyclerView>(R.id.main_rv)
 
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
@@ -86,6 +102,21 @@ class MainActivity : AppCompatActivity() {
         })
 
 
+        mainAdapter = MainTopAdapter(mainIngList)
+        rv.adapter = mainAdapter
+        rv.layoutManager = LinearLayoutManager(baseContext).apply {
+            orientation = RecyclerView.HORIZONTAL
+        }
+        // 리사이클러뷰 아이템을 클릭하면 여기가 호출됨
+        mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                //여기서 재료랑 밑에 사진 맵핑
+                val itemName = mainIngList[position].name
+                Toast.makeText(baseContext, "$itemName", Toast.LENGTH_SHORT).show()
+                Log.d("MainClick", "$itemName")
+            }
+        }
+
 
         if (choice == 1) {
             imageBtn.setImageResource(R.drawable.kimchijji)
@@ -99,17 +130,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //토큰
-        val tokenbtn1 = findViewById<ImageButton>(R.id.token1)
-        tokenbtn1.setOnClickListener {
-            choice = 1
-            imageBtn.setImageResource(R.drawable.kimchijji)
-        }
-        val tokenbtn2 = findViewById<ImageButton>(R.id.token2)
-        tokenbtn2.setOnClickListener {
-            choice = 2
-            imageBtn.setImageResource(R.drawable.d)
-        }
 
 
         //하단바 이동
@@ -143,7 +163,7 @@ class MainActivity : AppCompatActivity() {
         val american = findViewById<ImageButton>(R.id.american)
         american.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","amreican")
+            intent.putExtra("key","western")
             startActivity(intent)
         }
         //레시피 이동 , 중식
@@ -217,20 +237,29 @@ class MainActivity : AppCompatActivity() {
             dbList.clear()
         }
         CoroutineScope(Dispatchers.IO).launch {
-            //room에 있는 데이터 가져오기
-            dbList.clear()
             dbList.addAll(helper.roomExpDao().getAll())
-            //RoomDb가 존재하지 않으면 build하도록
-            if (dbList.size == 0) {
-                //냉장고 리스트에 내용물 없을 때 할 일
-            }else{
-                //dbList로 가져온 데이터를 가공하는 곳
+        //RoomDb가 존재하지 않으면 build하도록
+        if (dbList.size == 0) {
+
+        } else {
+            //dbList로 가져온 데이터를 가공하는 곳
+            val today = Calendar.getInstance()
+            val sf = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+
+            for (i in dbList) {
+                //5일 단위.
+                val date = sf.parse(i.exp)
+                val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
+                if (calcDate < 5) {
+                    mainIngList.add(MainTop(com.example.app.testUrl, i.name))
+                }
+                Log.d("Main", i.name + " " + i.exp +" "+ i.count)
             }
-            withContext(Dispatchers.Main) {
-//                dbAdapter.notifyDataSetChanged()
-            }
-            Log.d("dblist","$dbList")
         }
+        withContext(Dispatchers.Main) {
+//                dbAdapter.notifyDataSetChanged()
+        }
+    }
 
     }
 

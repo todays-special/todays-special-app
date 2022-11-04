@@ -23,7 +23,7 @@ class enqueue {
                 .build()
 
             val api = retrofit.create(recipeapi::class.java)
-            val callResult = api.getResult()
+            val callResult = api.getChina()
 
             callResult.execute().body()
         } catch (err: Exception) {

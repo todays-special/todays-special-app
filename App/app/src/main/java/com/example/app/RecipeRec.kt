@@ -97,26 +97,26 @@ class RecipeRec : AppCompatActivity() {
         var api = retrofit.create(recipeapi::class.java)
 
         val callResult: Call<JsonArray>?
-        if (KeyAPI == "korean") {
-            callResult = api.getResult()
+        if (KeyAPI == "korea") {
+            callResult = api.getKorea()
         } else if (KeyAPI == "japan") {
-            callResult = api.getResult()
-        } else if (KeyAPI == "american") {
-            callResult = api.getResult()
+            callResult = api.getJapan()
+        } else if (KeyAPI == "western") {
+            callResult = api.getWestern()
         } else if (KeyAPI == "china") {
             callResult = api.getChina()
         } else if (KeyAPI == "bunsik") {
-            callResult = api.getResult()
+            callResult = api.getSnack()
         } else if (KeyAPI == "meat") {
-            callResult = api.getResult()
+            callResult = api.getRandom()
         } else if (KeyAPI == "seafood") {
-            callResult = api.getResult()
+            callResult = api.getRandom()
         } else if (KeyAPI == "random") {
-            callResult = api.getResult()
+            callResult = api.getRandom()
         } else if (KeyAPI == "image") {
-            callResult = api.getResult()
+            callResult = api.getRandom()
         } else {
-            callResult = api.getResult()
+            callResult = api.getRandom()
         }
 
         var resultJsonArray: JsonArray?
@@ -218,9 +218,6 @@ class RecipeRec : AppCompatActivity() {
         check.show()
     }
 
-    private fun useAPI(key: String?) {
-
-    }
 
     fun getRoomDb() {
         if (dbList.isNotEmpty()) {
