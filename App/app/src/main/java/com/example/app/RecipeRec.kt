@@ -63,6 +63,7 @@ class RecipeRec : AppCompatActivity() {
     //플레이어
     private var exoPlayer: ExoPlayer? = null
     private lateinit var videoPlayer: PlayerView
+
     //통신 함수
     var gson = GsonBuilder().setLenient().create()
     val retrofit = Retrofit.Builder()
@@ -153,12 +154,7 @@ class RecipeRec : AppCompatActivity() {
                             Sort = i
                             playYoutubeLink(items[i].link)
 
-//                            exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
-//
-//                            buildMediaSource(items[i].link)?.let{
-//                                exoPlayer?.addMediaSource(it)
-//                                videoPlayer?.player = exoPlayer
-//                            }
+
                         }
                     }
                 } else {
@@ -171,11 +167,7 @@ class RecipeRec : AppCompatActivity() {
                     recipehow.setText(recipeHowCount.toString())
 
                     playYoutubeLink(items[0].link)
-//                    exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
-//                    buildMediaSource(items[0].link)?.let{
-//                        exoPlayer?.addMediaSource(it)
-//                        videoPlayer?.player = exoPlayer
-//                    }
+
                 }
             }
 
@@ -365,8 +357,21 @@ class RecipeRec : AppCompatActivity() {
             )
         }
     }
-    
-    
+
+
+    override fun onDestroy() {
+        // 해당 엑티비티 종료시
+        exoPlayer?.pause()
+        super.onDestroy()
+    }
+
+    override fun onStop() {
+        // 백그라운드로 갔을때
+        exoPlayer?.pause()
+        super.onStop()
+    }
+
+
     @SuppressLint("StaticFieldLeak")
     private fun playYoutubeLink(link: String) {
         object : YouTubeExtractor(this) {
@@ -378,6 +383,7 @@ class RecipeRec : AppCompatActivity() {
                     exoPlayer = ExoPlayer.Builder(this@RecipeRec).build()
                     buildMediaSource(videoPath)?.let{
                         exoPlayer?.addMediaSource(it)
+                    }?.let {
                         videoPlayer?.player = exoPlayer
                     }
                 }

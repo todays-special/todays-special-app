@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
     var choice = 2 //ThreadLocalRandom.current().nextInt(1,2)
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
+    lateinit var itemName: String
 
     //토큰 뷰
     val mainIngList = mutableListOf<MainTop>()
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
+        //토큰 리사이클러뷰
         mainAdapter = MainTopAdapter(mainIngList)
         rv.adapter = mainAdapter
         rv.layoutManager = LinearLayoutManager(baseContext).apply {
@@ -111,9 +112,12 @@ class MainActivity : AppCompatActivity() {
         mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 //여기서 재료랑 밑에 사진 맵핑
-                val itemName = mainIngList[position].name
-                Toast.makeText(baseContext, "$itemName", Toast.LENGTH_SHORT).show()
-                Log.d("MainClick", "$itemName")
+                itemName = mainIngList[position].name
+                for(i in items.indices){
+                    if(items[i].mainIngredient == itemName){
+                        //glide로 이미지 교체
+                    }
+                }
             }
         }
 
@@ -204,7 +208,7 @@ class MainActivity : AppCompatActivity() {
 
         imageBtn.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("BooleanName", items[choice - 1].name)
+            intent.putExtra("BooleanName", itemName)
             intent.putExtra("key","image")
             startActivity(intent)
         }
