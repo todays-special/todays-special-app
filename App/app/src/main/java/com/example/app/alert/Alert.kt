@@ -26,7 +26,7 @@ class Alert : AppCompatActivity() {
         const val CHANNEL_NAME = "channel_name"
         const val notificationID_ALL = 1000
         const val notificationID_NO_ITEM = 1001
-        const val notificationID_NIGHT = 1002
+        const val notificationID_EXP = 1002
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

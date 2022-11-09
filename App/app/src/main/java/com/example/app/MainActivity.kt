@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 //여기서 재료랑 밑에 사진 맵핑
                 val itemName = mainIngList[position].name
                 Toast.makeText(baseContext, "$itemName", Toast.LENGTH_SHORT).show()
-                Log.d("MainClick", "$itemName")
+                Log.d("MainClick", ""+IngredientImgUrl().dataList[mainIngList[position].name])
             }
         }
 

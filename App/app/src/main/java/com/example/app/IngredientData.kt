@@ -3,6 +3,7 @@ package com.example.app
 val s = "vegetable"
 
 class IngredientData {
+
     val spinnerList = arrayListOf<String>(
         "쌀/곡식",
         "견과",
@@ -397,7 +398,7 @@ class IngredientData {
         "grain_redbean" to "팥",                // 팥
         "grain_mungbean" to "녹두",            // 녹두
         "grain_sesame" to "참깨",                // 참깨
-
+        "grain_starch" to "전분",
         "nut_acorn" to "도토리",                    // 도토리
         "nut_peanut" to "땅콩",                // 땅콩
         "nut_chestnut" to "밤",                // 밤
@@ -607,7 +608,8 @@ class IngredientData {
         "processedfood_silkentofu" to "순두부",        // 순두부
         "processedfood_driedtofu" to "건두부",        // 건두부
 
-
+        "sauce_msg" to "MSG",
+        "sauce_msgsault" to "맛소금",
         "sauce_gochujang" to "고추장",                // 고추장
         "sauce_chogochujang" to "초고추장",            // 초고추장
         "sauce_ssamjang" to "쌈장",                // 쌈장
