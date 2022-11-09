@@ -11,6 +11,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
 import at.huber.youtubeExtractor.VideoMeta
@@ -20,6 +22,7 @@ import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
 import com.example.app.RecAdapter.EndCook
+import com.example.app.RecAdapter.R_ingerdientAdapter
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.refrigerator.RefrigeratorStatus
@@ -48,8 +51,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RecipeRec : AppCompatActivity() {
     private val serviceKey = "Cname"
     private var container = -1
-    private lateinit var recipeRecyclerview: RecyclerView
-    private lateinit var recyclerArray: ArrayList<recipe>
     var addlist = mutableListOf<recycler>()
     val items = mutableListOf<recipe>()
     var howtorecipe = arrayOfNulls<String>(500)
@@ -72,6 +73,9 @@ class RecipeRec : AppCompatActivity() {
         .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
         .build()
 
+    //재료창 리사이클러뷰
+    lateinit var ingredAdapter: R_ingerdientAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_rec)
@@ -79,6 +83,8 @@ class RecipeRec : AppCompatActivity() {
         var recipe_name = findViewById(R.id.name_cook) as TextView
         var recipehow = findViewById<TextView>(R.id.pageview)
         videoPlayer = findViewById(R.id.video_player)
+
+        val rv = findViewById<RecyclerView>(R.id.ingerd_recycler)
 
         helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
             .build()
@@ -98,7 +104,9 @@ class RecipeRec : AppCompatActivity() {
         if (intent.hasExtra("BooleanName")) {
             Booleanname = intent.getStringExtra("BooleanName")
             Log.d("Boolean", "$Booleanname")
-        }
+        }else{}
+
+
         if (intent.hasExtra("key"))
             KeyAPI = intent.getStringExtra("key")
         var api = retrofit.create(recipeapi::class.java)
@@ -154,7 +162,6 @@ class RecipeRec : AppCompatActivity() {
                             Sort = i
                             playYoutubeLink(items[i].link)
 
-
                         }
                     }
                 } else {
@@ -169,6 +176,14 @@ class RecipeRec : AppCompatActivity() {
                     playYoutubeLink(items[0].link)
 
                 }
+                MakeExtra(rv)
+
+//                for(i in items[Sort].Ingredient.indices){
+//                    val split = items[Sort].Ingredient[i].split(' ')
+//                    val ingredient = split[0]
+//                    val used = split[1]
+//                    Extra.add(EndCook(ingredient,used))
+//                }
             }
 
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {
@@ -204,20 +219,29 @@ class RecipeRec : AppCompatActivity() {
             }
         }
 
+
+        Log.d("Have?","$Extra")
+
+
     }
 
     fun onDialogClicked2(view: View) {
+        Log.d("Extra", "$Extra")
+        val check = Check(Extra,this)
+        check.show()
+    }
+
+    fun MakeExtra (rv:RecyclerView){
         for(i in items[Sort].Ingredient.indices){
             val split = items[Sort].Ingredient[i].split(' ')
             val ingredient = split[0]
             val used = split[1]
-
             Extra.add(EndCook(ingredient,used))
-
         }
-        Log.d("Extra", "$Extra")
-        val check = Check(Extra,this)
-        check.show()
+        ingredAdapter = R_ingerdientAdapter(Extra)
+        rv.adapter = ingredAdapter
+        rv.layoutManager = GridLayoutManager(this,3)
+
     }
 
 

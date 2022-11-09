@@ -3,7 +3,7 @@ package com.example.app
 val s = "vegetable"
 
 class IngredientData {
-    val spinnerList = arrayListOf<String>("쌀/곡식","견과","과일","채소","버섯","육류","유제품","해산물","소스","양념","허브","통조림","술")
+    val spinnerList = arrayListOf<String>("쌀/곡식","견과","과일","채소","버섯","육류","유제품","해산물","소스","양념","허브","통조림","술","기성품")
     fun getNameFromId(nameCode: String): String {
         if (nameCode.contains("grain_")) return grain[nameCode].toString()
         if (nameCode.contains("nut_")) return nut[nameCode].toString()
@@ -24,8 +24,14 @@ class IngredientData {
         if (nameCode.contains("herb_")) return herb[nameCode].toString()
         if (nameCode.contains("can_")) return can[nameCode].toString()
         if (nameCode.contains("wine_")) return wine[nameCode].toString()
+        if (nameCode.contains("processedfood_")) return processedfood[nameCode].toString()
         else return nameCode
     }
+
+    //processedfood
+    val processedfood = hashMapOf(
+        "processedfood_tofu" to "두부"
+    )
 
     //grain_
     val grain = hashMapOf(
@@ -637,6 +643,8 @@ class IngredientData {
         "can_vegetabletuna" to "야채참치",            // 야채참치
 
         "wine_white" to "화이트와인",                    // 화이트와인
-        "wine_red" to "식초"                    // 식초
+        "wine_red" to "식초" ,                   // 식초
+
+        "processedfood_tofu" to "두부"
     )
 }

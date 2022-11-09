@@ -243,7 +243,7 @@
             app:srcCompat="@drawable/refrigerator" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/recipeImageBtn"
         android:layout_width="345dp"
         android:layout_height="233dp"

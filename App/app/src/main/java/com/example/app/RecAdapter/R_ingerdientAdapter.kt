@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.IngredientData
 import com.example.app.R
 
-class EndCookAdapter(private var recipe_ingredient: MutableList<EndCook>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class R_ingerdientAdapter(private var reci_ingredient: MutableList<EndCook>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val mainView = itemView.findViewById<ConstraintLayout>(R.id.check_item)
+        val mainView = itemView.findViewById<ConstraintLayout>(R.id.ingerd_recycler)
         fun bindItems(item: EndCook){
             val process = IngredientData().getNameFromId(item.ingerdient)
 
-            val ingred = itemView.findViewById<TextView>(R.id.check_ingredient)
+            val ingred = itemView.findViewById<TextView>(R.id.item_Name)
             ingred.text = process
 
-            val used = itemView.findViewById<EditText>(R.id.check_used)
-            used.setText(item.usedIn)
+            val used = itemView.findViewById<TextView>(R.id.item_Gram)
+            used.text = item.usedIn
 
         }
     }
@@ -37,20 +37,20 @@ class EndCookAdapter(private var recipe_ingredient: MutableList<EndCook>) : Recy
         viewType: Int
     ): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.check_recycler,parent,false)
+            .inflate(R.layout.rec_ingredient_recycler,parent,false)
         return ItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is EndCookAdapter.ItemViewHolder) {
+        if (holder is R_ingerdientAdapter.ItemViewHolder) {
 //            if(itemClick != null){
 //                holder.mainView.setOnClickListener{v->
 //                    itemClick!!.onClick(v, position)
 //                }
 //            }
-            holder.bindItems(recipe_ingredient[position])
+            holder.bindItems(reci_ingredient[position])
         }
     }
 
-    override fun getItemCount() = recipe_ingredient.size
+    override fun getItemCount() = reci_ingredient.size
 }

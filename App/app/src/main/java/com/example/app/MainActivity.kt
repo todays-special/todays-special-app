@@ -12,6 +12,10 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.APIS.recycler
@@ -50,7 +54,7 @@ class MainActivity : AppCompatActivity() {
     private var container = -1
     var addlist = mutableListOf<recycler>()
     var items = mutableListOf<recipe>()
-    var choice = 2 //ThreadLocalRandom.current().nextInt(1,2)
+    var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     lateinit var itemName: String
@@ -63,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val imageBtn = findViewById<ImageButton>(R.id.recipeImageBtn)
+        val imageBtn = findViewById<ImageView>(R.id.recipeImageBtn)
 
         val rv = findViewById<RecyclerView>(R.id.main_rv)
 
@@ -94,6 +98,8 @@ class MainActivity : AppCompatActivity() {
                 insertRecipe(jsonArray)
 
                 filter_recipe()
+                itemName=items[choice].name
+                glideimg(items[choice].link, imageBtn)
 
             }
 
@@ -116,17 +122,18 @@ class MainActivity : AppCompatActivity() {
                 for(i in items.indices){
                     if(items[i].mainIngredient == itemName){
                         //glide로 이미지 교체
+//                        val glidelink = items[i].link.substring(items[i].link.lastIndexOf("/")+1)
+//                        val getThumbnail = "https://img.youtube.com/vi/"+ glidelink+ "/" + "default.jpg"
+//                        Glide.with(imageBtn)
+//                            .load(getThumbnail)
+//                            .centerCrop()
+//                            .into(imageBtn)
+                        glideimg(items[i].link,imageBtn)
                     }
                 }
             }
         }
 
-
-        if (choice == 1) {
-            imageBtn.setImageResource(R.drawable.kimchijji)
-        } else {
-            imageBtn.setImageResource(R.drawable.d)
-        }
 
         val bell = findViewById<ImageButton>(R.id.bell)
         bell.setOnClickListener {
@@ -331,6 +338,17 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
+    }
+
+    fun glideimg(link:String, imageBtn:ImageView){
+        var glidelink = link.substring(link.lastIndexOf("=")+1)
+        glidelink = glidelink.substring(0,11)
+        val getThumbnail = "https://i1.ytimg.com/vi/"+ glidelink+ "/" + "maxresdefault.jpg"
+        Glide.with(imageBtn)
+            .load(getThumbnail)
+            .centerCrop()
+            .fitCenter()
+            .into(imageBtn)
     }
 
 
