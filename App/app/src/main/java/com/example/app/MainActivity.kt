@@ -16,14 +16,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.app.APIS.recipe
-import com.example.app.APIS.recipeapi
-import com.example.app.APIS.recycler
+import com.example.app.APIS.*
 import com.example.app.MainTop.MainTop
 import com.example.app.MainTop.MainTopAdapter
 import com.example.app.MainTop.testUrl
-import com.example.app.algorithm.enqueue
-import com.example.app.algorithm.sort
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.refrigerator.RefrigeratorStatus
@@ -52,12 +48,12 @@ const val testUrl =
 class MainActivity : AppCompatActivity() {
     private val serviceKey = "Cname"
     private var container = -1
-    var addlist = mutableListOf<recycler>()
     var items = mutableListOf<recipe>()
     var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     lateinit var itemName: String
+    var AfterFilter = mutableListOf<SortMyRecipe>()
 
     //토큰 뷰
     val mainIngList = mutableListOf<MainTop>()
@@ -121,13 +117,6 @@ class MainActivity : AppCompatActivity() {
                 itemName = mainIngList[position].name
                 for(i in items.indices){
                     if(items[i].mainIngredient == itemName){
-                        //glide로 이미지 교체
-//                        val glidelink = items[i].link.substring(items[i].link.lastIndexOf("/")+1)
-//                        val getThumbnail = "https://img.youtube.com/vi/"+ glidelink+ "/" + "default.jpg"
-//                        Glide.with(imageBtn)
-//                            .load(getThumbnail)
-//                            .centerCrop()
-//                            .into(imageBtn)
                         glideimg(items[i].link,imageBtn)
                     }
                 }
@@ -221,25 +210,36 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     private fun filter_recipe(){
-        val i = 0
-        val n = 0
-        val indexes = mutableListOf<String>()
+        var MainIngerdientRank: Int = 0
+        val indexes = mutableListOf<compare>()
         for(n in dbList.indices){
-            indexes.add(dbList[n].name)
+            indexes.add(compare(dbList[n].name))
         }
         Log.d("lists","$indexes")
         for(i in items.indices) {
-            val matchCounter =
+            val name = items[i].name
+            val IngerdientRank =
                 (items[i].Ingredient).count() - (items[i].Ingredient).minus(indexes.toList()
                 ).count()
-            items[i].matchCount = matchCounter
-            Log.d("count", "$matchCounter")
+            for(k in indexes.indices){
+                if(indexes[k].Ingerdients == items[i].mainIngredient) {
+                    MainIngerdientRank = k
+                } else{
+                    MainIngerdientRank = dbList.indices.count() + 1
+                }
+            }
+            AfterFilter.add(SortMyRecipe(name,IngerdientRank,MainIngerdientRank))
         }
+        Log.d("After","$AfterFilter")
+
+        AfterFilter.sortBy { it.IngredientRank }
+        AfterFilter.reverse()
+        AfterFilter.sortBy { it.MainRank }
 
 
-        items.sortBy { it.matchCount }
-        items.reverse()
+
         Log.d("match", "$items")
     }
 
@@ -303,7 +303,6 @@ class MainActivity : AppCompatActivity() {
             val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
             val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
             val url = jsonArray.getJSONObject(i).getString("link")
-            val match = 0
             val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
             items.add(
                 recipe(
@@ -334,7 +333,6 @@ class MainActivity : AppCompatActivity() {
                     step21,
                     step22,
                     url,
-                    match
                 )
             )
         }

@@ -18,9 +18,7 @@ import androidx.room.Room
 import at.huber.youtubeExtractor.VideoMeta
 import at.huber.youtubeExtractor.YouTubeExtractor
 import at.huber.youtubeExtractor.YtFile
-import com.example.app.APIS.recipe
-import com.example.app.APIS.recipeapi
-import com.example.app.APIS.recycler
+import com.example.app.APIS.*
 import com.example.app.RecAdapter.EndCook
 import com.example.app.RecAdapter.R_ingerdientAdapter
 import com.example.app.localdb.RoomExpDB
@@ -60,6 +58,7 @@ class RecipeRec : AppCompatActivity() {
     lateinit var helper: RoomHelper
     var Extra = mutableListOf<EndCook>()
     var Sort = 0
+    var AfterFilter = mutableListOf<SortMyRecipe>()
 
     //플레이어
     private var exoPlayer: ExoPlayer? = null
@@ -268,25 +267,34 @@ class RecipeRec : AppCompatActivity() {
     }
 
     private fun filter_recipe() {
-        val i = 0
-        val n = 0
-        val indexes = mutableListOf<String>()
-        for (n in dbList.indices) {
-            indexes.add(dbList[n].name)
+        var MainIngerdientRank: Int = 0
+        val indexes = mutableListOf<compare>()
+        for(n in dbList.indices){
+            indexes.add(compare(dbList[n].name))
         }
-        Log.d("lists", "$indexes")
-        for (i in items.indices) {
-            val matchCounter =
-                (items[i].Ingredient).count() - (items[i].Ingredient).minus(
-                    indexes.toList()
+        Log.d("lists","$indexes")
+        for(i in items.indices) {
+            val name = items[i].name
+            val IngerdientRank =
+                (items[i].Ingredient).count() - (items[i].Ingredient).minus(indexes.toList()
                 ).count()
-            items[i].matchCount = matchCounter
-            Log.d("count", "$matchCounter")
+            for(k in indexes.indices){
+                if(indexes[k].Ingerdients == items[i].mainIngredient) {
+                    MainIngerdientRank = k
+                } else{
+                    MainIngerdientRank = dbList.indices.count() + 1
+                }
+            }
+            AfterFilter.add(SortMyRecipe(name,IngerdientRank,MainIngerdientRank))
         }
+        Log.d("After","$AfterFilter")
+
+        AfterFilter.sortBy { it.IngredientRank }
+        AfterFilter.reverse()
+        AfterFilter.sortBy { it.MainRank }
 
 
-        items.sortBy { it.matchCount }
-        items.reverse()
+
         Log.d("match", "$items")
     }
 
@@ -345,7 +353,6 @@ class RecipeRec : AppCompatActivity() {
             val Ingredient = jsonArray.getJSONObject(i).getString("ingredient")
             val mainIngredient = jsonArray.getJSONObject(i).getString("mainIngredient")
             val url = jsonArray.getJSONObject(i).getString("link")
-            val match = 0
             val list = Ingredient.substring(1, Ingredient.length - 1).split(", ").toList()
             items.add(
                 recipe(
@@ -376,7 +383,6 @@ class RecipeRec : AppCompatActivity() {
                     step21,
                     step22,
                     url,
-                    match
                 )
             )
         }

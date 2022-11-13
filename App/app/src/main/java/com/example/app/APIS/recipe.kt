@@ -29,14 +29,19 @@ data class recipe(
     val step21: String,
     val step22: String,
     var link: String,
-    var matchCount : Int
-)
-
-data class refrige(
-    val name: String
 )
 
 data class recycler(
     var Tname: String,
     var Tcheif: String
+)
+
+data class SortMyRecipe(
+    var FoodName : String,
+    var IngredientRank : Int,
+    var MainRank : Int,
+)
+
+data class compare(
+    val Ingerdients : String
 )
