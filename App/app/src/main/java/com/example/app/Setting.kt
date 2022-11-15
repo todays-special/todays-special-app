@@ -8,12 +8,11 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import com.example.app.alert.Alert
+import com.example.app.alert.AlertSetting
 import com.example.app.login.Login
 import com.example.app.login.SettingUserName
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_setting.*
 
 class Setting : AppCompatActivity()  {
     lateinit var nameText: TextView
@@ -41,7 +40,7 @@ class Setting : AppCompatActivity()  {
 
         val alterPoint= findViewById<ImageButton>(R.id.alterPoint)
         alterPoint.setOnClickListener {
-            val intent = Intent(this, Alert::class.java)
+            val intent = Intent(this, AlertSetting::class.java)
             startActivity(intent)
         }
     }

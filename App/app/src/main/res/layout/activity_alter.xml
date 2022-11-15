@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".alert.Alert">
+    tools:context=".alert.AlertSetting">
 
     <ImageButton
         android:id="@+id/back"
@@ -114,7 +114,8 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch1"
-            android:layout_width="375dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="전체 알람 끄기"
             android:textSize="18dp"
@@ -136,7 +137,8 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch2"
-            android:layout_width="375dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:text="유통기한 임박 식재료 알림"
             android:textSize="14dp"
@@ -156,7 +158,8 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch3"
-            android:layout_width="375dp"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
             android:layout_height="55dp"
             android:text="식재료 소진 알림"
             android:textSize="14dp"
@@ -176,7 +179,8 @@
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch4"
-            android:layout_width="375dp"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="8dp"
             android:layout_height="55dp"
             android:text="야간 push 설정 (20시~00시)"
             android:textSize="14dp"

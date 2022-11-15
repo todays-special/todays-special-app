@@ -3,9 +3,8 @@ package com.example.app
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageButton
-import com.example.app.recipeapi.UpdateTestActivity
+import com.example.app.alert.AlertSetting
 import com.example.app.refrigerator.RefrigeratorStatus
 import kotlinx.android.synthetic.main.activity_recipe_rec.*
 
@@ -25,7 +24,8 @@ class RecipeRec : AppCompatActivity() {
             startActivity(intent)
         }
         button.setOnClickListener {
-           startActivity(Intent(this, UpdateTestActivity::class.java))
+//           startActivity(Intent(this, UpdateTestActivity::class.java))
+            AlertSetting().sendNotification("재료차감","차감되었습니다")
         }
     }
     //test중이라 주석처리해둠

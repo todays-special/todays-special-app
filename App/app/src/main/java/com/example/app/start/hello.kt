@@ -76,7 +76,7 @@ class hello : AppCompatActivity() {
             ).show()
 
             //로컬파일에 저장하기
-            Log.d("tool", " " + mSelectedItem)
+            Log.d("tool", "$mSelectedItem")
             saveTools("tool",mSelectedItem)
 
         }

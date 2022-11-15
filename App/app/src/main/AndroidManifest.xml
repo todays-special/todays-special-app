@@ -72,7 +72,7 @@
             android:name=".Alert"
             android:exported="false" />
         <activity
-            android:name=".alert.Alert"
+            android:name=".alert.AlertSetting"
             android:exported="false" />
         <activity
             android:name=".NoticeMatter"

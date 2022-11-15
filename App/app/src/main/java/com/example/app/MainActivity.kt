@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 //        Log.d("name", "$value")
 //        return value
 //    }
+    lateinit var rv : RecyclerView
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     val mainIngList = mutableListOf<MainTop>()
@@ -68,10 +69,11 @@ class MainActivity : AppCompatActivity() {
                     //5일 단위.
                     val date = sf.parse(i.exp)
                     val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
-                    if (calcDate < 5) {
+                    if (calcDate in 0..5) {
                         mainIngList.add(MainTop(testUrl, i.name))
                     }
-                    Log.d("Main", i.name + " " + i.exp +" "+ i.count)
+//                    Log.d("Main", "$mainIngList")
+
                 }
             }
             withContext(Dispatchers.Main) {
@@ -208,6 +210,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+//        getRoomDb()
         main_name.text = "${SettingUserName().getName("name", this).toString()}의 냉장고"
     }
 }
