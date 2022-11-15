@@ -306,6 +306,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/recipeImageBtn"
+        android:layout_width="345dp"
+        android:layout_height="233dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/state"
+        app:srcCompat="@drawable/mainrecommand" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/state3"
         android:visibility="gone"
