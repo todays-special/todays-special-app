@@ -23,6 +23,6 @@ interface recipeapi {
     @GET("/show/show_snack.php")
     fun getSnack(): Call<JsonArray>
 
-    @GET("/show/show_Rand.php")
+    @GET("/show/show_Random.php")
     fun getRandom(): Call<JsonArray>
 }

@@ -52,5 +52,6 @@ class R_ingerdientAdapter(private var reci_ingredient: MutableList<EndCook>) : R
         }
     }
 
+
     override fun getItemCount() = reci_ingredient.size
 }
