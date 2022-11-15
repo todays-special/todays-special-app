@@ -47,9 +47,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class RecipeRec : AppCompatActivity() {
-    private val serviceKey = "Cname"
-    private var container = -1
-    var addlist = mutableListOf<recycler>()
     val items = mutableListOf<recipe>()
     var howtorecipe = arrayOfNulls<String>(500)
     private var Booleanname: String? = null
@@ -68,7 +65,6 @@ class RecipeRec : AppCompatActivity() {
     var gson = GsonBuilder().setLenient().create()
     val retrofit = Retrofit.Builder()
         .baseUrl("http://jaeryurp.duckdns.org:40131/")
-//            .addConverterFactory(ScalarsConverterFactory.create())
         .addConverterFactory(GsonConverterFactory.create(gson)) //있으나마나한 코드...
         .build()
 

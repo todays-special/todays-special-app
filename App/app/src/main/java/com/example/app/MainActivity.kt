@@ -46,8 +46,6 @@ const val testUrl =
     "https://img.danawa.com/prod_img/500000/616/833/img/3833616_1.jpg?shrink=330:330&_v=20170329122809"
 
 class MainActivity : AppCompatActivity() {
-    private val serviceKey = "Cname"
-    private var container = -1
     var items = mutableListOf<recipe>()
     var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
     val dbList = mutableListOf<RoomExpDB>()
