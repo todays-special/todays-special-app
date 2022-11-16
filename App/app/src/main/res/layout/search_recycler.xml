@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/Thumbnail"
+        android:layout_width="160dp"
+        android:layout_height="127dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/Search_cook_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="마파두부"
+        android:textSize="27dp"
+        app:layout_constraintStart_toEndOf="@+id/Thumbnail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Search_cook_cheif"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="51dp"
+        android:text="백종원"
+        app:layout_constraintStart_toEndOf="@+id/Thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/Search_cook_name"
+        android:textSize="20dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

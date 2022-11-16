@@ -5,7 +5,7 @@
       <map>
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_alter.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_check.xml" value="0.33" />
-        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_name.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_notice.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_notice_matter.xml" value="0.24166666666666667" />
@@ -13,7 +13,7 @@
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_plus_menu.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_recipe_rec.xml" value="0.33" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_refrigerator_status.xml" value="0.24166666666666667" />
-        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_search.xml" value="0.24166666666666667" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_search.xml" value="0.1750465549348231" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_setting.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/activity_test.xml" value="0.2368659420289855" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/check_item.xml" value="0.16530054644808742" />
@@ -24,6 +24,7 @@
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/item_status_plus.xml" value="0.2368659420289855" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/items_main_token.xml" value="0.67" />
         <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/rec_ingredient_recycler.xml" value="0.605" />
+        <entry key="..\:/Users/USER/todays-special-app/App/app/src/main/res/layout/search_recycler.xml" value="0.1" />
       </map>
     </option>
   </component>

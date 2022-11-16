@@ -231,7 +231,7 @@ class RecipeRec : AppCompatActivity() {
             val split = items[Sort].Ingredient[i].split(' ')
             val ingredient = split[0]
             val used = split[1]
-            Extra.add(EndCook(ingredient,used))
+            Extra.add(EndCook(i,ingredient,used))
         }
         ingredAdapter = R_ingerdientAdapter(Extra)
         rv.adapter = ingredAdapter
