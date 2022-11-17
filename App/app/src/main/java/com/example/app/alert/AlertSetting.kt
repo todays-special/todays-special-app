@@ -25,7 +25,8 @@ class AlertSetting : AppCompatActivity() {
         const val CHANNEL_EXP = "no_exp"
         const val CHANNEL_ALL = "all"
 
-        const val CHANNEL_NAME = "channel_name"
+        //이거로 생성된 채널이름을 확인해야됨. <- 이거때문에 에뮬별로 오류났음 os ver 10으로 고정
+        const val CHANNEL_NAME = "channel_id"
 
         const val notificationID_ALL = 1000
         const val notificationID_NO_ITEM = 1001
@@ -105,7 +106,7 @@ class AlertSetting : AppCompatActivity() {
 //        val notificationID = Random().nextInt(1000) // 0~999의 정수 랜덤 추출
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(notificationManager, channelId)
+            createNotificationChannel(notificationManager, CHANNEL_ID)
         }
         //야간설정
         if (title.isNotEmpty() && message.isNotEmpty()) {
@@ -153,7 +154,6 @@ class AlertSetting : AppCompatActivity() {
                         .build()
                     notificationManager.notify(notificationID_ALL, notification)
                 }
-
             }
 
 
@@ -177,15 +177,17 @@ class AlertSetting : AppCompatActivity() {
         notificationManager: NotificationManager,
         channelId: String
     ) {
-        val channel = NotificationChannel(
-            channelId,
-            CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = "Channel Description"
-            enableLights(true)
-            lightColor = Color.GREEN
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(
+                channelId,
+                CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Channel Description"
+                enableLights(true)
+                lightColor = Color.GREEN
+            }
+            notificationManager.createNotificationChannel(channel)
         }
-        notificationManager.createNotificationChannel(channel)
     }
 }

@@ -14,10 +14,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.SparseArray
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -99,12 +96,12 @@ class RecipeRec : AppCompatActivity() {
             .build()
         getRoomDb()
 
-        val home = findViewById<ImageButton>(R.id.home)
+        val home = findViewById<ImageView>(R.id.home)
         home.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        val refrigerator = findViewById<ImageButton>(R.id.refrigerator)
+        val refrigerator = findViewById<ImageView>(R.id.refrigerator)
         refrigerator.setOnClickListener {
             val intent = Intent(this, RefrigeratorStatus::class.java)
             startActivity(intent)

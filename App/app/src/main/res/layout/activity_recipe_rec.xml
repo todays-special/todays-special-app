@@ -2,10 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rec_constraintlayout"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".RecipeRec"
-    android:id="@+id/rec_constraintlayout">
+    tools:context=".RecipeRec">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -13,13 +14,16 @@
         android:layout_height="60dp"
         android:background="@drawable/circle"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="1dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <ImageButton
             android:id="@+id/search"
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:background="#00ffffff"
             app:layout_constraintBottom_toBottomOf="@+id/home"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.206"
@@ -32,6 +36,8 @@
             android:id="@+id/home"
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:background="#00ffffff"
+            android:layout_marginVertical="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
@@ -44,6 +50,7 @@
             android:id="@+id/refrigerator"
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:background="#00ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.799"
@@ -106,15 +113,14 @@
         android:id="@+id/back"
         android:layout_width="37dp"
         android:layout_height="35dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:background="#00ffffff"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.45"
         app:srcCompat="@drawable/back" />
 
 
@@ -123,6 +129,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="레시피 추천"
+        android:fontFamily="@font/miwon"
         android:textColor="#020202"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -130,7 +137,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014" />
+        app:layout_constraintVertical_bias="0.012" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -151,23 +158,25 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="23dp"
-            android:text="TextView" />
+            android:fontFamily="@font/san"
+            android:text="TextView"
+            android:textSize="23dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/baemin"
         android:text="조리법"
         android:textColor="#020202"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="@+id/name_cook"
-        app:layout_constraintHorizontal_bias="0.244"
-        app:layout_constraintStart_toStartOf="@+id/name_cook"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.0" />
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/left_btn"
+        app:layout_constraintEnd_toStartOf="@+id/left_btn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/left_btn" />
 
     <TextView
         android:id="@+id/require_in"
@@ -176,19 +185,20 @@
         android:text="필요한 재료"
         android:textColor="#020202"
         android:textSize="18sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.064"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.028"
-        android:visibility="invisible"/>
+        app:layout_constraintVertical_bias="0.028" />
 
     <TextView
         android:id="@+id/name_cook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="15dp"
+        android:fontFamily="@font/baemin"
         android:text="요리 이름"
         android:textColor="#020202"
         android:textSize="24sp"
@@ -196,31 +206,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/video_player" />
 
+
     <Button
         android:id="@+id/button"
-        android:layout_width="62dp"
-        android:layout_height="31dp"
-        android:background="@drawable/rec"
-        android:text="요리 완료"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00ffffff"
+        android:drawableLeft="@drawable/size"
+        android:fontFamily="@font/baemin"
         android:onClick="onDialogClicked2"
-        android:textColor="#020202"
+        android:text=" 요리 완료"
+        android:textColor="#F44336"
+        android:textSize="@dimen/alp_18"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/name_cook"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toEndOf="@+id/name_cook"
         app:layout_constraintTop_toTopOf="@+id/name_cook"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.41000003" />
 
     <Button
         android:id="@+id/left_btn"
         android:layout_width="43dp"
         android:layout_height="32dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="28dp"
         android:text="◀"
-        app:layout_constraintEnd_toStartOf="@+id/pageview"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/right_btn"
+        app:layout_constraintEnd_toStartOf="@+id/right_btn"
+        app:layout_constraintTop_toTopOf="@+id/right_btn"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/right_btn"
@@ -229,6 +245,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
         android:text="▶"
+        android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
 
@@ -236,20 +253,18 @@
         android:id="@+id/pageview"
         android:layout_width="19dp"
         android:layout_height="24dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
+        android:gravity="center"
         android:text="1"
+        app:layout_constraintBottom_toBottomOf="@+id/right_btn"
         app:layout_constraintEnd_toStartOf="@+id/right_btn"
-        app:layout_constraintTop_toBottomOf="@+id/view3" />
+        app:layout_constraintStart_toEndOf="@+id/left_btn"
+        app:layout_constraintTop_toTopOf="@+id/right_btn" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ingredient_recy"
         android:layout_width="match_parent"
-        android:layout_height="147dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2">
 
@@ -260,11 +275,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="17dp"
-            android:layout_marginBottom="3dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

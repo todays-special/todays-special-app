@@ -234,6 +234,7 @@
             android:id="@+id/search_btn"
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:background="#00ffffff"
             app:layout_constraintBottom_toBottomOf="@+id/home"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.206"
@@ -244,6 +245,7 @@
 
         <ImageButton
             android:id="@+id/home"
+            android:background="#00ffffff"
             android:layout_width="65dp"
             android:layout_height="60dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -258,6 +260,7 @@
             android:id="@+id/refrigerator"
             android:layout_width="65dp"
             android:layout_height="60dp"
+            android:background="#00ffffff"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.799"
