@@ -18,5 +18,5 @@ interface ShoppingAPI {
         @Path("type") type: String?,
         @Query("query") query: String?,
         @Query("exclude") exclude: String?,
-    ): Call<shopping>
+    ): Call<shoppingDC>
 }

@@ -39,10 +39,10 @@ class ShoppingActivity : AppCompatActivity() {
                 .build()
             val api = retrofit.create(ShoppingAPI::class.java)
             val result = api.getSearchResult(clientId, clientSecret,"shop.json",keyword,exclude="used:cbshop")
-            result.enqueue(object : Callback<shopping> {
+            result.enqueue(object : Callback<shoppingDC> {
                 override fun onResponse(
-                    call: Call<shopping>,
-                    response: Response<shopping>
+                    call: Call<shoppingDC>,
+                    response: Response<shoppingDC>
                 ) {
                     Log.d("naver", "성공 : ${response.body()}")
                     val item = response.body()?.items?.get(0)
@@ -53,7 +53,7 @@ class ShoppingActivity : AppCompatActivity() {
                     tv.text = item?.link
                 }
 
-                override fun onFailure(call: Call<shopping>, t: Throwable) {
+                override fun onFailure(call: Call<shoppingDC>, t: Throwable) {
                     Log.d("naver", "실패 : $t")
                 }
             })
@@ -66,10 +66,10 @@ class ShoppingActivity : AppCompatActivity() {
             .build()
         val api = retrofit.create(ShoppingAPI::class.java)
         val result = api.getSearchResult(clientId, clientSecret,"shop.json","우유",exclude="used:cbshop")
-        result.enqueue(object : Callback<shopping> {
+        result.enqueue(object : Callback<shoppingDC> {
             override fun onResponse(
-                call: Call<shopping>,
-                response: Response<shopping>
+                call: Call<shoppingDC>,
+                response: Response<shoppingDC>
             ) {
                 Log.d("naver", "성공 : ${response.body()}")
                 val item = response.body()?.items?.get(0)
@@ -80,7 +80,7 @@ class ShoppingActivity : AppCompatActivity() {
                 tv.text = item?.link
             }
 
-            override fun onFailure(call: Call<shopping>, t: Throwable) {
+            override fun onFailure(call: Call<shoppingDC>, t: Throwable) {
                 Log.d("naver", "실패 : $t")
             }
         })

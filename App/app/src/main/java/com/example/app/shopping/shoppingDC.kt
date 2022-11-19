@@ -1,6 +1,6 @@
 package com.example.app.shopping
 
-data class shopping(
+data class shoppingDC(
     val lastBuildDate :String,
     val total: String,
     val start: String,
