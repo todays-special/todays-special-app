@@ -154,8 +154,17 @@ class AlertSetting : AppCompatActivity() {
                         .build()
                     notificationManager.notify(notificationID_ALL, notification)
                 }
+                else -> {
+                    val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(notificationID_ALL, notification)
+                }
             }
-
 
         } else {
 

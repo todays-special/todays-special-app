@@ -226,10 +226,7 @@ class RecipeRec : AppCompatActivity() {
             }
         }
 
-
         Log.d("Have?", "$Extra")
-
-
     }
 
     fun onDialogClicked2(view: View) {
@@ -237,10 +234,113 @@ class RecipeRec : AppCompatActivity() {
         val check = Check(Extra, this)
         check.show()
 
-        check.setOnDismissListener {
+        check.setOnCancelListener() {
             Log.d("dialog","die")
-
             // 식재료 다쓴거 푸시알림.
+            sendNotification("요리완료", "사용된 재료가 차감되었습니다")
+
+        }
+    }
+
+    //notify
+    fun sendNotification(title: String = "", message: String = "", channelId: String= "") {
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+//        val notificationID = Random().nextInt(1000) // 0~999의 정수 랜덤 추출
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(notificationManager, AlertSetting.CHANNEL_ID)
+        }
+        //야간설정
+        if (title.isNotEmpty() && message.isNotEmpty()) {
+            when(title){
+                "야간알림설정" ->{
+                    //            val intent = Intent(this, RefrigeratorStatus::class.java)
+//            val pendingIntent = getActivity(this, 0, intent, FLAG_IMMUTABLE)
+
+                    val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(AlertSetting.notificationID_night, notification)
+                }
+                "식재료소진알림설정" ->{
+                    val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(AlertSetting.notificationID_NO_ITEM, notification)
+                }
+                "유통기한임박알림설정"->{
+                    val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(AlertSetting.notificationID_EXP, notification)
+                }
+                "전체알림설정"->{
+                    val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(AlertSetting.notificationID_ALL, notification)
+                }
+                else -> {
+                    val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                        .build()
+                    notificationManager.notify(AlertSetting.notificationID_ALL, notification)
+                }
+            }
+
+        } else {
+
+            val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                .setContentTitle("전체 알람 켜짐")
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setAutoCancel(true)
+                .build()
+//            (System.currentTimeMillis()).toInt()
+            // noti 쌓기
+//            notificationManager.notify((System.currentTimeMillis()).toInt(), notification)
+
+            notificationManager.notify(AlertSetting.notificationID_night, notification)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(
+        notificationManager: NotificationManager,
+        channelId: String
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(
+                channelId,
+                AlertSetting.CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Channel Description"
+                enableLights(true)
+                lightColor = Color.GREEN
+            }
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
@@ -443,48 +543,6 @@ class RecipeRec : AppCompatActivity() {
         val dataSourceFactory: DataSource.Factory = DefaultHttpDataSource.Factory()
         return ProgressiveMediaSource.Factory(dataSourceFactory)
             .createMediaSource(MediaItem.fromUri(link))
-    }
-
-    fun sendNotification(title: String = "", message: String = "", channelId: String = "") {
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
-                as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel(notificationManager, channelId)
-        }
-        //야간설정
-        when (title) {
-            "재료차감" -> {
-                val intent = Intent(this, RefrigeratorStatus::class.java)
-                val pendingIntent = getActivity(this, 0, intent, FLAG_IMMUTABLE)
-
-                val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
-                    .setContentTitle(title)
-                    .setContentText(message)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setAutoCancel(true)
-                    .setContentIntent(pendingIntent)
-                    .build()
-                notificationManager.notify((System.currentTimeMillis()).toInt(), notification)
-            }
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(
-        notificationManager: NotificationManager,
-        channelId: String
-    ) {
-        val channel = NotificationChannel(
-            channelId,
-            AlertSetting.CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply {
-            description = "Channel Description"
-            enableLights(true)
-            lightColor = Color.GREEN
-        }
-        notificationManager.createNotificationChannel(channel)
     }
 
 

@@ -26,7 +26,7 @@
         android:id="@+id/view"
         style="@style/Divider"
         android:background="#BDBDBD"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toTopOf="@+id/rec_done"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 
@@ -36,26 +36,26 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:background="#00ffffff"
+        android:fontFamily="@font/san"
         android:text="수정"
         android:textColor="#0027FF"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:fontFamily="@font/san"
-        app:layout_constraintBottom_toBottomOf="@+id/button3"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="@+id/button3"
+        app:layout_constraintBottom_toBottomOf="@+id/rec_done"
+        app:layout_constraintEnd_toStartOf="@+id/rec_done"
+        app:layout_constraintTop_toTopOf="@+id/rec_done"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/rec_done"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="#00ffffff"
+        android:fontFamily="@font/san"
         android:text="확인"
         android:textColor="#000000"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:fontFamily="@font/san"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.936"
@@ -72,8 +72,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="재료 확인"
             android:fontFamily="@font/san"
+            android:text="재료 확인"
             android:textColor="#020202"
             android:textSize="@dimen/alp_24"
             android:textStyle="bold"
@@ -83,6 +83,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.515" />
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:src="@android:drawable/ic_notification_clear_all"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!--        app:layoutMananger = "androidx.recyclerview.widget.LinearLayoutManager"-->
