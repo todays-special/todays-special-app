@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.app.IngredientData
 import com.example.app.R
 import com.example.app.plusminus.ControlData
+import org.w3c.dom.Text
 
-class ExpWarningAdapter(private val items: MutableList<Exp>) :
+class ExpWarningAdapter(private val items: MutableList<ExpCount>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface ItemClick{
         fun onClick(view :View, position: Int)
@@ -19,14 +20,15 @@ class ExpWarningAdapter(private val items: MutableList<Exp>) :
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deleteItem = itemView.findViewById<ImageView>(R.id.imageButton)
 
-        fun bindItems(item: Exp) {
+        fun bindItems(item: ExpCount) {
             //data mapping
             val processedName = IngredientData().getNameFromId(item.name)
-
             val name = itemView.findViewById<TextView>(R.id.textView1)
             val exp = itemView.findViewById<TextView>(R.id.exp)
             name.text = processedName
             exp.text = item.exp
+            val count = itemView.findViewById<TextView>(R.id.count)
+            count.text = item.count +"개"
         }
     }
 

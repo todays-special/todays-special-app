@@ -354,44 +354,45 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="345dp"
-        android:layout_height="233dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/state"
-        android:visibility="visible"
-        app:srcCompat="@drawable/mainrecommand" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView4"-->
+<!--        android:layout_width="345dp"-->
+<!--        android:layout_height="233dp"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/textView"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/state"-->
+<!--        android:visibility="visible"-->
+<!--        app:srcCompat="@drawable/mainrecommand" />-->
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="345dp"
-        android:layout_height="233dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="1.0"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/mainrecommand2" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView3"-->
+<!--        android:layout_width="345dp"-->
+<!--        android:layout_height="233dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/imageView4"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView4"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView4"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView4"-->
+<!--        app:layout_constraintVertical_bias="1.0"-->
+<!--        android:visibility="invisible"-->
+<!--        app:srcCompat="@drawable/mainrecommand2" />-->
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="345dp"
-        android:layout_height="233dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="@+id/imageView4"
-        app:layout_constraintStart_toStartOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:srcCompat="@drawable/mainrecommand3" />
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView5"-->
+<!--        android:layout_width="345dp"-->
+<!--        android:layout_height="233dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/imageView4"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/imageView4"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/imageView4"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/imageView4"-->
+<!--        app:srcCompat="@drawable/mainrecommand3" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout2"
+        android:id="@+id/guide"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#CC232323"

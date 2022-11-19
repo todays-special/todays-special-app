@@ -1,5 +1,6 @@
 package com.example.app
 
+import android.content.Context
 import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,7 @@ import com.example.app.MainTop.MainTop
 import com.example.app.MainTop.MainTopAdapter
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
+import com.example.app.login.New_customer
 import com.example.app.login.SettingUserName
 import com.example.app.refrigerator.Exp
 import com.example.app.refrigerator.ExpExpiredAdapter
@@ -43,6 +45,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 
 const val testUrl =
@@ -56,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 //        Log.d("name", "$value")
 //        return value
 //    }
+
     lateinit var itemName: String
     var AfterFilter = mutableListOf<SortMyRecipe>()
     var items = mutableListOf<recipe>()
@@ -100,6 +104,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+//        getRoomDb()
+    }
+
+    private fun setCheck() {
+        val prefs = getSharedPreferences("main", Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("main_check", "checked")
+        editor.apply()
+    }
+
+    private fun getCheck(): String? {
+        val prefs = getSharedPreferences("main", Context.MODE_PRIVATE)
+        val value = prefs.getString("main_check", "default")
+        Log.d("main_check", "$value")
+        return value
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_App)
         super.onCreate(savedInstanceState)
@@ -108,11 +131,22 @@ class MainActivity : AppCompatActivity() {
         val imageBtn = findViewById<ImageView>(R.id.recipeImageBtn)
 
         val rv = findViewById<RecyclerView>(R.id.main_rv)
-        getRoomDb()
 
-        delete.setOnClickListener {
-            layout2.visibility = View.GONE
+        val guideState = getCheck()
+        if (guideState == "checked"){
+            guide.visibility = View.GONE
+        }else{
+            delete.setOnClickListener {
+                guide.visibility = View.GONE
+                if (check.isChecked){
+                    Log.d("MainCheck", "checked")
+                    //다시 안뜨게
+                    setCheck()
+                    Toast.makeText(baseContext, "가이드가 다시 나오지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
+
 
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
@@ -127,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
 //        helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
 //            .build()
-//        getRoomDb()
+        getRoomDb()
 
 
         callResult.enqueue(object : Callback<JsonArray> {
@@ -156,6 +190,7 @@ class MainActivity : AppCompatActivity() {
         rv.adapter = mainAdapter
         rv.layoutManager = LinearLayoutManager(baseContext).apply {
             orientation = RecyclerView.HORIZONTAL
+            mainAdapter.notifyDataSetChanged()
         }
 
         mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
@@ -169,6 +204,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
 //        // 리사이클러뷰 아이템을 클릭하면 여기가 호출됨
 //        mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
 //            override fun onClick(view: View, position: Int) {
@@ -179,9 +215,9 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
 
-        val imageView4 = findViewById<ImageView>(R.id.imageView4)
-        val imageView5 = findViewById<ImageView>(R.id.imageView5)
-        val imageView3 = findViewById<ImageView>(R.id.imageView3)
+//        val imageView4 = findViewById<ImageView>(R.id.imageView4)
+//        val imageView5 = findViewById<ImageView>(R.id.imageView5)
+//        val imageView3 = findViewById<ImageView>(R.id.imageView3)
 
         val bell = findViewById<ImageButton>(R.id.bell)
         bell.setOnClickListener {
@@ -382,7 +418,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 //        getRoomDb()
-
+        mainAdapter.notifyDataSetChanged()
         main_name.text = "${SettingUserName().getName("name", this).toString()}의 냉장고"
     }
 }

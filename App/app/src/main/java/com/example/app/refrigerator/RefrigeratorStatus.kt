@@ -1,6 +1,7 @@
 package com.example.app.refrigerator
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -26,7 +28,11 @@ import com.example.app.localdb.RoomSetting
 import com.example.app.plusminus.ControlData
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_refrigerator_status.*
+import kotlinx.android.synthetic.main.activity_refrigerator_status.check
+import kotlinx.android.synthetic.main.activity_refrigerator_status.delete
+import kotlinx.android.synthetic.main.activity_refrigerator_status.guide
 import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONTokener
@@ -46,9 +52,9 @@ class RefrigeratorStatus : AppCompatActivity() {
     lateinit var getList: MutableList<RoomExpDB>
     lateinit var mAlertDialog: AlertDialog
 
-    val fineList = mutableListOf<Exp>()
-    val warningList = mutableListOf<Exp>()
-    val expiredList = mutableListOf<Exp>()
+    val fineList = mutableListOf<ExpCount>()
+    val warningList = mutableListOf<ExpCount>()
+    val expiredList = mutableListOf<ExpCount>()
 
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
@@ -77,6 +83,20 @@ class RefrigeratorStatus : AppCompatActivity() {
         }
     }
 
+    private fun setCheck() {
+        val prefs = getSharedPreferences("ref", Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putString("ref_check", "checked")
+        editor.apply()
+    }
+
+    private fun getCheck(): String? {
+        val prefs = getSharedPreferences("ref", Context.MODE_PRIVATE)
+        val value = prefs.getString("ref_check", "default")
+        Log.d("ref_check", "$value")
+        return value
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refrigerator_status)
@@ -85,8 +105,23 @@ class RefrigeratorStatus : AppCompatActivity() {
         val rvExpired = findViewById<RecyclerView>(R.id.rv_expired)
         val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
 
-        delete.setOnClickListener {
-            layout2.visibility = View.GONE
+//        delete.setOnClickListener {
+//            guide.visibility = View.GONE
+//        }
+
+        val guideState = getCheck()
+        if (guideState == "checked"){
+            guide.visibility = View.GONE
+        }else{
+            delete.setOnClickListener {
+                guide.visibility = View.GONE
+                if (check.isChecked){
+                    Log.d("RefCheck", "checked")
+                    //다시 안뜨게
+                    setCheck()
+                    Toast.makeText(baseContext, "가이드가 다시 나오지 않습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         refresh.setOnRefreshListener {
@@ -116,12 +151,12 @@ class RefrigeratorStatus : AppCompatActivity() {
                 val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
                 if (calcDate < 5) {
                     if (calcDate < 0) {
-                        expiredList.add(Exp("TEST", i.name, i.exp))
+                        expiredList.add(ExpCount("TEST", i.name, i.exp,i.count))
                     } else {
-                        warningList.add(Exp("TEST", i.name, i.exp))
+                        warningList.add(ExpCount("TEST", i.name, i.exp,i.count))
                     }
                 } else {
-                    fineList.add(Exp("TEST", i.name, i.exp))
+                    fineList.add(ExpCount("TEST", i.name, i.exp,i.count))
                 }
 //                Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
             }
@@ -214,7 +249,7 @@ class RefrigeratorStatus : AppCompatActivity() {
         // 임박/여유 5일 기준. 확인을 삭제.
         val back = findViewById<ImageButton>(R.id.back)
         back.setOnClickListener {
-            finish()
+            onBackPressed()
         }
 
 
@@ -408,12 +443,12 @@ class RefrigeratorStatus : AppCompatActivity() {
                     val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
                     if (calcDate < 5) {
                         if (calcDate < 0) {
-                            expiredList.add(Exp("TEST", i.name, i.exp))
+                            expiredList.add(ExpCount("TEST", i.name, i.exp, i.count))
                         } else {
-                            warningList.add(Exp("TEST", i.name, i.exp))
+                            warningList.add(ExpCount("TEST", i.name, i.exp, i.count))
                         }
                     } else {
-                        fineList.add(Exp("TEST", i.name, i.exp))
+                        fineList.add(ExpCount("TEST", i.name, i.exp, i.count))
                     }
 //                    Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
                 }
