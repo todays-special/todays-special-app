@@ -21,6 +21,7 @@ class IngredientData {
     )
 
     fun getNameFromId(nameCode: String): String {
+        if (nameCode.contains("processedfood_")) return processedFood[nameCode].toString()
         if (nameCode.contains("grain_")) return grain[nameCode].toString()
         if (nameCode.contains("nut_")) return nut[nameCode].toString()
         if (nameCode.contains("fruit_")) return fruit[nameCode].toString()
@@ -360,6 +361,16 @@ class IngredientData {
     )
     val spinnerSpice = spice.values.toList()
 
+    val processedFood = hashMapOf(
+        "processedfood_dumpling" to "만두",        // 만두
+        "processedfood_koreameatball" to "동그랑땡",    // 동그랑땡
+        "processedfood_meatball" to "미트볼",        // 미트볼
+        "processedfood_koreansausage" to "순대",    // 순대
+        "processedfood_tofu" to "두부",            // 두부
+        "processedfood_silkentofu" to "순두부",        // 순두부
+        "processedfood_driedtofu" to "건두부",        // 건두부
+    )
+    val spinnerProcess = processedFood.toList()
     //herb
     val herb = hashMapOf(
         "herb_mint" to "박하",                    // 박하

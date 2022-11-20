@@ -62,6 +62,18 @@
         app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
     <TextView
+        app:layout_constraintStart_toEndOf="@+id/textView23"
+        app:layout_constraintTop_toTopOf="@+id/textView23"
+        app:layout_constraintBottom_toBottomOf="@+id/textView23"
+        app:layout_constraintEnd_toEndOf="@+id/editText6"
+        android:layout_width="0dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/baemin"
+        tools:text="text"
+        android:layout_marginHorizontal="10dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,9 +86,11 @@
         app:layout_constraintStart_toStartOf="@+id/textView23"
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
-    <SearchView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:src="@android:drawable/ic_menu_search"
+        android:id="@+id/search"
         app:layout_constraintBottom_toBottomOf="@+id/editText6"
         app:layout_constraintEnd_toEndOf="@+id/editText6"
         app:layout_constraintTop_toTopOf="@+id/editText6" />

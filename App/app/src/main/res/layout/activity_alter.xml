@@ -69,6 +69,7 @@
 
         <ImageButton
             android:id="@+id/search"
+            android:background="#00ffffff"
             android:layout_width="65dp"
             android:layout_height="60dp"
             app:layout_constraintBottom_toBottomOf="@+id/home"
@@ -80,6 +81,7 @@
             app:srcCompat="@drawable/search" />
 
         <ImageButton
+            android:background="#00ffffff"
             android:id="@+id/home"
             android:layout_width="65dp"
             android:layout_height="60dp"
@@ -93,6 +95,7 @@
 
         <ImageButton
             android:id="@+id/refrigerator"
+            android:background="#00ffffff"
             android:layout_width="65dp"
             android:layout_height="60dp"
             app:layout_constraintBottom_toBottomOf="parent"

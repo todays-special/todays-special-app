@@ -1,8 +1,12 @@
 package com.example.app
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.opengl.Visibility
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +15,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -21,6 +27,7 @@ import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.MainTop.MainTop
 import com.example.app.MainTop.MainTopAdapter
+import com.example.app.alert.AlertSetting
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.login.New_customer
@@ -29,13 +36,11 @@ import com.example.app.refrigerator.Exp
 import com.example.app.refrigerator.ExpExpiredAdapter
 import com.example.app.refrigerator.ExpFineAdapter
 import com.example.app.refrigerator.RefrigeratorStatus
+import com.example.app.shopping.Shopping
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONTokener
 import retrofit2.Call
@@ -64,12 +69,12 @@ class MainActivity : AppCompatActivity() {
     var AfterFilter = mutableListOf<SortMyRecipe>()
     var items = mutableListOf<recipe>()
     var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
-    lateinit var rv : RecyclerView
+    lateinit var rv: RecyclerView
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     val mainIngList = mutableListOf<MainTop>()
     lateinit var mainAdapter: MainTopAdapter
-
+    var result = ""
     fun getRoomDb() {
         helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
             .build()
@@ -93,11 +98,16 @@ class MainActivity : AppCompatActivity() {
                     val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
                     if (calcDate in 0..5) {
                         mainIngList.add(MainTop(testUrl, i.name))
+                        val processedName = IngredientData().getNameFromId(i.name)
+                        result += "${processedName}, "
                     }
 //                    Log.d("Main", "$mainIngList")
 
                 }
             }
+            delay(1000)
+            Log.d("mainnoti","$result")
+            sendNotification("식재료알림", "${result}가 임박했습니다")
             withContext(Dispatchers.Main) {
 //                dbAdapter.notifyDataSetChanged()
             }
@@ -128,17 +138,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        shopping.setOnClickListener {
+            startActivity(Intent(this, Shopping::class.java))
+        }
         val imageBtn = findViewById<ImageView>(R.id.recipeImageBtn)
 
         val rv = findViewById<RecyclerView>(R.id.main_rv)
 
         val guideState = getCheck()
-        if (guideState == "checked"){
+        if (guideState == "checked") {
             guide.visibility = View.GONE
-        }else{
+        } else {
             delete.setOnClickListener {
                 guide.visibility = View.GONE
-                if (check.isChecked){
+                if (check.isChecked) {
                     Log.d("MainCheck", "checked")
                     //다시 안뜨게
                     setCheck()
@@ -175,7 +188,7 @@ class MainActivity : AppCompatActivity() {
                 insertRecipe(jsonArray)
 
                 filter_recipe()
-                itemName=items[choice].name
+                itemName = items[choice].name
                 glideimg(items[choice].link, imageBtn)
 
             }
@@ -197,9 +210,9 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int) {
                 //여기서 재료랑 밑에 사진 맵핑
                 itemName = mainIngList[position].name
-                for(i in items.indices){
-                    if(items[i].mainIngredient == itemName){
-                        glideimg(items[i].link,imageBtn)
+                for (i in items.indices) {
+                    if (items[i].mainIngredient == itemName) {
+                        glideimg(items[i].link, imageBtn)
                     }
                 }
             }
@@ -246,90 +259,91 @@ class MainActivity : AppCompatActivity() {
         val korean = findViewById<ImageButton>(R.id.korean)
         korean.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","korea")
+            intent.putExtra("key", "korea")
             startActivity(intent)
         }
         //레시피 이동 , 일식
         val japan = findViewById<ImageButton>(R.id.japan)
         japan.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","japan")
+            intent.putExtra("key", "japan")
             startActivity(intent)
         }
         //레시피 이동 , 양식
         val american = findViewById<ImageButton>(R.id.american)
         american.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","western")
+            intent.putExtra("key", "western")
             startActivity(intent)
         }
         //레시피 이동 , 중식
         val china = findViewById<ImageButton>(R.id.china)
         china.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","china")
+            intent.putExtra("key", "china")
             startActivity(intent)
         }
         //레시피 이동 , 분식
         val bunsik = findViewById<ImageButton>(R.id.bunsik)
         bunsik.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","bunsik")
+            intent.putExtra("key", "bunsik")
             startActivity(intent)
         }
         //레시피 이동 , 육류
         val meat = findViewById<ImageButton>(R.id.meat)
         meat.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","meat")
+            intent.putExtra("key", "meat")
             startActivity(intent)
         }
         //레시피 이동, 해산물
         val seafood = findViewById<ImageButton>(R.id.seafood)
         seafood.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","seafood")
+            intent.putExtra("key", "seafood")
             startActivity(intent)
         }
         //레시피 이동, 랜덤
         val random = findViewById<ImageButton>(R.id.random)
         random.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
-            intent.putExtra("key","random")
+            intent.putExtra("key", "random")
             startActivity(intent)
         }
 
         imageBtn.setOnClickListener {
             val intent = Intent(this, RecipeRec::class.java)
             intent.putExtra("BooleanName", itemName)
-            intent.putExtra("key","image")
+            intent.putExtra("key", "image")
             startActivity(intent)
         }
 
     }
 
-    private fun filter_recipe(){
+    private fun filter_recipe() {
         var MainIngerdientRank: Int = 0
         val indexes = mutableListOf<compare>()
-        for(n in dbList.indices){
+        for (n in dbList.indices) {
             indexes.add(compare(dbList[n].name))
         }
-        Log.d("lists","$indexes")
-        for(i in items.indices) {
+        Log.d("lists", "$indexes")
+        for (i in items.indices) {
             val name = items[i].name
             val IngerdientRank =
-                (items[i].Ingredient).count() - (items[i].Ingredient).minus(indexes.toList()
+                (items[i].Ingredient).count() - (items[i].Ingredient).minus(
+                    indexes.toList()
                 ).count()
-            for(k in indexes.indices){
-                if(indexes[k].Ingerdients == items[i].mainIngredient) {
+            for (k in indexes.indices) {
+                if (indexes[k].Ingerdients == items[i].mainIngredient) {
                     MainIngerdientRank = k
-                } else{
+                } else {
                     MainIngerdientRank = dbList.indices.count() + 1
                 }
             }
-            AfterFilter.add(SortMyRecipe(name,IngerdientRank,MainIngerdientRank))
+            AfterFilter.add(SortMyRecipe(name, IngerdientRank, MainIngerdientRank))
         }
-        Log.d("After","$AfterFilter")
+        Log.d("After", "$AfterFilter")
 
         AfterFilter.sortBy { it.IngredientRank }
         AfterFilter.reverse()
@@ -340,7 +354,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("match", "$items")
     }
 
-    fun insertRecipe(jsonArray : JSONArray){
+    fun insertRecipe(jsonArray: JSONArray) {
         for (i in 0 until jsonArray.length()) {
             val name = jsonArray.getJSONObject(i).getString("name")
             val chief = jsonArray.getJSONObject(i).getString("chief")
@@ -404,10 +418,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun glideimg(link:String, imageBtn:ImageView){
-        var glidelink = link.substring(link.lastIndexOf("=")+1)
-        glidelink = glidelink.substring(0,11)
-        val getThumbnail = "https://i1.ytimg.com/vi/"+ glidelink+ "/" + "maxresdefault.jpg"
+    fun glideimg(link: String, imageBtn: ImageView) {
+        var glidelink = link.substring(link.lastIndexOf("=") + 1)
+        glidelink = glidelink.substring(0, 11)
+        val getThumbnail = "https://i1.ytimg.com/vi/" + glidelink + "/" + "maxresdefault.jpg"
         Glide.with(imageBtn)
             .load(getThumbnail)
             .centerCrop()
@@ -420,5 +434,59 @@ class MainActivity : AppCompatActivity() {
 //        getRoomDb()
         mainAdapter.notifyDataSetChanged()
         main_name.text = "${SettingUserName().getName("name", this).toString()}의 냉장고"
+    }
+
+
+    //notify
+    fun sendNotification(title: String = "", message: String = "", channelId: String = "") {
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+//        val notificationID = Random().nextInt(1000) // 0~999의 정수 랜덤 추출
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(notificationManager, AlertSetting.CHANNEL_ID)
+        }
+        //야간설정
+        if (title.isNotEmpty() && message.isNotEmpty()) {
+            val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setAutoCancel(true)
+//                .setContentIntent(pendingIntent)
+                .build()
+            notificationManager.notify(AlertSetting.notificationID_ALL, notification)
+        } else {
+            val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
+                .setContentTitle("전체 알람 켜짐")
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setAutoCancel(true)
+                .build()
+//            (System.currentTimeMillis()).toInt()
+            // noti 쌓기
+//            notificationManager.notify((System.currentTimeMillis()).toInt(), notification)
+
+            notificationManager.notify(AlertSetting.notificationID_night, notification)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel(
+        notificationManager: NotificationManager,
+        channelId: String
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(
+                channelId,
+                AlertSetting.CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Channel Description"
+                enableLights(true)
+                lightColor = Color.GREEN
+            }
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 }
