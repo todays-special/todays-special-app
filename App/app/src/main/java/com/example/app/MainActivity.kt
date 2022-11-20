@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -46,8 +47,9 @@ const val testUrl =
     "https://img.danawa.com/prod_img/500000/616/833/img/3833616_1.jpg?shrink=330:330&_v=20170329122809"
 
 class MainActivity : AppCompatActivity() {
+
     var items = mutableListOf<recipe>()
-    var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
+    var choice = ThreadLocalRandom.current().nextInt(1,5)
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     lateinit var itemName: String
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             .build()
         val api = retrofit.create(recipeapi::class.java)
 
-        val callResult = api.getChina()
+        val callResult = api.getRandom()
         var resultJsonArray: JsonArray?
 
         helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
@@ -112,10 +114,11 @@ class MainActivity : AppCompatActivity() {
         mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 //여기서 재료랑 밑에 사진 맵핑
-                itemName = mainIngList[position].name
+                val maincheck = mainIngList[position].name
                 for(i in items.indices){
-                    if(items[i].mainIngredient == itemName){
+                    if(items[i].mainIngredient == maincheck){
                         glideimg(items[i].link,imageBtn)
+                        itemName = items[i].name
                     }
                 }
             }

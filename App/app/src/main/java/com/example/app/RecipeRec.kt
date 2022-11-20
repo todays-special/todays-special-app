@@ -44,6 +44,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.Inet4Address
+import java.util.concurrent.ThreadLocalRandom
 
 
 class RecipeRec : AppCompatActivity() {
@@ -54,7 +56,7 @@ class RecipeRec : AppCompatActivity() {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     var Extra = mutableListOf<EndCook>()
-    var Sort = 0
+    var Sort = ThreadLocalRandom.current().nextInt(1,3)
     var AfterFilter = mutableListOf<SortMyRecipe>()
 
     //플레이어
@@ -118,9 +120,9 @@ class RecipeRec : AppCompatActivity() {
         } else if (KeyAPI == "bunsik") {
             callResult = api.getSnack()
         } else if (KeyAPI == "meat") {
-            callResult = api.getRandom()
+            callResult = api.getMeat()
         } else if (KeyAPI == "seafood") {
-            callResult = api.getRandom()
+            callResult = api.getSeafood()
         } else if (KeyAPI == "random") {
             callResult = api.getRandom()
         } else if (KeyAPI == "image") {
@@ -160,15 +162,15 @@ class RecipeRec : AppCompatActivity() {
                         }
                     }
                 } else {
-                    require_in.setText(items[0].Ingredient.toString())
-                    recipe_name.setText(items[0].name)
+                    require_in.setText(items[Sort].Ingredient.toString())
+                    recipe_name.setText(items[Sort].name)
                     Log.d("match", "$items")
 
-                    Imgtorecipe(0)
+                    Imgtorecipe(Sort)
                     recipeto.setText(howtorecipe[0])
                     recipehow.setText(recipeHowCount.toString())
 
-                    playYoutubeLink(items[0].link)
+                    playYoutubeLink(items[Sort].link)
 
                 }
                 MakeExtra(rv)
@@ -222,6 +224,9 @@ class RecipeRec : AppCompatActivity() {
 
     fun onDialogClicked2(view: View) {
         Log.d("Extra", "$Extra")
+        for (i in Extra.indices){
+            Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(),"")
+        }
         val check = Check(Extra,this)
         check.show()
     }
@@ -235,7 +240,7 @@ class RecipeRec : AppCompatActivity() {
         }
         ingredAdapter = R_ingerdientAdapter(Extra)
         rv.adapter = ingredAdapter
-        rv.layoutManager = GridLayoutManager(this,3)
+        rv.layoutManager = GridLayoutManager(this,2)
 
     }
 

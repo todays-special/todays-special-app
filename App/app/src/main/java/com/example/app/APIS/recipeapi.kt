@@ -8,7 +8,7 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface recipeapi {
-    @GET("/show/show_korea") //한식
+    @GET("/show/show_korea.php") //한식
     fun getKorea(): Call<JsonArray>
 
     @GET("/show/show_japan.php")
@@ -23,6 +23,12 @@ interface recipeapi {
     @GET("/show/show_snack.php")
     fun getSnack(): Call<JsonArray>
 
-    @GET("/show/show_Random.php")
+    @GET("/show/show_rand.php")
     fun getRandom(): Call<JsonArray>
+
+    @GET("/show/show_meat.php")
+    fun getMeat() : Call<JsonArray>
+
+    @GET("/show/show_seafood.php")
+    fun getSeafood() : Call<JsonArray>
 }

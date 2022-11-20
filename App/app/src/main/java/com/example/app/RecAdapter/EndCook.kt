@@ -11,7 +11,7 @@ data class EndCook (
     var id:Int?,
 
     @ColumnInfo(name = "Ingredient")
-    val ingerdient: String,
+    var ingerdient: String,
     @ColumnInfo(name = "Used")
-    val usedIn: String
+    var usedIn: String
 )
