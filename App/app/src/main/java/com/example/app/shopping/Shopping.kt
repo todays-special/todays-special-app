@@ -8,13 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.app.MainTop.MainTopAdapter
 import com.example.app.R
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_shopping2.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -31,6 +36,7 @@ class Shopping : AppCompatActivity() {
     var clientSecret = "eWrj0Qh_NU" //애플리케이션 클라이언트 시크릿값";
     val url = "https://openapi.naver.com/v1/"
     lateinit var mAlertDialog: AlertDialog
+    val shoppingItems = mutableListOf<ShoppingView>()
 
     suspend fun loading(time: Long) {
         val mDialogView =
@@ -48,12 +54,36 @@ class Shopping : AppCompatActivity() {
         mAlertDialog.dismiss()
     }
 
+    override fun onResume() {
+        super.onResume()
+        shoppingItems.clear()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping2)
-        val shoppingItems = mutableListOf<ShoppingView>()
         val et = findViewById<TextView>(R.id.editText6)
         val btn = findViewById<ImageView>(R.id.search)
+
+        val values = intent.getStringExtra("igred")
+
+        val valueList = values?.split(", ") as MutableList<String>
+        val textAdapter = ShoppingTextAdapter(valueList)
+        recommendRv.adapter = textAdapter
+        recommendRv.layoutManager = LinearLayoutManager(baseContext).apply {
+            orientation = RecyclerView.HORIZONTAL
+            textAdapter.notifyDataSetChanged()
+        }
+
+        textAdapter.itemClick = object : ShoppingTextAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                //여기서 재료랑 밑에 사진 맵핑
+                val name = valueList[position]
+                et.text= name
+                Log.d("ShoppingText", "$name")
+            }
+        }
+
 
         btn.setOnClickListener {
             if (et.text.isNullOrEmpty()) {
@@ -139,4 +169,6 @@ class Shopping : AppCompatActivity() {
 //
 //        }
     }
+
+
 }

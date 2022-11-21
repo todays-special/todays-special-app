@@ -21,6 +21,7 @@ class ShoppingActivity : AppCompatActivity() {
     var clientId = "YR1nlA7YckDaosOJGVUF" //애플리케이션 클라이언트 아이디값";
     var clientSecret = "eWrj0Qh_NU" //애플리케이션 클라이언트 시크릿값";
     val url = "https://openapi.naver.com/v1/"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shopping)
@@ -88,5 +89,11 @@ class ShoppingActivity : AppCompatActivity() {
         tv.setOnClickListener {
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+
     }
 }

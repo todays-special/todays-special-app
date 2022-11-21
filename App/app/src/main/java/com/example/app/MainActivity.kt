@@ -138,9 +138,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        shopping.setOnClickListener {
-            startActivity(Intent(this, Shopping::class.java))
-        }
+
         val imageBtn = findViewById<ImageView>(R.id.recipeImageBtn)
 
         val rv = findViewById<RecyclerView>(R.id.main_rv)
@@ -176,6 +174,11 @@ class MainActivity : AppCompatActivity() {
 //            .build()
         getRoomDb()
 
+        shopping.setOnClickListener {
+            val intent = Intent(this, Shopping::class.java)
+            intent.putExtra("igred",result)
+            startActivity(intent)
+        }
 
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
