@@ -30,6 +30,7 @@ import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
 import com.example.app.RecAdapter.EndCook
 import com.example.app.RecAdapter.R_ingerdientAdapter
+import com.example.app.RecAdapter.minusIngredient
 import com.example.app.alert.AlertSetting
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
@@ -55,6 +56,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.ThreadLocalRandom
 
 class RecipeRec : AppCompatActivity() {
     val items = mutableListOf<recipe>()
@@ -64,8 +66,9 @@ class RecipeRec : AppCompatActivity() {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     var Extra = mutableListOf<EndCook>()
-    var Sort = 0
+    var Sort = ThreadLocalRandom.current().nextInt(1,5)
     var AfterFilter = mutableListOf<SortMyRecipe>()
+    var used = mutableListOf<minusIngredient>()
 
     //플레이어
     private var exoPlayer: ExoPlayer? = null
@@ -236,6 +239,9 @@ class RecipeRec : AppCompatActivity() {
 
     fun onDialogClicked2(view: View) {
         Log.d("Extra", "$Extra")
+        for (i in Extra.indices){
+            Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(),"")
+        }
         val check = Check(Extra, this)
         check.show()
 

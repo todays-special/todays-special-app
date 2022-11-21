@@ -209,10 +209,11 @@ class MainActivity : AppCompatActivity() {
         mainAdapter.itemClick = object : MainTopAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 //여기서 재료랑 밑에 사진 맵핑
-                itemName = mainIngList[position].name
-                for (i in items.indices) {
-                    if (items[i].mainIngredient == itemName) {
-                        glideimg(items[i].link, imageBtn)
+                val maincheck = mainIngList[position].name
+                for(i in items.indices){
+                    if(items[i].mainIngredient == maincheck){
+                        glideimg(items[i].link,imageBtn)
+                        itemName = items[i].name
                     }
                 }
             }

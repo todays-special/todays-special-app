@@ -1,6 +1,11 @@
 package com.example.app.RecAdapter
 
 data class EndCook (
-    val ingerdient: String,
-    val usedIn: String
+    var ingerdient: String,
+    var usedIn: String
+)
+
+data class minusIngredient(
+    var ingredient:String,
+    var Used:String
 )
