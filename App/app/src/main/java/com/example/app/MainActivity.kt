@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
             .build()
         val api = retrofit.create(recipeapi::class.java)
 
-        val callResult = api.getChina()
+        val callResult = api.getRandom()
         var resultJsonArray: JsonArray?
 
 //        helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
@@ -254,6 +254,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, Setting::class.java)
             startActivity(intent)
         }
+
+        val search = findViewById<ImageButton>(R.id.search_btn)
+        search.setOnClickListener{
+            val intent = Intent(this, Search::class.java)
+            startActivity(intent)
+        }
+
 
 
         //레시피 이동 , 한식

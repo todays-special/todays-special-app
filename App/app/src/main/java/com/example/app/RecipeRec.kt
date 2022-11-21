@@ -366,7 +366,7 @@ class RecipeRec : AppCompatActivity() {
         }
         ingredAdapter = R_ingerdientAdapter(Extra)
         rv.adapter = ingredAdapter
-        rv.layoutManager = GridLayoutManager(this, 3)
+        rv.layoutManager = GridLayoutManager(this, 2)
 
     }
 
@@ -556,10 +556,4 @@ class RecipeRec : AppCompatActivity() {
             .createMediaSource(MediaItem.fromUri(link))
     }
 
-
-    //test중이라 주석처리해둠
-//    fun onDialogClicked2(view: View){
-//        val check = Check(this)
-//        check.show()
-//    }
 }

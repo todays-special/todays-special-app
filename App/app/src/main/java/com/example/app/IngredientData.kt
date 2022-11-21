@@ -53,6 +53,12 @@ class IngredientData {
         return "no key"
     }
 
+    val processedfood = hashMapOf(
+        "processedfood_tofu" to "두부",
+        "processedfood_kimchi" to "김치",
+    )
+    val spinnerProcessed = (processedfood.values).toList()
+
     //grain_
     val grain = hashMapOf(
         "grain_rice" to "쌀",                // 쌀
@@ -60,6 +66,7 @@ class IngredientData {
         "grain_redbean" to "팥",                // 팥
         "grain_mungbean" to "녹두",            // 녹두
         "grain_sesame" to "참깨",
+        "grain_starch" to "전분",
     )
     val spinnerGrain = (grain.values).toList()
 
@@ -349,6 +356,9 @@ class IngredientData {
         "sauce_perillaoil" to "들기름",                // 들기름
         "sauce_curry" to "카레",                    // 카레
         "sauce_jajang" to "짜장",                    // 짜장
+        "sauce_msgsault" to "맛소금",              //맛소금
+        "sauce_msg" to "MSG"   ,                     //msg
+
     )
     val spinnerSauce = sauce.values.toList()
 
@@ -358,6 +368,8 @@ class IngredientData {
         "spice_staranise" to "팔각",                // 팔각
         "spice_clove" to "정향",                    // 정향
         "spice_wasabi" to "와사비",                    // 와사비
+        "spice_pepper" to "후추",
+        "spice_chili" to "고춧가루"
     )
     val spinnerSpice = spice.values.toList()
 

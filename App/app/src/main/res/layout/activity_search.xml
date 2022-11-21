@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Search">
+    tools:context=".Search"
+    android:id="@+id/Search_rv">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
@@ -25,7 +26,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/search" />
+            app:srcCompat="@drawable/search"
+            android:background="#00ffffff"/>
 
         <ImageButton
             android:id="@+id/home"
@@ -37,7 +39,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/refrigerator"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/home" />
+            app:srcCompat="@drawable/home"
+            android:background="#00ffffff"/>
 
         <ImageButton
             android:id="@+id/refrigerator"
@@ -49,12 +52,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/refrigerator" />
+            app:srcCompat="@drawable/refrigerator"
+            android:background="#00ffffff"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <SearchView
-        android:layout_width="310dp"
-        android:layout_height="55dp"
+<!--    <SearchView-->
+<!--        android:id="@+id/searchView"-->
+<!--        android:layout_width="310dp"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchRecycler"
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
