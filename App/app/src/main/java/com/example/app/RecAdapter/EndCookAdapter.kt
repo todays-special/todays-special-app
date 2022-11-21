@@ -53,11 +53,13 @@ class EndCookAdapter(private var recipe_ingredient: MutableList<EndCook>) :
                 override fun afterTextChanged(s: Editable?) {
                     val Position: Int = adapterPosition
                     val Changed = itemView.findViewById<EditText>(R.id.check_used).text.toString()
+                    recipe_ingredient[Position].usedIn = Changed
+                    val getString = recipe_ingredient[Position].usedIn
                     val needChanged = MyApplication.Used
-                    needChanged.setString("$Position", Changed)
-                    val getString = MyApplication.Used.getString("$Position","$recipe_ingredient")
-                    Log.d("Changed?", "$needChanged")
-                    Log.d("??","$getString")
+                    needChanged.setString("$Position", "$Changed")
+                    val test = MyApplication.Used.getString("$Position","No")
+                    Log.d("??","$needChanged")
+                    Log.d("change?","$test")
                 }
             })
         }

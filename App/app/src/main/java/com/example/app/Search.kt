@@ -82,7 +82,7 @@ class Search : AppCompatActivity() {
 
                 insertRecipe(jsonArray)
 
-                SearchAdapter = com.example.app.SearchAdap.SearchAdapter(Result)
+                SearchAdapter = SearchAdapter(Result)
                 rv.adapter = SearchAdapter
                 rv.layoutManager = LinearLayoutManager(baseContext).apply{
                     orientation = RecyclerView.VERTICAL

@@ -1,6 +1,8 @@
 package com.example.app
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +25,8 @@ import com.example.app.RecAdapter.EndCook
 import com.example.app.RecAdapter.R_ingerdientAdapter
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
+import com.example.app.MyApplication
+import com.example.app.RecAdapter.minusIngredient
 import com.example.app.refrigerator.RefrigeratorStatus
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -58,6 +62,7 @@ class RecipeRec : AppCompatActivity() {
     var Extra = mutableListOf<EndCook>()
     var Sort = ThreadLocalRandom.current().nextInt(1,3)
     var AfterFilter = mutableListOf<SortMyRecipe>()
+    var used = mutableListOf<minusIngredient>()
 
     //플레이어
     private var exoPlayer: ExoPlayer? = null
@@ -228,6 +233,20 @@ class RecipeRec : AppCompatActivity() {
             Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(),"")
         }
         val check = Check(Extra,this)
+
+        check.setOnDismissListener(object : DialogInterface.OnDismissListener {
+            override fun onDismiss(dialog: DialogInterface?) {
+                for (i in Extra.indices)
+                {
+                    val def = Extra[i].usedIn
+                    val Name = Extra[i].ingerdient
+                    val UseI = MyApplication.Used.getString("$i", "$def")
+                    used.add(minusIngredient(Name,UseI))
+                }
+                Log.d("dismiss", "$used")
+            }
+        })
+
         check.show()
     }
 

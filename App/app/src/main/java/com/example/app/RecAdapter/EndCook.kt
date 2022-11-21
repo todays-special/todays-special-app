@@ -15,3 +15,8 @@ data class EndCook (
     @ColumnInfo(name = "Used")
     var usedIn: String
 )
+
+data class minusIngredient(
+    var ingredient:String,
+    var Used:String
+)

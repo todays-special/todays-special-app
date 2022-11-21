@@ -2,6 +2,7 @@ package com.example.app
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +27,9 @@ class Check(val recipe_ingredient:MutableList<EndCook>,context: Context) : Dialo
         val rv = findViewById<RecyclerView>(R.id.check_recycler)
 
         for(i in recipe_ingredient.indices){
-            recipe_ingredient[i].usedIn.replace("[^0-9]".toRegex(),"")
-            MyApplication.Ingerd.setString("$i",recipe_ingredient[i].ingerdient)
-            MyApplication.Used.setString("$i",recipe_ingredient[i].usedIn)
+            recipe_ingredient[i].usedIn.replace("[^0-9.]".toRegex(),"")
+            val import = recipe_ingredient[i].usedIn
+            MyApplication.Used.setString("$i","$import")
         }
 
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -41,18 +42,20 @@ class Check(val recipe_ingredient:MutableList<EndCook>,context: Context) : Dialo
 
         val change_btn = findViewById<Button>(R.id.check_change)
         change_btn.setOnClickListener{
-            Toast.makeText(context,"수정되었습니다.",Toast.LENGTH_SHORT).show()
+            dismiss()
         }
 
 
         val check_btn = findViewById<Button>(R.id.check_ok)
         check_btn.setOnClickListener{
-            for(i in recipe_ingredient.indices){
-                recipe_ingredient[i].ingerdient = MyApplication.Ingerd.getString("$i",recipe_ingredient[i].ingerdient)
-                recipe_ingredient[i].usedIn = MyApplication.Used.getString("$i",recipe_ingredient[i].usedIn)
-            }
+//            for(i in recipe_ingredient.indices){
+//                recipe_ingredient[i].ingerdient = MyApplication.Ingerd.getString("$i","$recipe_ingredient")
+//                recipe_ingredient[i].usedIn = MyApplication.Used.getString("$i","$recipe_ingredient")
+//            }
+//            val intent = Intent(context,RecipeRec::class.java)
+//            intent.putExtra("used",true)
             dismiss()
         }
-
+        setCancelable(false)
     }
 }
