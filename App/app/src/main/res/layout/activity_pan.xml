@@ -28,16 +28,40 @@
             android:layout_height="wrap_content"
             android:text="냄비" />
         <CheckBox
-            android:id="@+id/stick"
+            android:id="@+id/ricecooker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="젓가락" />
+            android:text="밥솥" />
         <CheckBox
-            android:id="@+id/ladle"
+            android:id="@+id/toaster"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="국자" />
-
+            android:text="토스터" />
+        <CheckBox
+            android:id="@+id/airfryer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="에어프라이어" />
+        <CheckBox
+            android:id="@+id/mixer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="믹서기" />
+        <CheckBox
+            android:id="@+id/microwaveter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="전자레인지" />
+        <CheckBox
+            android:id="@+id/oven"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="오븐" />
+        <CheckBox
+            android:id="@+id/wok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="웍" />
     </LinearLayout>
 
     <!--    <CheckBox-->

@@ -3,6 +3,7 @@ package com.example.app.shopping
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app.R
@@ -15,6 +16,11 @@ class Shopping_tap : AppCompatActivity() {
 
         val data = intent.getSerializableExtra("data") as MutableList<ShoppingView>
         Log.d("data","$data")
+
+        val back = findViewById<ImageButton>(R.id.back)
+        back.setOnClickListener {
+            onBackPressed()
+        }
 
         val shopAdapter = ShoppingAdapter(data)
         val rv = findViewById<RecyclerView>(R.id.shopping_rv)

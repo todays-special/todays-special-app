@@ -35,6 +35,27 @@ class Pan : AppCompatActivity() {
                     "냄비" -> {
                         pot.isChecked = true
                     }
+                    "밥솥" -> {
+                        ricecooker.isChecked = true
+                    }
+                    "토스터" -> {
+                        toaster.isChecked = true
+                    }
+                    "웍" -> {
+                        wok.isChecked = true
+                    }
+                    "에어프라이어" -> {
+                        airfryer.isChecked = true
+                    }
+                    "오븐" -> {
+                        oven.isChecked = true
+                    }
+                    "믹서기" -> {
+                        mixer.isChecked = true
+                    }
+                    "전자레인지" -> {
+                        microwaveter.isChecked = true
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.example.app.R
+import org.w3c.dom.Text
 
 class ShoppingAdapter(val items: MutableList<ShoppingView>) :
     RecyclerView.Adapter<ViewHolder>() {
@@ -25,6 +26,9 @@ class ShoppingAdapter(val items: MutableList<ShoppingView>) :
                 .load(item.imgUrl)
                 .centerCrop()
                 .into(iv)
+
+            val linkView = itemView.findViewById<TextView>(R.id.link)
+            linkView.text = item.link
 
             val str = item.name.replace("<b></b>","")
             val str1 = str.replace("<b>"," ")

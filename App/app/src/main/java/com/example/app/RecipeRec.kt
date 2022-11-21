@@ -145,6 +145,11 @@ class RecipeRec : AppCompatActivity() {
         var recipeto = findViewById<TextView>(R.id.recipe_howto)
         var recipeHowCount = 1
 
+        val back = findViewById<ImageButton>(R.id.back)
+        back.setOnClickListener {
+            onBackPressed()
+        }
+
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
                 call: Call<JsonArray>,

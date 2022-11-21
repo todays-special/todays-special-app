@@ -1,10 +1,14 @@
 package com.example.app.login
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +20,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.activity_new_customer.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +37,8 @@ class New_customer : AppCompatActivity() {
     lateinit var email: String
     lateinit var passwordInput: String
     lateinit var passwordCheck: String
+    lateinit var mAlertDialog: AlertDialog
+
 
     private lateinit var mPreferences: SharedPreferences
 
@@ -52,6 +62,22 @@ class New_customer : AppCompatActivity() {
         return value
     }
 
+    suspend fun loading(time: Long) {
+        val mDialogView =
+            LayoutInflater.from(this).inflate(R.layout.dialog_loading, null)
+        val mBuilder = AlertDialog.Builder(this)
+            .setView(mDialogView)
+            .setCancelable(false) //외부영역 터치해도 dismiss 안되게
+        mAlertDialog = mBuilder.create()
+
+        /** dialog 배경 투명하게 만들기*/
+        mAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+
+        mAlertDialog.show()
+        delay(time)
+        mAlertDialog.dismiss()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_customer)
@@ -68,6 +94,8 @@ class New_customer : AppCompatActivity() {
             email = signUpID
             passwordInput = signUpPW
             passwordCheck = signUpPWC
+
+
 
             if (passwordInput != passwordCheck) {
                 Toast.makeText(this, "비밀번호가 같지 않습니다.", Toast.LENGTH_SHORT).show()
@@ -106,8 +134,12 @@ class New_customer : AppCompatActivity() {
                                     Log.d("SignIn", "실패 : $t")
                                 }
                             })
-                            startActivity(Intent(this, hello::class.java))
-                            finish()
+                            val intent = Intent(this, hello::class.java)
+                            CoroutineScope(Dispatchers.Main).launch {
+                                loading(2000)
+                                startActivity(intent)
+                                finish()
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "createUserWithEmail:failure", task.exception)

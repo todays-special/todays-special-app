@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface createAPI {
-    @GET("/create/create_user.php?")
+    @GET("/create/create_user3.php?")
     fun createUser(
         @Query("Cname") Cname: String,
     ): Call<JsonArray>

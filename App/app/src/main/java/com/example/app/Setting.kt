@@ -24,6 +24,12 @@ class Setting : AppCompatActivity()  {
 
         nameText.text = SettingUserName().getName("name",this).toString()
 
+
+        val back = findViewById<ImageButton>(R.id.back)
+        back.setOnClickListener {
+            onBackPressed()
+        }
+
         logout.setOnClickListener {
             //로그아웃하고
             Firebase.auth.signOut()
