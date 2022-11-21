@@ -22,7 +22,7 @@ class ExpExpiredAdapter(private val items: MutableList<ExpCount>) :
             val name = itemView.findViewById<TextView>(R.id.textView1)
             val exp = itemView.findViewById<TextView>(R.id.exp)
             val count = itemView.findViewById<TextView>(R.id.count)
-            count.text = item.count +"개"
+            count.text = item.count
             name.text = processedName
             exp.text = item.exp
         }

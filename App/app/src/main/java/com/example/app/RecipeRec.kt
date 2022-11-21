@@ -66,7 +66,7 @@ class RecipeRec : AppCompatActivity() {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
     var Extra = mutableListOf<EndCook>()
-    var Sort = ThreadLocalRandom.current().nextInt(1,5)
+    var Sort = ThreadLocalRandom.current().nextInt(1, 5)
     var AfterFilter = mutableListOf<SortMyRecipe>()
     var used = mutableListOf<minusIngredient>()
 
@@ -239,14 +239,14 @@ class RecipeRec : AppCompatActivity() {
 
     fun onDialogClicked2(view: View) {
         Log.d("Extra", "$Extra")
-        for (i in Extra.indices){
-            Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(),"")
+        for (i in Extra.indices) {
+            Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(), "")
         }
         val check = Check(Extra, this)
         check.show()
 
         check.setOnCancelListener() {
-            Log.d("dialog","die")
+            Log.d("dialog", "die")
             // 식재료 다쓴거 푸시알림.
             sendNotification("요리완료", "사용된 재료가 차감되었습니다")
 
@@ -254,7 +254,7 @@ class RecipeRec : AppCompatActivity() {
     }
 
     //notify
-    fun sendNotification(title: String = "", message: String = "", channelId: String= "") {
+    fun sendNotification(title: String = "", message: String = "", channelId: String = "") {
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
                 as NotificationManager
@@ -265,8 +265,8 @@ class RecipeRec : AppCompatActivity() {
         }
         //야간설정
         if (title.isNotEmpty() && message.isNotEmpty()) {
-            when(title){
-                "야간알림설정" ->{
+            when (title) {
+                "야간알림설정" -> {
                     //            val intent = Intent(this, RefrigeratorStatus::class.java)
 //            val pendingIntent = getActivity(this, 0, intent, FLAG_IMMUTABLE)
 
@@ -279,7 +279,7 @@ class RecipeRec : AppCompatActivity() {
                         .build()
                     notificationManager.notify(AlertSetting.notificationID_night, notification)
                 }
-                "식재료소진알림설정" ->{
+                "식재료소진알림설정" -> {
                     val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
                         .setContentTitle(title)
                         .setContentText(message)
@@ -289,7 +289,7 @@ class RecipeRec : AppCompatActivity() {
                         .build()
                     notificationManager.notify(AlertSetting.notificationID_NO_ITEM, notification)
                 }
-                "유통기한임박알림설정"->{
+                "유통기한임박알림설정" -> {
                     val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
                         .setContentTitle(title)
                         .setContentText(message)
@@ -299,7 +299,7 @@ class RecipeRec : AppCompatActivity() {
                         .build()
                     notificationManager.notify(AlertSetting.notificationID_EXP, notification)
                 }
-                "전체알림설정"->{
+                "전체알림설정" -> {
                     val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
                         .setContentTitle(title)
                         .setContentText(message)
@@ -310,12 +310,14 @@ class RecipeRec : AppCompatActivity() {
                     notificationManager.notify(AlertSetting.notificationID_ALL, notification)
                 }
                 else -> {
+                    val intent = Intent(this, RefrigeratorStatus::class.java)
+                    val pendingIntent = getActivity(this, 0, intent, FLAG_IMMUTABLE)
                     val notification = NotificationCompat.Builder(this, AlertSetting.CHANNEL_ID)
                         .setContentTitle(title)
                         .setContentText(message)
                         .setSmallIcon(R.drawable.ic_launcher_foreground)
                         .setAutoCancel(true)
-//                .setContentIntent(pendingIntent)
+                        .setContentIntent(pendingIntent)
                         .build()
                     notificationManager.notify(AlertSetting.notificationID_ALL, notification)
                 }
@@ -341,7 +343,7 @@ class RecipeRec : AppCompatActivity() {
         notificationManager: NotificationManager,
         channelId: String
     ) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
                 AlertSetting.CHANNEL_NAME,
@@ -354,7 +356,6 @@ class RecipeRec : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
-
 
 
     fun MakeExtra(rv: RecyclerView) {

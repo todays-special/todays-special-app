@@ -39,7 +39,6 @@ class New_customer : AppCompatActivity() {
     lateinit var passwordCheck: String
     lateinit var mAlertDialog: AlertDialog
 
-
     private lateinit var mPreferences: SharedPreferences
 
     companion object {

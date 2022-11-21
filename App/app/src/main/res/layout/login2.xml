@@ -56,7 +56,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint=" 비밀번호"
-        android:inputType="textMultiLine|textNoSuggestions"
+        android:inputType="textMultiLine|textNoSuggestions|textPassword"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/et_id"

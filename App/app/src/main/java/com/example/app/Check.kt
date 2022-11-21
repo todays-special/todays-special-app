@@ -31,10 +31,8 @@ import com.example.app.recipeapi.UpdateAPI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.activity_update_test.*
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,7 +45,6 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
 
     lateinit var EndAdapter: EndCookAdapter
 
-    var used = mutableListOf<minusIngredient>()
 
     private val prefs: SharedPreferences =
         context.getSharedPreferences("Ends_used", Context.MODE_PRIVATE)
@@ -62,6 +59,9 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        var used = mutableListOf<minusIngredient>()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check)
         setCanceledOnTouchOutside(false)
@@ -88,17 +88,88 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
             dismiss()
         }
 
+        val except = setOf<String>(
+            "sauce_msgsault",
+            "sauce_msg",
+            "spice_pepper",
+            "grain_starch",
+            "processedfood_kimchi",
+            "spice_chili",
+            "물",
+            "식용유",
+            "쌀뜨물",
+            "뜨거운물",
+            "라면사리",
+            "양념장",
+            "라면",
+            "순두부양념장",
+            "소면",
+            "찬물",
+            "당면",
+            "버터",
+            "만능양념장",
+            "우동사리",
+            "떡볶이떡",
+            "베이크드빈",
+            "슬라이스치즈",
+            "칼국수면",
+            "고추기름",
+            "가쓰오부시",
+            "우동면",
+            "밀가루",
+            "페퍼론치노",
+            "올리브유",
+            "파스타면",
+            "스파게티면",
+            "바게트",
+            "정수물",
+            "빵가루",
+            "우스터소스",
+            "스테이크소스",
+            "토마토주스",
+            "올리브오일",
+            "식빵",
+            "쌀떡",
+            "밀가루떡",
+            "슬라이스햄",
+            "쫄면사리",
+            "마라소스",
+            "돼지비계(라드)"
+        )
+
         updateConfirm.setOnClickListener {
 
             for (i in recipe_ingredient.indices) {
                 val def = recipe_ingredient[i].usedIn
                 val Name = recipe_ingredient[i].ingerdient
                 val UseI = getString("$i", "$def")
-                used.add(minusIngredient(Name, UseI))
+
+                if(Name in except){
+                    continue
+                }else{
+//                    compareDateItem(Name)
+
+                    used.add(minusIngredient(Name, UseI))
+//                    updateIngredient(used[i].ingredient, used[i].Used, comparedDate)
+                }
             }
             Log.d("dismiss", "$used")
-            //차감
+
+//            CoroutineScope(Dispatchers.IO).launch {
+//                for (i in used){
+//                    updateIngredient(i.ingredient, i.Used, "2022-11-30")
+//                }
+//                delay(1000)
+//                cancel()
+//            }
+
+            for (i in used){
+                updateIngredient(i.ingredient, i.Used, "2022-11-30")
+            }
+
             cancel()
+
+            //차감
         }
 
 
@@ -127,6 +198,7 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
                 //dbList로 가져온 데이터를 가공하는 곳
                 val sf = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
                 Log.d("Update", "compared")
+
                 for (i in dbList) {
                     //날짜 비교해서 제일 빠른거 넣어두는 것
                     if (i.name == Uingredient) {
@@ -161,9 +233,9 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
     }
 
     fun updateIngredient(Uingredient: String, Ucnt: String, Udate: String) {
-        compareDateItem(Uingredient)
+//        compareDateItem(Uingredient)
 
-        val Uname = auth.currentUser?.uid as String
+//        val Uname = auth.currentUser?.uid as String
 
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
@@ -180,10 +252,10 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
                 response: Response<JsonArray>
             ) {
                 Log.d("Update", "값이 수정되었습니다")
-                Toast.makeText(
-                    context, "값이 수정되었습니다",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    context, "값이 수정되었습니다",
+//                    Toast.LENGTH_SHORT
+//                ).show()
             }
 
             override fun onFailure(call: Call<JsonArray>, t: Throwable) {

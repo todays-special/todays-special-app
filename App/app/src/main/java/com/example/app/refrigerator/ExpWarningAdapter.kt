@@ -28,7 +28,7 @@ class ExpWarningAdapter(private val items: MutableList<ExpCount>) :
             name.text = processedName
             exp.text = item.exp
             val count = itemView.findViewById<TextView>(R.id.count)
-            count.text = item.count +"개"
+            count.text = item.count
         }
     }
 

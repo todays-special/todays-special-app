@@ -24,7 +24,7 @@ class ExpFineAdapter(private val items: MutableList<ExpCount>) :
             //data mapping
             val processedName = IngredientData().getNameFromId(item.name)
             val count = itemView.findViewById<TextView>(R.id.count)
-            count.text = item.count +"개"
+            count.text = item.count
             val name = itemView.findViewById<TextView>(R.id.textView1)
             val exp = itemView.findViewById<TextView>(R.id.exp)
             name.text = processedName
