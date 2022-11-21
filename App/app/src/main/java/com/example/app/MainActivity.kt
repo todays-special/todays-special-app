@@ -50,6 +50,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ThreadLocalRandom
 import kotlin.random.Random
 
 
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var itemName: String
     var AfterFilter = mutableListOf<SortMyRecipe>()
     var items = mutableListOf<recipe>()
-    var choice = 0 //ThreadLocalRandom.current().nextInt(1,2)
+    var choice = ThreadLocalRandom.current().nextInt(1,10)
     lateinit var rv: RecyclerView
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
