@@ -103,13 +103,17 @@ class MainActivity : AppCompatActivity() {
                     }
 //                    Log.d("Main", "$mainIngList")
 
+
                 }
             }
             delay(1000)
             Log.d("mainnoti","$result")
+
+
             sendNotification("식재료알림", "${result}가 임박했습니다")
             withContext(Dispatchers.Main) {
 //                dbAdapter.notifyDataSetChanged()
+                mainAdapter.notifyDataSetChanged()
             }
         }
     }
