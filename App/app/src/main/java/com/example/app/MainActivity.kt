@@ -106,11 +106,12 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-            delay(1000)
             Log.d("mainnoti","$result")
 
 
             sendNotification("식재료알림", "${result}가 임박했습니다")
+            delay(1000)
+
             withContext(Dispatchers.Main) {
 //                dbAdapter.notifyDataSetChanged()
                 mainAdapter.notifyDataSetChanged()
@@ -176,21 +177,15 @@ class MainActivity : AppCompatActivity() {
 
 //        helper = Room.databaseBuilder(baseContext, RoomHelper::class.java, "internalExpDb")
 //            .build()
-        getRoomDb()
 
-        shopping.setOnClickListener {
-            val intent = Intent(this, Shopping::class.java)
-            intent.putExtra("igred",result)
-            startActivity(intent)
-        }
-
+// 핫스팟 처럼 폐쇄망을 사용하면 접속하지못함.
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
                 call: Call<JsonArray>,
                 response: Response<JsonArray>
             ) {
                 resultJsonArray = response.body()
-
+//                delay(100)
                 val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
                 insertRecipe(jsonArray)
 
@@ -205,6 +200,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        getRoomDb()
+
+        shopping.setOnClickListener {
+            val intent = Intent(this, Shopping::class.java)
+            intent.putExtra("igred",result)
+            startActivity(intent)
+        }
+
         //상단 재료 바
         mainAdapter = MainTopAdapter(mainIngList)
         rv.adapter = mainAdapter
@@ -217,6 +220,8 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(view: View, position: Int) {
                 //여기서 재료랑 밑에 사진 맵핑
                 val maincheck = mainIngList[position].name
+                Log.d("Clicked","${maincheck}")
+
                 for(i in items.indices){
                     if(items[i].mainIngredient == maincheck){
                         glideimg(items[i].link,imageBtn)
