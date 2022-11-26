@@ -104,7 +104,7 @@ class RefrigeratorStatus : AppCompatActivity() {
         val rvWarning = findViewById<RecyclerView>(R.id.rv_warning)
         val rvExpired = findViewById<RecyclerView>(R.id.rv_expired)
         val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
-
+        expRoomDbBuild()
 //        delete.setOnClickListener {
 //            guide.visibility = View.GONE
 //        }

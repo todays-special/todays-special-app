@@ -153,7 +153,7 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
 //                    updateIngredient(used[i].ingredient, used[i].Used, comparedDate)
                 }
             }
-            Log.d("dismiss", "$used")
+//            Log.d("dismiss", "$used")
 
 //            CoroutineScope(Dispatchers.IO).launch {
 //                for (i in used){
@@ -163,9 +163,9 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
 //                cancel()
 //            }
 
-            for (i in used){
-                updateIngredient(i.ingredient, i.Used, "2022-11-30")
-            }
+//            for (i in used){
+//                updateIngredient(i.ingredient, i.Used, "2022-11-30")
+//            }
 
             cancel()
 

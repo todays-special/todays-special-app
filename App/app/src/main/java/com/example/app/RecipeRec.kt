@@ -7,6 +7,7 @@ import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -28,12 +29,15 @@ import com.example.app.APIS.SortMyRecipe
 import com.example.app.APIS.compare
 import com.example.app.APIS.recipe
 import com.example.app.APIS.recipeapi
+import com.example.app.MainTop.MainTop
 import com.example.app.RecAdapter.EndCook
 import com.example.app.RecAdapter.R_ingerdientAdapter
 import com.example.app.RecAdapter.minusIngredient
 import com.example.app.alert.AlertSetting
 import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
+import com.example.app.recipeapi.UpdateAPI
+import com.example.app.recipeapi.UpdateDataClass
 import com.example.app.refrigerator.RefrigeratorStatus
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
@@ -42,13 +46,12 @@ import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.activity_recipe_rec.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.activity_update_test.*
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONTokener
 import retrofit2.Call
@@ -56,7 +59,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ThreadLocalRandom
+import kotlin.collections.HashMap
 
 class RecipeRec : AppCompatActivity() {
     val items = mutableListOf<recipe>()
@@ -68,6 +74,7 @@ class RecipeRec : AppCompatActivity() {
     var Extra = mutableListOf<EndCook>()
     var Sort = ThreadLocalRandom.current().nextInt(1, 5)
     var AfterFilter = mutableListOf<SortMyRecipe>()
+
     var used = mutableListOf<minusIngredient>()
 
     //플레이어
@@ -85,7 +92,69 @@ class RecipeRec : AppCompatActivity() {
     //재료창 리사이클러뷰
     lateinit var ingredAdapter: R_ingerdientAdapter
 
+
+    private lateinit var auth: FirebaseAuth
+
+    val dateCheck = mutableListOf<String>()
+    val dateCheckResult = mutableListOf<UpdateDataClass>()
+    val dateMap = mutableMapOf<String, String>()
+    val mainIngList = mutableListOf<MainTop>()
+    var comparedDate: String = ""
+
+    val except = setOf<String>(
+        "sauce_msgsault",
+        "sauce_msg",
+        "spice_pepper",
+        "grain_starch",
+        "processedfood_kimchi",
+        "spice_chili",
+        "물",
+        "식용유",
+        "쌀뜨물",
+        "뜨거운물",
+        "라면사리",
+        "양념장",
+        "라면",
+        "순두부양념장",
+        "소면",
+        "찬물",
+        "당면",
+        "버터",
+        "만능양념장",
+        "우동사리",
+        "떡볶이떡",
+        "베이크드빈",
+        "슬라이스치즈",
+        "칼국수면",
+        "고추기름",
+        "가쓰오부시",
+        "우동면",
+        "밀가루",
+        "페퍼론치노",
+        "올리브유",
+        "파스타면",
+        "스파게티면",
+        "바게트",
+        "정수물",
+        "빵가루",
+        "우스터소스",
+        "스테이크소스",
+        "토마토주스",
+        "올리브오일",
+        "식빵",
+        "쌀떡",
+        "밀가루떡",
+        "슬라이스햄",
+        "쫄면사리",
+        "마라소스",
+        "돼지비계(라드)"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val prefs: SharedPreferences =
+            getSharedPreferences("Ends_used", Context.MODE_PRIVATE)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_rec)
         var require_in = findViewById(R.id.require_in) as TextView
@@ -237,18 +306,147 @@ class RecipeRec : AppCompatActivity() {
         Log.d("Have?", "$Extra")
     }
 
+
+    fun compareDateItem(Uingredient: String) {
+        helper = Room.databaseBuilder(this, RoomHelper::class.java, "internalExpDb")
+            .build()
+        if (dbList.isNotEmpty()) {
+            dbList.clear()
+        }
+        CoroutineScope(Dispatchers.Default).async {
+            //로컬에 있는 데이터 가져오기
+            dbList.addAll(helper.roomExpDao().getAll())
+            //RoomDb가 존재하지 않으면 build하도록
+            if (dbList.size == 0) {
+
+            } else {
+                //dbList로 가져온 데이터를 가공하는 곳
+                val sf = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+                Log.d("Update", "compared")
+
+                for (i in dbList) {
+                    //날짜 비교해서 제일 빠른거 넣어두는 것
+                    if (i.name == Uingredient) {
+                        if (i.name in dateCheck) {
+                            // 이미 재료가 들어가있으니 날짜 비교
+                            val firstDate: Date = sf.parse(comparedDate) as Date
+                            val secondDate: Date = sf.parse(i.exp) as Date
+                            // 제일 오래된 재료부터 찾아서 긁어옴
+                            when {
+                                firstDate.after(secondDate) -> {
+                                    comparedDate = i.exp
+                                    Log.d("Update", "$comparedDate is after ${i.exp}")
+                                }
+                                firstDate.before(secondDate) -> {
+                                    Log.d("Update", "$comparedDate is before ${i.exp}")
+                                }
+                                firstDate == secondDate -> {
+                                    Log.d("Update", "Both dates are equal")
+                                    continue
+                                }
+                            }
+                        } else {
+                            dateCheck.add(i.name)
+                            comparedDate = i.exp
+
+                            dateMap[i.name] = i.exp
+                            dateCheckResult.add(UpdateDataClass(i.name, i.exp))
+
+                        }
+                    }
+                }
+            }
+            withContext(Dispatchers.Main) {
+//                dbAdapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+    fun updateIngredient(Uingredient: String, Ucnt: String, Udate: String) {
+//        compareDateItem(Uingredient)
+
+//        val Uname = auth.currentUser?.uid as String
+
+        var gson = GsonBuilder().setLenient().create()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://jaeryurp.duckdns.org:40131/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+        val api = retrofit.create(UpdateAPI::class.java)
+//        val callResult = api.update(Uname, Uingredient, Ucnt, Udate)
+        val callResult = api.update("test", Uingredient, Ucnt, Udate)
+
+        callResult.enqueue(object : Callback<JsonArray> {
+            override fun onResponse(
+                call: Call<JsonArray>,
+                response: Response<JsonArray>
+            ) {
+                Log.d("Update", "값이 수정되었습니다")
+//                Toast.makeText(
+//                    context, "값이 수정되었습니다",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+            }
+
+            override fun onFailure(call: Call<JsonArray>, t: Throwable) {
+                Log.d("Update", "실패 : $t")
+            }
+        })
+    }
+
     fun onDialogClicked2(view: View) {
         Log.d("Extra", "$Extra")
         for (i in Extra.indices) {
             Extra[i].usedIn = Extra[i].usedIn.replace("[^0-9]".toRegex(), "")
         }
+
         val check = Check(Extra, this)
+
+        for (i in Extra){
+            if(i.ingerdient in except){
+                continue
+            }else{
+                compareDateItem(i.ingerdient)
+            }
+        }
         check.show()
+
 
         check.setOnCancelListener() {
             Log.d("dialog", "die")
+            for (i in Extra){
+                if(i.ingerdient in except){
+                    continue
+                }else{
+                    val date = dateMap[i.ingerdient]
+                    Log.d("Updated Items:","${i.ingerdient} ${i.usedIn} ${dateMap[i.ingerdient]}")
+                    updateIngredient(i.ingerdient, i.usedIn, date.toString())
+                }
+            }
+
+//            for (i in Extra.indices) {
+//                val def = Extra[i].usedIn
+//                val Name = Extra[i].ingerdient
+////                val UseI = getString("$i", "$def")
+//                val date = dateMap[Name]
+//
+//                if(Name in except){
+//                    continue
+//                }else{
+////                    compareDateItem(Name)
+//                    used.add(minusIngredient(Name, def))
+//
+////                    used.add(minusIngredient(Name, UseI))
+////                    updateIngredient(used[i].ingredient, used[i].Used, comparedDate)
+//                }
+//            }
+//            Log.d("dismiss", "$used")
             // 식재료 다쓴거 푸시알림.
+
+
             sendNotification("요리완료", "사용된 재료가 차감되었습니다")
+
+
 
         }
     }

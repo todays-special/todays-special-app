@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
 
             sendNotification("식재료알림", "${result}가 임박했습니다")
-            delay(1000)
+            delay(500)
 
             withContext(Dispatchers.Main) {
 //                dbAdapter.notifyDataSetChanged()
