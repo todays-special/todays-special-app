@@ -174,7 +174,6 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
 
 
     }
-
     private lateinit var auth: FirebaseAuth
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
@@ -232,6 +231,8 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
         }
     }
 
+    val user = auth.currentUser
+
     fun updateIngredient(Uingredient: String, Ucnt: String, Udate: String) {
 //        compareDateItem(Uingredient)
 
@@ -244,7 +245,8 @@ class Check(val recipe_ingredient: MutableList<EndCook>, context: Context) : Dia
             .build()
         val api = retrofit.create(UpdateAPI::class.java)
 //        val callResult = api.update(Uname, Uingredient, Ucnt, Udate)
-        val callResult = api.update("test", Uingredient, Ucnt, Udate)
+//        val callResult = api.update("test", Uingredient, Ucnt, Udate)
+        val callResult = api.update(user!!.uid, Uingredient, Ucnt, Udate)
 
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(

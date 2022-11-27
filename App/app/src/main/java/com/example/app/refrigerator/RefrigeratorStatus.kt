@@ -26,6 +26,9 @@ import com.example.app.localdb.RoomExpDB
 import com.example.app.localdb.RoomHelper
 import com.example.app.localdb.RoomSetting
 import com.example.app.plusminus.ControlData
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import kotlinx.android.synthetic.main.activity_main.*
@@ -105,6 +108,7 @@ class RefrigeratorStatus : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_refrigerator_status)
         val rvFine = findViewById<RecyclerView>(R.id.rv_fine)
         val rvWarning = findViewById<RecyclerView>(R.id.rv_warning)
@@ -113,14 +117,15 @@ class RefrigeratorStatus : AppCompatActivity() {
 //        delete.setOnClickListener {
 //            guide.visibility = View.GONE
 //        }
+        auth = Firebase.auth
 
         val guideState = getCheck()
-        if (guideState == "checked"){
+        if (guideState == "checked") {
             guide.visibility = View.GONE
-        }else{
+        } else {
             delete.setOnClickListener {
                 guide.visibility = View.GONE
-                if (check.isChecked){
+                if (check.isChecked) {
                     Log.d("RefCheck", "checked")
                     //다시 안뜨게
                     setCheck()
@@ -156,12 +161,12 @@ class RefrigeratorStatus : AppCompatActivity() {
                 val calcDate = (date.time - today.time.time) / (60 * 60 * 24 * 1000)
                 if (calcDate < 5) {
                     if (calcDate < 0) {
-                        expiredList.add(ExpCount("TEST", i.name, i.exp,i.count))
+                        expiredList.add(ExpCount("TEST", i.name, i.exp, i.count))
                     } else {
-                        warningList.add(ExpCount("TEST", i.name, i.exp,i.count))
+                        warningList.add(ExpCount("TEST", i.name, i.exp, i.count))
                     }
                 } else {
-                    fineList.add(ExpCount("TEST", i.name, i.exp,i.count))
+                    fineList.add(ExpCount("TEST", i.name, i.exp, i.count))
                 }
 //                Log.d("calcDate:", "${i.name} : ${calcDate + 1} 남음")
             }
@@ -304,11 +309,14 @@ class RefrigeratorStatus : AppCompatActivity() {
         }
     }
 
+    private lateinit var auth: FirebaseAuth
+
     fun expRoomDbBuild() {
         //list를 먼저 받고, exp를 받아서 list에 exp가 있으면 name-count-exp순으로 앱 내부 db에 저장한다.
         //list받기
         var gson = GsonBuilder().setLenient().create()
         val nameList = mutableListOf<String>()
+        val user = auth.currentUser
 
         val retrofit = Retrofit.Builder()
             .baseUrl("http://jaeryurp.duckdns.org:40131/")
@@ -316,9 +324,11 @@ class RefrigeratorStatus : AppCompatActivity() {
             .build()
         val api = retrofit.create(GetIngredientAPI::class.java)
         val callList = api.getList("test")
+//        val callList = api.getList(user!!.uid)
 
         var resultJsonArray: JsonArray?
-
+//        val tableName = "Tables_in_" + user!!.uid
+        val tableName = "Tables_in_test"
         callList.enqueue(object : Callback<JsonArray> {
             override fun onResponse(
                 call: Call<JsonArray>,
@@ -331,12 +341,14 @@ class RefrigeratorStatus : AppCompatActivity() {
                 }
                 val jsonArray = JSONTokener(resultJsonArray.toString()).nextValue() as JSONArray
                 for (i in 0 until jsonArray.length()) {
-                    val Sname = jsonArray.getJSONObject(i).getString("Tables_in_test")
+                    val Sname = jsonArray.getJSONObject(i).getString(tableName)
                     nameList.add(Sname)
                 }
                 for (i in nameList) {
                     if (i == "temp_ingre" || i == "cookware") continue //filter
                     val callExp = api.getExp(i)
+//                    val callExp = api.getExpUser(user.uid.toString(), i)
+
                     callExp.enqueue(object : Callback<JsonArray> {
                         override fun onResponse(
                             call: Call<JsonArray>,

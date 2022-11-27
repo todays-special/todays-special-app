@@ -45,6 +45,7 @@ class RoomSetting {
             .build()
         val api = retrofit.create(GetIngredientAPI::class.java)
         val callList = api.getList("test")
+//        val callList = api.getList("test")
 
         var resultJsonArray: JsonArray?
 

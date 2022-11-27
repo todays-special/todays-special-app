@@ -361,6 +361,8 @@ class RecipeRec : AppCompatActivity() {
             }
         }
     }
+    val user = auth.currentUser
+
 
     fun updateIngredient(Uingredient: String, Ucnt: String, Udate: String) {
 //        compareDateItem(Uingredient)
@@ -374,7 +376,9 @@ class RecipeRec : AppCompatActivity() {
             .build()
         val api = retrofit.create(UpdateAPI::class.java)
 //        val callResult = api.update(Uname, Uingredient, Ucnt, Udate)
-        val callResult = api.update("test", Uingredient, Ucnt, Udate)
+//        val callResult = api.update("test", Uingredient, Ucnt, Udate)
+
+        val callResult = api.update(user!!.uid, Uingredient, Ucnt, Udate)
 
         callResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(

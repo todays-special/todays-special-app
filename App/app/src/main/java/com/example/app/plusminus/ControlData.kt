@@ -1,6 +1,7 @@
 package com.example.app.plusminus
 
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
@@ -14,6 +15,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ControlData {
+    private lateinit var auth: FirebaseAuth
+    val user = auth.currentUser
+
     fun deleteData(Dname: String, Dingredient: String, Ddate: String){
         var gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
@@ -23,7 +27,9 @@ class ControlData {
             .build()
         val api = retrofit.create(InsertDeleteAPI::class.java)
 
+
         val deleteResult = api.delete(Dname, Dingredient, Ddate)
+//        val deleteResult = api.delete(user!!.uid, Dingredient, Ddate)
 
         deleteResult.enqueue(object : Callback<JsonArray> {
             override fun onResponse(

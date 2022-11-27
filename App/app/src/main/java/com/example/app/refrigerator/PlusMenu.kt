@@ -13,6 +13,7 @@ import android.widget.*
 import com.example.app.IngredientData
 import com.example.app.R
 import com.example.app.plusminus.ControlData
+import com.google.firebase.auth.FirebaseAuth
 
 class PlusMenu(context: Context) : Dialog(context) {
 
@@ -22,6 +23,8 @@ class PlusMenu(context: Context) : Dialog(context) {
     var nameValue: String = ""
     var volume: String = ""
     var exp: String = ""
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -151,6 +154,8 @@ class PlusMenu(context: Context) : Dialog(context) {
         val calendar = findViewById<ImageButton>(R.id.calendar)
         val plusClear = findViewById<ImageButton>(R.id.plusclear)
 
+        val user = auth.currentUser
+
         plusClear.setOnClickListener {
             //값을 내부 DB에 먼저 넣고, 서버에 동기화하기
             IngredientData().meat_beef
@@ -166,6 +171,12 @@ class PlusMenu(context: Context) : Dialog(context) {
                         IngredientData().getKeyName(ingredient)
                     }"
                 )
+//                ControlData().insertData(
+//                    user!!.uid,
+//                    IngredientData().getKeyName(ingredient),
+//                    volume,
+//                    date
+//                )
                 ControlData().insertData(
                     "test",
                     IngredientData().getKeyName(ingredient),

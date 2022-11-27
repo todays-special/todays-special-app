@@ -15,4 +15,10 @@ interface GetIngredientAPI {
     fun getExp(
         @Query("Sname") Sname: String,
     ): Call<JsonArray>
+
+    @GET("show/show_table.php?")
+    fun getExpUser(
+        @Query("Sname") Sname: String,
+        @Query("Singredient") Singredient: String,
+    ): Call<JsonArray>
 }
