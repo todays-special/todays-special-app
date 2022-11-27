@@ -59,6 +59,12 @@ class RefrigeratorStatus : AppCompatActivity() {
     val dbList = mutableListOf<RoomExpDB>()
     lateinit var helper: RoomHelper
 
+//    override fun onResume() {
+//        super.onResume()
+//        expRoomDbBuild()
+//
+//    }
+
     fun getRoomDb() {
         if (dbList.isNotEmpty()) {
             dbList.clear()
@@ -104,7 +110,6 @@ class RefrigeratorStatus : AppCompatActivity() {
         val rvWarning = findViewById<RecyclerView>(R.id.rv_warning)
         val rvExpired = findViewById<RecyclerView>(R.id.rv_expired)
         val refresh = findViewById<SwipeRefreshLayout>(R.id.refresh)
-        expRoomDbBuild()
 //        delete.setOnClickListener {
 //            guide.visibility = View.GONE
 //        }
